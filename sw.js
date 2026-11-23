@@ -1,9 +1,9 @@
 'use strict';
 // Bump this version whenever you release a new website to refresh the offline cache.
-const CACHE_NAME = 'wortspiel-pwa-v1';
+const CACHE_NAME = 'wortspiel-pwa-v2';
 const CACHE_PREFIX = 'wortspiel-pwa-';
 const ASSETS = [
-  './', './index.html', './manifest.webmanifest',
+  './', './index.html', './manifest.webmanifest', './audio/tracks.json',
   './icon-192.png', './icon-512.png',
   './icon-maskable-512.png', './apple-touch-icon.png'
 ];

@@ -1,0 +1,4813 @@
+{
+  "version": 1,
+  "voice": "de_DE-thorsten-medium",
+  "mode": "pre-generated German neural voice, same files on every device",
+  "collections": {
+    "lookalikes": [
+      {
+        "text": "organisieren",
+        "file": "audio/l000.mp3"
+      },
+      {
+        "text": "informieren",
+        "file": "audio/l001.mp3"
+      },
+      {
+        "text": "telefonieren",
+        "file": "audio/l002.mp3"
+      },
+      {
+        "text": "diskutieren",
+        "file": "audio/l003.mp3"
+      },
+      {
+        "text": "studieren",
+        "file": "audio/l004.mp3"
+      },
+      {
+        "text": "trainieren",
+        "file": "audio/l005.mp3"
+      },
+      {
+        "text": "reparieren",
+        "file": "audio/l006.mp3"
+      },
+      {
+        "text": "reservieren",
+        "file": "audio/l007.mp3"
+      },
+      {
+        "text": "planen",
+        "file": "audio/l008.mp3"
+      },
+      {
+        "text": "testen",
+        "file": "audio/l009.mp3"
+      },
+      {
+        "text": "starten",
+        "file": "audio/l010.mp3"
+      },
+      {
+        "text": "stoppen",
+        "file": "audio/l011.mp3"
+      },
+      {
+        "text": "parken",
+        "file": "audio/l012.mp3"
+      },
+      {
+        "text": "chatten",
+        "file": "audio/l013.mp3"
+      },
+      {
+        "text": "surfen",
+        "file": "audio/l014.mp3"
+      },
+      {
+        "text": "scannen",
+        "file": "audio/l015.mp3"
+      },
+      {
+        "text": "kopieren",
+        "file": "audio/l016.mp3"
+      },
+      {
+        "text": "fotografieren",
+        "file": "audio/l017.mp3"
+      },
+      {
+        "text": "filmen",
+        "file": "audio/l018.mp3"
+      },
+      {
+        "text": "posten",
+        "file": "audio/l019.mp3"
+      },
+      {
+        "text": "mailen",
+        "file": "audio/l020.mp3"
+      },
+      {
+        "text": "exportieren",
+        "file": "audio/l021.mp3"
+      },
+      {
+        "text": "importieren",
+        "file": "audio/l022.mp3"
+      },
+      {
+        "text": "installieren",
+        "file": "audio/l023.mp3"
+      },
+      {
+        "text": "programmieren",
+        "file": "audio/l024.mp3"
+      },
+      {
+        "text": "digitalisieren",
+        "file": "audio/l025.mp3"
+      },
+      {
+        "text": "simulieren",
+        "file": "audio/l026.mp3"
+      },
+      {
+        "text": "analysieren",
+        "file": "audio/l027.mp3"
+      },
+      {
+        "text": "optimieren",
+        "file": "audio/l028.mp3"
+      },
+      {
+        "text": "reagieren",
+        "file": "audio/l029.mp3"
+      },
+      {
+        "text": "demonstrieren",
+        "file": "audio/l030.mp3"
+      },
+      {
+        "text": "präsentieren",
+        "file": "audio/l031.mp3"
+      },
+      {
+        "text": "kommunizieren",
+        "file": "audio/l032.mp3"
+      },
+      {
+        "text": "kooperieren",
+        "file": "audio/l033.mp3"
+      },
+      {
+        "text": "kommentieren",
+        "file": "audio/l034.mp3"
+      },
+      {
+        "text": "sich konzentrieren",
+        "file": "audio/l035.mp3"
+      },
+      {
+        "text": "motivieren",
+        "file": "audio/l036.mp3"
+      },
+      {
+        "text": "inspirieren",
+        "file": "audio/l037.mp3"
+      },
+      {
+        "text": "faszinieren",
+        "file": "audio/l038.mp3"
+      },
+      {
+        "text": "interessieren",
+        "file": "audio/l039.mp3"
+      },
+      {
+        "text": "akzeptieren",
+        "file": "audio/l040.mp3"
+      },
+      {
+        "text": "ignorieren",
+        "file": "audio/l041.mp3"
+      },
+      {
+        "text": "respektieren",
+        "file": "audio/l042.mp3"
+      },
+      {
+        "text": "tolerieren",
+        "file": "audio/l043.mp3"
+      },
+      {
+        "text": "integrieren",
+        "file": "audio/l044.mp3"
+      },
+      {
+        "text": "isolieren",
+        "file": "audio/l045.mp3"
+      },
+      {
+        "text": "reduzieren",
+        "file": "audio/l046.mp3"
+      },
+      {
+        "text": "produzieren",
+        "file": "audio/l047.mp3"
+      },
+      {
+        "text": "investieren",
+        "file": "audio/l048.mp3"
+      },
+      {
+        "text": "finanzieren",
+        "file": "audio/l049.mp3"
+      },
+      {
+        "text": "kalkulieren",
+        "file": "audio/l050.mp3"
+      },
+      {
+        "text": "korrigieren",
+        "file": "audio/l051.mp3"
+      },
+      {
+        "text": "kritisieren",
+        "file": "audio/l052.mp3"
+      },
+      {
+        "text": "definieren",
+        "file": "audio/l053.mp3"
+      },
+      {
+        "text": "identifizieren",
+        "file": "audio/l054.mp3"
+      },
+      {
+        "text": "verifizieren",
+        "file": "audio/l055.mp3"
+      },
+      {
+        "text": "registrieren",
+        "file": "audio/l056.mp3"
+      },
+      {
+        "text": "kombinieren",
+        "file": "audio/l057.mp3"
+      },
+      {
+        "text": "markieren",
+        "file": "audio/l058.mp3"
+      },
+      {
+        "text": "notieren",
+        "file": "audio/l059.mp3"
+      },
+      {
+        "text": "dokumentieren",
+        "file": "audio/l060.mp3"
+      },
+      {
+        "text": "archivieren",
+        "file": "audio/l061.mp3"
+      },
+      {
+        "text": "sortieren",
+        "file": "audio/l062.mp3"
+      },
+      {
+        "text": "funktionieren",
+        "file": "audio/l063.mp3"
+      },
+      {
+        "text": "kalibrieren",
+        "file": "audio/l064.mp3"
+      },
+      {
+        "text": "interessant",
+        "file": "audio/l065.mp3"
+      },
+      {
+        "text": "faszinierend",
+        "file": "audio/l066.mp3"
+      },
+      {
+        "text": "fasziniert",
+        "file": "audio/l067.mp3"
+      },
+      {
+        "text": "super",
+        "file": "audio/l068.mp3"
+      },
+      {
+        "text": "normal",
+        "file": "audio/l069.mp3"
+      },
+      {
+        "text": "optimal",
+        "file": "audio/l070.mp3"
+      },
+      {
+        "text": "ideal",
+        "file": "audio/l071.mp3"
+      },
+      {
+        "text": "total",
+        "file": "audio/l072.mp3"
+      },
+      {
+        "text": "digital",
+        "file": "audio/l073.mp3"
+      },
+      {
+        "text": "international",
+        "file": "audio/l074.mp3"
+      },
+      {
+        "text": "global",
+        "file": "audio/l075.mp3"
+      },
+      {
+        "text": "lokal",
+        "file": "audio/l076.mp3"
+      },
+      {
+        "text": "modern",
+        "file": "audio/l077.mp3"
+      },
+      {
+        "text": "flexibel",
+        "file": "audio/l078.mp3"
+      },
+      {
+        "text": "aktiv",
+        "file": "audio/l079.mp3"
+      },
+      {
+        "text": "passiv",
+        "file": "audio/l080.mp3"
+      },
+      {
+        "text": "positiv",
+        "file": "audio/l081.mp3"
+      },
+      {
+        "text": "negativ",
+        "file": "audio/l082.mp3"
+      },
+      {
+        "text": "kreativ",
+        "file": "audio/l083.mp3"
+      },
+      {
+        "text": "logisch",
+        "file": "audio/l084.mp3"
+      },
+      {
+        "text": "das Restaurant",
+        "file": "audio/l085.mp3"
+      },
+      {
+        "text": "die Musik",
+        "file": "audio/l086.mp3"
+      },
+      {
+        "text": "die Information",
+        "file": "audio/l087.mp3"
+      },
+      {
+        "text": "die Organisation",
+        "file": "audio/l088.mp3"
+      },
+      {
+        "text": "die Diskussion",
+        "file": "audio/l089.mp3"
+      },
+      {
+        "text": "die Kommunikation",
+        "file": "audio/l090.mp3"
+      },
+      {
+        "text": "die Motivation",
+        "file": "audio/l091.mp3"
+      },
+      {
+        "text": "die Inspiration",
+        "file": "audio/l092.mp3"
+      },
+      {
+        "text": "die Situation",
+        "file": "audio/l093.mp3"
+      },
+      {
+        "text": "das Problem",
+        "file": "audio/l094.mp3"
+      },
+      {
+        "text": "das Projekt",
+        "file": "audio/l095.mp3"
+      },
+      {
+        "text": "die Präsentation",
+        "file": "audio/l096.mp3"
+      },
+      {
+        "text": "die Technologie",
+        "file": "audio/l097.mp3"
+      },
+      {
+        "text": "die Energie",
+        "file": "audio/l098.mp3"
+      },
+      {
+        "text": "der Computer",
+        "file": "audio/l099.mp3"
+      },
+      {
+        "text": "aktivieren",
+        "file": "audio/l100.mp3"
+      },
+      {
+        "text": "adressieren",
+        "file": "audio/l101.mp3"
+      },
+      {
+        "text": "alarmieren",
+        "file": "audio/l102.mp3"
+      },
+      {
+        "text": "argumentieren",
+        "file": "audio/l103.mp3"
+      },
+      {
+        "text": "arrangieren",
+        "file": "audio/l104.mp3"
+      },
+      {
+        "text": "balancieren",
+        "file": "audio/l105.mp3"
+      },
+      {
+        "text": "blockieren",
+        "file": "audio/l106.mp3"
+      },
+      {
+        "text": "campen",
+        "file": "audio/l107.mp3"
+      },
+      {
+        "text": "checken",
+        "file": "audio/l108.mp3"
+      },
+      {
+        "text": "dekorieren",
+        "file": "audio/l109.mp3"
+      },
+      {
+        "text": "delegieren",
+        "file": "audio/l110.mp3"
+      },
+      {
+        "text": "designen",
+        "file": "audio/l111.mp3"
+      },
+      {
+        "text": "diktieren",
+        "file": "audio/l112.mp3"
+      },
+      {
+        "text": "dominieren",
+        "file": "audio/l113.mp3"
+      },
+      {
+        "text": "dosieren",
+        "file": "audio/l114.mp3"
+      },
+      {
+        "text": "experimentieren",
+        "file": "audio/l115.mp3"
+      },
+      {
+        "text": "explodieren",
+        "file": "audio/l116.mp3"
+      },
+      {
+        "text": "fixieren",
+        "file": "audio/l117.mp3"
+      },
+      {
+        "text": "fokussieren",
+        "file": "audio/l118.mp3"
+      },
+      {
+        "text": "formatieren",
+        "file": "audio/l119.mp3"
+      },
+      {
+        "text": "formulieren",
+        "file": "audio/l120.mp3"
+      },
+      {
+        "text": "garantieren",
+        "file": "audio/l121.mp3"
+      },
+      {
+        "text": "generieren",
+        "file": "audio/l122.mp3"
+      },
+      {
+        "text": "gratulieren",
+        "file": "audio/l123.mp3"
+      },
+      {
+        "text": "imitieren",
+        "file": "audio/l124.mp3"
+      },
+      {
+        "text": "improvisieren",
+        "file": "audio/l125.mp3"
+      },
+      {
+        "text": "interpretieren",
+        "file": "audio/l126.mp3"
+      },
+      {
+        "text": "interviewen",
+        "file": "audio/l127.mp3"
+      },
+      {
+        "text": "kategorisieren",
+        "file": "audio/l128.mp3"
+      },
+      {
+        "text": "klicken",
+        "file": "audio/l129.mp3"
+      },
+      {
+        "text": "komponieren",
+        "file": "audio/l130.mp3"
+      },
+      {
+        "text": "konsumieren",
+        "file": "audio/l131.mp3"
+      },
+      {
+        "text": "kontaktieren",
+        "file": "audio/l132.mp3"
+      },
+      {
+        "text": "koordinieren",
+        "file": "audio/l133.mp3"
+      },
+      {
+        "text": "kreieren",
+        "file": "audio/l134.mp3"
+      },
+      {
+        "text": "limitieren",
+        "file": "audio/l135.mp3"
+      },
+      {
+        "text": "lokalisieren",
+        "file": "audio/l136.mp3"
+      },
+      {
+        "text": "massieren",
+        "file": "audio/l137.mp3"
+      },
+      {
+        "text": "meditieren",
+        "file": "audio/l138.mp3"
+      },
+      {
+        "text": "minimieren",
+        "file": "audio/l139.mp3"
+      },
+      {
+        "text": "modifizieren",
+        "file": "audio/l140.mp3"
+      },
+      {
+        "text": "montieren",
+        "file": "audio/l141.mp3"
+      },
+      {
+        "text": "navigieren",
+        "file": "audio/l142.mp3"
+      },
+      {
+        "text": "normalisieren",
+        "file": "audio/l143.mp3"
+      },
+      {
+        "text": "operieren",
+        "file": "audio/l144.mp3"
+      },
+      {
+        "text": "pausieren",
+        "file": "audio/l145.mp3"
+      },
+      {
+        "text": "personalisieren",
+        "file": "audio/l146.mp3"
+      },
+      {
+        "text": "platzieren",
+        "file": "audio/l147.mp3"
+      },
+      {
+        "text": "polieren",
+        "file": "audio/l148.mp3"
+      },
+      {
+        "text": "positionieren",
+        "file": "audio/l149.mp3"
+      },
+      {
+        "text": "profitieren",
+        "file": "audio/l150.mp3"
+      },
+      {
+        "text": "protestieren",
+        "file": "audio/l151.mp3"
+      },
+      {
+        "text": "publizieren",
+        "file": "audio/l152.mp3"
+      },
+      {
+        "text": "realisieren",
+        "file": "audio/l153.mp3"
+      },
+      {
+        "text": "reflektieren",
+        "file": "audio/l154.mp3"
+      },
+      {
+        "text": "renovieren",
+        "file": "audio/l155.mp3"
+      },
+      {
+        "text": "riskieren",
+        "file": "audio/l156.mp3"
+      },
+      {
+        "text": "servieren",
+        "file": "audio/l157.mp3"
+      },
+      {
+        "text": "signalisieren",
+        "file": "audio/l158.mp3"
+      },
+      {
+        "text": "stabilisieren",
+        "file": "audio/l159.mp3"
+      },
+      {
+        "text": "synchronisieren",
+        "file": "audio/l160.mp3"
+      },
+      {
+        "text": "transportieren",
+        "file": "audio/l161.mp3"
+      },
+      {
+        "text": "variieren",
+        "file": "audio/l162.mp3"
+      },
+      {
+        "text": "visualisieren",
+        "file": "audio/l163.mp3"
+      },
+      {
+        "text": "zitieren",
+        "file": "audio/l164.mp3"
+      },
+      {
+        "text": "automatisch",
+        "file": "audio/l165.mp3"
+      },
+      {
+        "text": "direkt",
+        "file": "audio/l166.mp3"
+      },
+      {
+        "text": "elegant",
+        "file": "audio/l167.mp3"
+      },
+      {
+        "text": "emotional",
+        "file": "audio/l168.mp3"
+      },
+      {
+        "text": "extrem",
+        "file": "audio/l169.mp3"
+      },
+      {
+        "text": "fantastisch",
+        "file": "audio/l170.mp3"
+      },
+      {
+        "text": "intelligent",
+        "file": "audio/l171.mp3"
+      },
+      {
+        "text": "intensiv",
+        "file": "audio/l172.mp3"
+      },
+      {
+        "text": "komfortabel",
+        "file": "audio/l173.mp3"
+      },
+      {
+        "text": "kompliziert",
+        "file": "audio/l174.mp3"
+      },
+      {
+        "text": "korrekt",
+        "file": "audio/l175.mp3"
+      },
+      {
+        "text": "legal",
+        "file": "audio/l176.mp3"
+      },
+      {
+        "text": "mobil",
+        "file": "audio/l177.mp3"
+      },
+      {
+        "text": "nervös",
+        "file": "audio/l178.mp3"
+      },
+      {
+        "text": "offiziell",
+        "file": "audio/l179.mp3"
+      },
+      {
+        "text": "perfekt",
+        "file": "audio/l180.mp3"
+      },
+      {
+        "text": "privat",
+        "file": "audio/l181.mp3"
+      },
+      {
+        "text": "professionell",
+        "file": "audio/l182.mp3"
+      },
+      {
+        "text": "spontan",
+        "file": "audio/l183.mp3"
+      },
+      {
+        "text": "typisch",
+        "file": "audio/l184.mp3"
+      },
+      {
+        "text": "die Adresse",
+        "file": "audio/l185.mp3"
+      },
+      {
+        "text": "die Alternative",
+        "file": "audio/l186.mp3"
+      },
+      {
+        "text": "das Argument",
+        "file": "audio/l187.mp3"
+      },
+      {
+        "text": "der Balkon",
+        "file": "audio/l188.mp3"
+      },
+      {
+        "text": "die Batterie",
+        "file": "audio/l189.mp3"
+      },
+      {
+        "text": "der Bus",
+        "file": "audio/l190.mp3"
+      },
+      {
+        "text": "die Chance",
+        "file": "audio/l191.mp3"
+      },
+      {
+        "text": "das Dokument",
+        "file": "audio/l192.mp3"
+      },
+      {
+        "text": "das Experiment",
+        "file": "audio/l193.mp3"
+      },
+      {
+        "text": "die Familie",
+        "file": "audio/l194.mp3"
+      },
+      {
+        "text": "die Garage",
+        "file": "audio/l195.mp3"
+      },
+      {
+        "text": "die Kamera",
+        "file": "audio/l196.mp3"
+      },
+      {
+        "text": "der Kontakt",
+        "file": "audio/l197.mp3"
+      },
+      {
+        "text": "das System",
+        "file": "audio/l198.mp3"
+      },
+      {
+        "text": "die Temperatur",
+        "file": "audio/l199.mp3"
+      },
+      {
+        "text": "aktualisieren",
+        "file": "audio/l200.mp3"
+      },
+      {
+        "text": "addieren",
+        "file": "audio/l201.mp3"
+      },
+      {
+        "text": "applaudieren",
+        "file": "audio/l202.mp3"
+      },
+      {
+        "text": "automatisieren",
+        "file": "audio/l203.mp3"
+      },
+      {
+        "text": "deaktivieren",
+        "file": "audio/l204.mp3"
+      },
+      {
+        "text": "debattieren",
+        "file": "audio/l205.mp3"
+      },
+      {
+        "text": "deinstallieren",
+        "file": "audio/l206.mp3"
+      },
+      {
+        "text": "desinfizieren",
+        "file": "audio/l207.mp3"
+      },
+      {
+        "text": "diagnostizieren",
+        "file": "audio/l208.mp3"
+      },
+      {
+        "text": "duplizieren",
+        "file": "audio/l209.mp3"
+      },
+      {
+        "text": "sich engagieren",
+        "file": "audio/l210.mp3"
+      },
+      {
+        "text": "etablieren",
+        "file": "audio/l211.mp3"
+      },
+      {
+        "text": "evaluieren",
+        "file": "audio/l212.mp3"
+      },
+      {
+        "text": "existieren",
+        "file": "audio/l213.mp3"
+      },
+      {
+        "text": "filtern",
+        "file": "audio/l214.mp3"
+      },
+      {
+        "text": "flirten",
+        "file": "audio/l215.mp3"
+      },
+      {
+        "text": "googeln",
+        "file": "audio/l216.mp3"
+      },
+      {
+        "text": "harmonieren",
+        "file": "audio/l217.mp3"
+      },
+      {
+        "text": "interagieren",
+        "file": "audio/l218.mp3"
+      },
+      {
+        "text": "irritieren",
+        "file": "audio/l219.mp3"
+      },
+      {
+        "text": "joggen",
+        "file": "audio/l220.mp3"
+      },
+      {
+        "text": "justieren",
+        "file": "audio/l221.mp3"
+      },
+      {
+        "text": "klassifizieren",
+        "file": "audio/l222.mp3"
+      },
+      {
+        "text": "kompensieren",
+        "file": "audio/l223.mp3"
+      },
+      {
+        "text": "komprimieren",
+        "file": "audio/l224.mp3"
+      },
+      {
+        "text": "konfigurieren",
+        "file": "audio/l225.mp3"
+      },
+      {
+        "text": "konfrontieren",
+        "file": "audio/l226.mp3"
+      },
+      {
+        "text": "konservieren",
+        "file": "audio/l227.mp3"
+      },
+      {
+        "text": "konstruieren",
+        "file": "audio/l228.mp3"
+      },
+      {
+        "text": "konvertieren",
+        "file": "audio/l229.mp3"
+      },
+      {
+        "text": "laminieren",
+        "file": "audio/l230.mp3"
+      },
+      {
+        "text": "leasen",
+        "file": "audio/l231.mp3"
+      },
+      {
+        "text": "liken",
+        "file": "audio/l232.mp3"
+      },
+      {
+        "text": "managen",
+        "file": "audio/l233.mp3"
+      },
+      {
+        "text": "manipulieren",
+        "file": "audio/l234.mp3"
+      },
+      {
+        "text": "maskieren",
+        "file": "audio/l235.mp3"
+      },
+      {
+        "text": "maximieren",
+        "file": "audio/l236.mp3"
+      },
+      {
+        "text": "mixen",
+        "file": "audio/l237.mp3"
+      },
+      {
+        "text": "mobilisieren",
+        "file": "audio/l238.mp3"
+      },
+      {
+        "text": "modellieren",
+        "file": "audio/l239.mp3"
+      },
+      {
+        "text": "nummerieren",
+        "file": "audio/l240.mp3"
+      },
+      {
+        "text": "sich orientieren",
+        "file": "audio/l241.mp3"
+      },
+      {
+        "text": "packen",
+        "file": "audio/l242.mp3"
+      },
+      {
+        "text": "priorisieren",
+        "file": "audio/l243.mp3"
+      },
+      {
+        "text": "projizieren",
+        "file": "audio/l244.mp3"
+      },
+      {
+        "text": "sich qualifizieren",
+        "file": "audio/l245.mp3"
+      },
+      {
+        "text": "recyceln",
+        "file": "audio/l246.mp3"
+      },
+      {
+        "text": "regenerieren",
+        "file": "audio/l247.mp3"
+      },
+      {
+        "text": "regulieren",
+        "file": "audio/l248.mp3"
+      },
+      {
+        "text": "rekonstruieren",
+        "file": "audio/l249.mp3"
+      },
+      {
+        "text": "reorganisieren",
+        "file": "audio/l250.mp3"
+      },
+      {
+        "text": "repräsentieren",
+        "file": "audio/l251.mp3"
+      },
+      {
+        "text": "reproduzieren",
+        "file": "audio/l252.mp3"
+      },
+      {
+        "text": "rotieren",
+        "file": "audio/l253.mp3"
+      },
+      {
+        "text": "schockieren",
+        "file": "audio/l254.mp3"
+      },
+      {
+        "text": "separieren",
+        "file": "audio/l255.mp3"
+      },
+      {
+        "text": "skizzieren",
+        "file": "audio/l256.mp3"
+      },
+      {
+        "text": "spekulieren",
+        "file": "audio/l257.mp3"
+      },
+      {
+        "text": "sich spezialisieren",
+        "file": "audio/l258.mp3"
+      },
+      {
+        "text": "sponsern",
+        "file": "audio/l259.mp3"
+      },
+      {
+        "text": "standardisieren",
+        "file": "audio/l260.mp3"
+      },
+      {
+        "text": "strukturieren",
+        "file": "audio/l261.mp3"
+      },
+      {
+        "text": "symbolisieren",
+        "file": "audio/l262.mp3"
+      },
+      {
+        "text": "texten",
+        "file": "audio/l263.mp3"
+      },
+      {
+        "text": "transformieren",
+        "file": "audio/l264.mp3"
+      },
+      {
+        "text": "trinken",
+        "file": "audio/l265.mp3"
+      },
+      {
+        "text": "wandern",
+        "file": "audio/l266.mp3"
+      },
+      {
+        "text": "warnen",
+        "file": "audio/l267.mp3"
+      },
+      {
+        "text": "waschen",
+        "file": "audio/l268.mp3"
+      },
+      {
+        "text": "wünschen",
+        "file": "audio/l269.mp3"
+      },
+      {
+        "text": "zoomen",
+        "file": "audio/l270.mp3"
+      },
+      {
+        "text": "bürsten",
+        "file": "audio/l271.mp3"
+      },
+      {
+        "text": "tanken",
+        "file": "audio/l272.mp3"
+      },
+      {
+        "text": "bloggen",
+        "file": "audio/l273.mp3"
+      },
+      {
+        "text": "streamen",
+        "file": "audio/l274.mp3"
+      },
+      {
+        "text": "shoppen",
+        "file": "audio/l275.mp3"
+      },
+      {
+        "text": "scrollen",
+        "file": "audio/l276.mp3"
+      },
+      {
+        "text": "rollen",
+        "file": "audio/l277.mp3"
+      },
+      {
+        "text": "formen",
+        "file": "audio/l278.mp3"
+      },
+      {
+        "text": "stressen",
+        "file": "audio/l279.mp3"
+      },
+      {
+        "text": "absurd",
+        "file": "audio/l280.mp3"
+      },
+      {
+        "text": "aggressiv",
+        "file": "audio/l281.mp3"
+      },
+      {
+        "text": "akademisch",
+        "file": "audio/l282.mp3"
+      },
+      {
+        "text": "akzeptabel",
+        "file": "audio/l283.mp3"
+      },
+      {
+        "text": "ambitioniert",
+        "file": "audio/l284.mp3"
+      },
+      {
+        "text": "anonym",
+        "file": "audio/l285.mp3"
+      },
+      {
+        "text": "attraktiv",
+        "file": "audio/l286.mp3"
+      },
+      {
+        "text": "authentisch",
+        "file": "audio/l287.mp3"
+      },
+      {
+        "text": "biologisch",
+        "file": "audio/l288.mp3"
+      },
+      {
+        "text": "brillant",
+        "file": "audio/l289.mp3"
+      },
+      {
+        "text": "brutal",
+        "file": "audio/l290.mp3"
+      },
+      {
+        "text": "chaotisch",
+        "file": "audio/l291.mp3"
+      },
+      {
+        "text": "clever",
+        "file": "audio/l292.mp3"
+      },
+      {
+        "text": "cool",
+        "file": "audio/l293.mp3"
+      },
+      {
+        "text": "demokratisch",
+        "file": "audio/l294.mp3"
+      },
+      {
+        "text": "dramatisch",
+        "file": "audio/l295.mp3"
+      },
+      {
+        "text": "effektiv",
+        "file": "audio/l296.mp3"
+      },
+      {
+        "text": "effizient",
+        "file": "audio/l297.mp3"
+      },
+      {
+        "text": "egoistisch",
+        "file": "audio/l298.mp3"
+      },
+      {
+        "text": "elektrisch",
+        "file": "audio/l299.mp3"
+      },
+      {
+        "text": "enorm",
+        "file": "audio/l300.mp3"
+      },
+      {
+        "text": "exakt",
+        "file": "audio/l301.mp3"
+      },
+      {
+        "text": "exklusiv",
+        "file": "audio/l302.mp3"
+      },
+      {
+        "text": "exotisch",
+        "file": "audio/l303.mp3"
+      },
+      {
+        "text": "fair",
+        "file": "audio/l304.mp3"
+      },
+      {
+        "text": "frisch",
+        "file": "audio/l305.mp3"
+      },
+      {
+        "text": "funktional",
+        "file": "audio/l306.mp3"
+      },
+      {
+        "text": "generell",
+        "file": "audio/l307.mp3"
+      },
+      {
+        "text": "genial",
+        "file": "audio/l308.mp3"
+      },
+      {
+        "text": "gratis",
+        "file": "audio/l309.mp3"
+      },
+      {
+        "text": "historisch",
+        "file": "audio/l310.mp3"
+      },
+      {
+        "text": "humorvoll",
+        "file": "audio/l311.mp3"
+      },
+      {
+        "text": "illegal",
+        "file": "audio/l312.mp3"
+      },
+      {
+        "text": "immun",
+        "file": "audio/l313.mp3"
+      },
+      {
+        "text": "individuell",
+        "file": "audio/l314.mp3"
+      },
+      {
+        "text": "industriell",
+        "file": "audio/l315.mp3"
+      },
+      {
+        "text": "informell",
+        "file": "audio/l316.mp3"
+      },
+      {
+        "text": "innovativ",
+        "file": "audio/l317.mp3"
+      },
+      {
+        "text": "inspirierend",
+        "file": "audio/l318.mp3"
+      },
+      {
+        "text": "intuitiv",
+        "file": "audio/l319.mp3"
+      },
+      {
+        "text": "ironisch",
+        "file": "audio/l320.mp3"
+      },
+      {
+        "text": "klassisch",
+        "file": "audio/l321.mp3"
+      },
+      {
+        "text": "klar",
+        "file": "audio/l322.mp3"
+      },
+      {
+        "text": "kompatibel",
+        "file": "audio/l323.mp3"
+      },
+      {
+        "text": "konkret",
+        "file": "audio/l324.mp3"
+      },
+      {
+        "text": "konstant",
+        "file": "audio/l325.mp3"
+      },
+      {
+        "text": "konservativ",
+        "file": "audio/l326.mp3"
+      },
+      {
+        "text": "kritisch",
+        "file": "audio/l327.mp3"
+      },
+      {
+        "text": "kulturell",
+        "file": "audio/l328.mp3"
+      },
+      {
+        "text": "linear",
+        "file": "audio/l329.mp3"
+      },
+      {
+        "text": "manuell",
+        "file": "audio/l330.mp3"
+      },
+      {
+        "text": "mathematisch",
+        "file": "audio/l331.mp3"
+      },
+      {
+        "text": "mechanisch",
+        "file": "audio/l332.mp3"
+      },
+      {
+        "text": "motiviert",
+        "file": "audio/l333.mp3"
+      },
+      {
+        "text": "neutral",
+        "file": "audio/l334.mp3"
+      },
+      {
+        "text": "der Alarm",
+        "file": "audio/l335.mp3"
+      },
+      {
+        "text": "die App",
+        "file": "audio/l336.mp3"
+      },
+      {
+        "text": "der Artikel",
+        "file": "audio/l337.mp3"
+      },
+      {
+        "text": "das Auto",
+        "file": "audio/l338.mp3"
+      },
+      {
+        "text": "die Banane",
+        "file": "audio/l339.mp3"
+      },
+      {
+        "text": "die Bank",
+        "file": "audio/l340.mp3"
+      },
+      {
+        "text": "die Bar",
+        "file": "audio/l341.mp3"
+      },
+      {
+        "text": "das Baby",
+        "file": "audio/l342.mp3"
+      },
+      {
+        "text": "der Blog",
+        "file": "audio/l343.mp3"
+      },
+      {
+        "text": "der Bonus",
+        "file": "audio/l344.mp3"
+      },
+      {
+        "text": "das Chaos",
+        "file": "audio/l345.mp3"
+      },
+      {
+        "text": "der Charakter",
+        "file": "audio/l346.mp3"
+      },
+      {
+        "text": "die Chemie",
+        "file": "audio/l347.mp3"
+      },
+      {
+        "text": "der Clown",
+        "file": "audio/l348.mp3"
+      },
+      {
+        "text": "die Cola",
+        "file": "audio/l349.mp3"
+      },
+      {
+        "text": "die Creme",
+        "file": "audio/l350.mp3"
+      },
+      {
+        "text": "die Daten",
+        "file": "audio/l351.mp3"
+      },
+      {
+        "text": "der Dialog",
+        "file": "audio/l352.mp3"
+      },
+      {
+        "text": "die Diät",
+        "file": "audio/l353.mp3"
+      },
+      {
+        "text": "die Differenz",
+        "file": "audio/l354.mp3"
+      },
+      {
+        "text": "die Distanz",
+        "file": "audio/l355.mp3"
+      },
+      {
+        "text": "das Drama",
+        "file": "audio/l356.mp3"
+      },
+      {
+        "text": "die E-Mail",
+        "file": "audio/l357.mp3"
+      },
+      {
+        "text": "die Emotion",
+        "file": "audio/l358.mp3"
+      },
+      {
+        "text": "der Effekt",
+        "file": "audio/l359.mp3"
+      },
+      {
+        "text": "das Element",
+        "file": "audio/l360.mp3"
+      },
+      {
+        "text": "die Elektronik",
+        "file": "audio/l361.mp3"
+      },
+      {
+        "text": "der Elefant",
+        "file": "audio/l362.mp3"
+      },
+      {
+        "text": "die Episode",
+        "file": "audio/l363.mp3"
+      },
+      {
+        "text": "die Explosion",
+        "file": "audio/l364.mp3"
+      },
+      {
+        "text": "der Export",
+        "file": "audio/l365.mp3"
+      },
+      {
+        "text": "der Faktor",
+        "file": "audio/l366.mp3"
+      },
+      {
+        "text": "der Fan",
+        "file": "audio/l367.mp3"
+      },
+      {
+        "text": "die Figur",
+        "file": "audio/l368.mp3"
+      },
+      {
+        "text": "der Filter",
+        "file": "audio/l369.mp3"
+      },
+      {
+        "text": "die Fitness",
+        "file": "audio/l370.mp3"
+      },
+      {
+        "text": "das Festival",
+        "file": "audio/l371.mp3"
+      },
+      {
+        "text": "der Film",
+        "file": "audio/l372.mp3"
+      },
+      {
+        "text": "die Firma",
+        "file": "audio/l373.mp3"
+      },
+      {
+        "text": "das Format",
+        "file": "audio/l374.mp3"
+      },
+      {
+        "text": "die Form",
+        "file": "audio/l375.mp3"
+      },
+      {
+        "text": "die Funktion",
+        "file": "audio/l376.mp3"
+      },
+      {
+        "text": "die Generation",
+        "file": "audio/l377.mp3"
+      },
+      {
+        "text": "das Glas",
+        "file": "audio/l378.mp3"
+      },
+      {
+        "text": "das Gramm",
+        "file": "audio/l379.mp3"
+      },
+      {
+        "text": "die Garantie",
+        "file": "audio/l380.mp3"
+      },
+      {
+        "text": "die Gitarre",
+        "file": "audio/l381.mp3"
+      },
+      {
+        "text": "die Gruppe",
+        "file": "audio/l382.mp3"
+      },
+      {
+        "text": "das Hobby",
+        "file": "audio/l383.mp3"
+      },
+      {
+        "text": "das Hotel",
+        "file": "audio/l384.mp3"
+      },
+      {
+        "text": "die Hygiene",
+        "file": "audio/l385.mp3"
+      },
+      {
+        "text": "die Idee",
+        "file": "audio/l386.mp3"
+      },
+      {
+        "text": "die Identität",
+        "file": "audio/l387.mp3"
+      },
+      {
+        "text": "die Illusion",
+        "file": "audio/l388.mp3"
+      },
+      {
+        "text": "die Industrie",
+        "file": "audio/l389.mp3"
+      },
+      {
+        "text": "der Import",
+        "file": "audio/l390.mp3"
+      },
+      {
+        "text": "das Internet",
+        "file": "audio/l391.mp3"
+      },
+      {
+        "text": "das Interview",
+        "file": "audio/l392.mp3"
+      },
+      {
+        "text": "die Jacke",
+        "file": "audio/l393.mp3"
+      },
+      {
+        "text": "der Job",
+        "file": "audio/l394.mp3"
+      },
+      {
+        "text": "der Joghurt",
+        "file": "audio/l395.mp3"
+      },
+      {
+        "text": "der Kaffee",
+        "file": "audio/l396.mp3"
+      },
+      {
+        "text": "der Kalender",
+        "file": "audio/l397.mp3"
+      },
+      {
+        "text": "die Karriere",
+        "file": "audio/l398.mp3"
+      },
+      {
+        "text": "die Kategorie",
+        "file": "audio/l399.mp3"
+      }
+    ],
+    "everyday": [
+      {
+        "text": "in den Bus einsteigen",
+        "file": "audio/e000.mp3"
+      },
+      {
+        "text": "aus dem Bus aussteigen",
+        "file": "audio/e001.mp3"
+      },
+      {
+        "text": "in die S-Bahn umsteigen",
+        "file": "audio/e002.mp3"
+      },
+      {
+        "text": "mit dem Auto losfahren",
+        "file": "audio/e003.mp3"
+      },
+      {
+        "text": "am Bahnhof abfahren",
+        "file": "audio/e004.mp3"
+      },
+      {
+        "text": "pünktlich ankommen",
+        "file": "audio/e005.mp3"
+      },
+      {
+        "text": "jemanden vom Bahnhof abholen",
+        "file": "audio/e006.mp3"
+      },
+      {
+        "text": "nach Hause zurückfahren",
+        "file": "audio/e007.mp3"
+      },
+      {
+        "text": "mit der Bahn weiterfahren",
+        "file": "audio/e008.mp3"
+      },
+      {
+        "text": "Die Abfahrt verzögert sich.",
+        "file": "audio/e009.mp3"
+      },
+      {
+        "text": "übers Wochenende wegfahren",
+        "file": "audio/e010.mp3"
+      },
+      {
+        "text": "für ein paar Tage verreisen",
+        "file": "audio/e011.mp3"
+      },
+      {
+        "text": "mit dem Zug reisen",
+        "file": "audio/e012.mp3"
+      },
+      {
+        "text": "nach Istanbul fliegen",
+        "file": "audio/e013.mp3"
+      },
+      {
+        "text": "am Flughafen landen",
+        "file": "audio/e014.mp3"
+      },
+      {
+        "text": "morgen abfliegen",
+        "file": "audio/e015.mp3"
+      },
+      {
+        "text": "einen Flug buchen",
+        "file": "audio/e016.mp3"
+      },
+      {
+        "text": "einen Flug umbuchen",
+        "file": "audio/e017.mp3"
+      },
+      {
+        "text": "eine Bestellung stornieren",
+        "file": "audio/e018.mp3"
+      },
+      {
+        "text": "sich um zehn Minuten verspäten",
+        "file": "audio/e019.mp3"
+      },
+      {
+        "text": "sich beeilen",
+        "file": "audio/e020.mp3"
+      },
+      {
+        "text": "zum Zug rennen",
+        "file": "audio/e021.mp3"
+      },
+      {
+        "text": "zu Fuß laufen",
+        "file": "audio/e022.mp3"
+      },
+      {
+        "text": "den Anschluss erwischen",
+        "file": "audio/e023.mp3"
+      },
+      {
+        "text": "eine Fahrkarte entwerten",
+        "file": "audio/e024.mp3"
+      },
+      {
+        "text": "links abbiegen",
+        "file": "audio/e025.mp3"
+      },
+      {
+        "text": "die Straße überqueren",
+        "file": "audio/e026.mp3"
+      },
+      {
+        "text": "sich verlaufen",
+        "file": "audio/e027.mp3"
+      },
+      {
+        "text": "sich verfahren",
+        "file": "audio/e028.mp3"
+      },
+      {
+        "text": "den Zug verpassen",
+        "file": "audio/e029.mp3"
+      },
+      {
+        "text": "auf den Bus warten",
+        "file": "audio/e030.mp3"
+      },
+      {
+        "text": "den Schildern folgen",
+        "file": "audio/e031.mp3"
+      },
+      {
+        "text": "etwas mitbringen",
+        "file": "audio/e032.mp3"
+      },
+      {
+        "text": "sich im Auto anschnallen",
+        "file": "audio/e033.mp3"
+      },
+      {
+        "text": "ausweichen",
+        "file": "audio/e034.mp3"
+      },
+      {
+        "text": "plötzlich bremsen",
+        "file": "audio/e035.mp3"
+      },
+      {
+        "text": "an der Haltestelle halten",
+        "file": "audio/e036.mp3"
+      },
+      {
+        "text": "Der Zug fällt aus.",
+        "file": "audio/e037.mp3"
+      },
+      {
+        "text": "am Flughafen einchecken",
+        "file": "audio/e038.mp3"
+      },
+      {
+        "text": "zurückkehren",
+        "file": "audio/e039.mp3"
+      },
+      {
+        "text": "einen Termin vereinbaren",
+        "file": "audio/e040.mp3"
+      },
+      {
+        "text": "einen Termin verschieben",
+        "file": "audio/e041.mp3"
+      },
+      {
+        "text": "einen Termin absagen",
+        "file": "audio/e042.mp3"
+      },
+      {
+        "text": "einen Termin bestätigen",
+        "file": "audio/e043.mp3"
+      },
+      {
+        "text": "den Vertrag verlängern",
+        "file": "audio/e044.mp3"
+      },
+      {
+        "text": "den Pass erneuern",
+        "file": "audio/e045.mp3"
+      },
+      {
+        "text": "eine Aufenthaltserlaubnis beantragen",
+        "file": "audio/e046.mp3"
+      },
+      {
+        "text": "Unterlagen einreichen",
+        "file": "audio/e047.mp3"
+      },
+      {
+        "text": "ein Formular ausfüllen",
+        "file": "audio/e048.mp3"
+      },
+      {
+        "text": "den Vertrag unterschreiben",
+        "file": "audio/e049.mp3"
+      },
+      {
+        "text": "den Ausweis vorlegen",
+        "file": "audio/e050.mp3"
+      },
+      {
+        "text": "die Zahlung nachweisen",
+        "file": "audio/e051.mp3"
+      },
+      {
+        "text": "bei der Behörde nachfragen",
+        "file": "audio/e052.mp3"
+      },
+      {
+        "text": "etwas erledigen",
+        "file": "audio/e053.mp3"
+      },
+      {
+        "text": "eine Bestätigung erhalten",
+        "file": "audio/e054.mp3"
+      },
+      {
+        "text": "einen Brief bekommen",
+        "file": "audio/e055.mp3"
+      },
+      {
+        "text": "die Unterlagen abgeben",
+        "file": "audio/e056.mp3"
+      },
+      {
+        "text": "sich von einem Kurs abmelden",
+        "file": "audio/e057.mp3"
+      },
+      {
+        "text": "sich für einen Kurs anmelden",
+        "file": "audio/e058.mp3"
+      },
+      {
+        "text": "teilnehmen",
+        "file": "audio/e059.mp3"
+      },
+      {
+        "text": "morgen vorbeikommen",
+        "file": "audio/e060.mp3"
+      },
+      {
+        "text": "sich melden",
+        "file": "audio/e061.mp3"
+      },
+      {
+        "text": "sich eintragen",
+        "file": "audio/e062.mp3"
+      },
+      {
+        "text": "einen Vertrag kündigen",
+        "file": "audio/e063.mp3"
+      },
+      {
+        "text": "aufrufen",
+        "file": "audio/e064.mp3"
+      },
+      {
+        "text": "eine Bescheinigung ausstellen",
+        "file": "audio/e065.mp3"
+      },
+      {
+        "text": "beanstanden",
+        "file": "audio/e066.mp3"
+      },
+      {
+        "text": "sich über den Lärm beschweren",
+        "file": "audio/e067.mp3"
+      },
+      {
+        "text": "eine E-Mail weiterleiten",
+        "file": "audio/e068.mp3"
+      },
+      {
+        "text": "jemandem Unterlagen zuschicken",
+        "file": "audio/e069.mp3"
+      },
+      {
+        "text": "jemanden um Hilfe bitten",
+        "file": "audio/e070.mp3"
+      },
+      {
+        "text": "einen Nachweis benötigen",
+        "file": "audio/e071.mp3"
+      },
+      {
+        "text": "eine Erklärung verlangen",
+        "file": "audio/e072.mp3"
+      },
+      {
+        "text": "einem Vorschlag zustimmen",
+        "file": "audio/e073.mp3"
+      },
+      {
+        "text": "einer Entscheidung widersprechen",
+        "file": "audio/e074.mp3"
+      },
+      {
+        "text": "dafür zuständig sein",
+        "file": "audio/e075.mp3"
+      },
+      {
+        "text": "Der Ausweis läuft ab.",
+        "file": "audio/e076.mp3"
+      },
+      {
+        "text": "Die Zahlung ist fällig.",
+        "file": "audio/e077.mp3"
+      },
+      {
+        "text": "ein Problem klären",
+        "file": "audio/e078.mp3"
+      },
+      {
+        "text": "sich nach den Öffnungszeiten erkundigen",
+        "file": "audio/e079.mp3"
+      },
+      {
+        "text": "das Badezimmer putzen",
+        "file": "audio/e080.mp3"
+      },
+      {
+        "text": "die Oberfläche reinigen",
+        "file": "audio/e081.mp3"
+      },
+      {
+        "text": "das Zimmer aufräumen",
+        "file": "audio/e082.mp3"
+      },
+      {
+        "text": "den Boden wischen",
+        "file": "audio/e083.mp3"
+      },
+      {
+        "text": "den Tisch abwischen",
+        "file": "audio/e084.mp3"
+      },
+      {
+        "text": "den Flur fegen",
+        "file": "audio/e085.mp3"
+      },
+      {
+        "text": "den Teppich saugen",
+        "file": "audio/e086.mp3"
+      },
+      {
+        "text": "das Wohnzimmer staubsaugen",
+        "file": "audio/e087.mp3"
+      },
+      {
+        "text": "das Geschirr spülen",
+        "file": "audio/e088.mp3"
+      },
+      {
+        "text": "die Tasse abspülen",
+        "file": "audio/e089.mp3"
+      },
+      {
+        "text": "das Geschirr abtrocknen",
+        "file": "audio/e090.mp3"
+      },
+      {
+        "text": "trocknen",
+        "file": "audio/e091.mp3"
+      },
+      {
+        "text": "die Wäsche aufhängen",
+        "file": "audio/e092.mp3"
+      },
+      {
+        "text": "die Wäsche zusammenlegen",
+        "file": "audio/e093.mp3"
+      },
+      {
+        "text": "ein Hemd bügeln",
+        "file": "audio/e094.mp3"
+      },
+      {
+        "text": "falten",
+        "file": "audio/e095.mp3"
+      },
+      {
+        "text": "das Regal abstauben",
+        "file": "audio/e096.mp3"
+      },
+      {
+        "text": "den Müll wegwerfen",
+        "file": "audio/e097.mp3"
+      },
+      {
+        "text": "Elektroschrott entsorgen",
+        "file": "audio/e098.mp3"
+      },
+      {
+        "text": "wegbringen",
+        "file": "audio/e099.mp3"
+      },
+      {
+        "text": "den Mülleimer ausleeren",
+        "file": "audio/e100.mp3"
+      },
+      {
+        "text": "die Wasserflasche auffüllen",
+        "file": "audio/e101.mp3"
+      },
+      {
+        "text": "das Spülmittel nachfüllen",
+        "file": "audio/e102.mp3"
+      },
+      {
+        "text": "das Licht einschalten",
+        "file": "audio/e103.mp3"
+      },
+      {
+        "text": "die Heizung ausschalten",
+        "file": "audio/e104.mp3"
+      },
+      {
+        "text": "den Stecker einstecken",
+        "file": "audio/e105.mp3"
+      },
+      {
+        "text": "den Stecker ziehen",
+        "file": "audio/e106.mp3"
+      },
+      {
+        "text": "das Fenster aufmachen",
+        "file": "audio/e107.mp3"
+      },
+      {
+        "text": "die Tür zumachen",
+        "file": "audio/e108.mp3"
+      },
+      {
+        "text": "die Tür abschließen",
+        "file": "audio/e109.mp3"
+      },
+      {
+        "text": "die Wohnung aufschließen",
+        "file": "audio/e110.mp3"
+      },
+      {
+        "text": "das Zimmer lüften",
+        "file": "audio/e111.mp3"
+      },
+      {
+        "text": "die Wohnung heizen",
+        "file": "audio/e112.mp3"
+      },
+      {
+        "text": "abkühlen",
+        "file": "audio/e113.mp3"
+      },
+      {
+        "text": "das Gefrierfach abtauen",
+        "file": "audio/e114.mp3"
+      },
+      {
+        "text": "etwas mit Kleber befestigen",
+        "file": "audio/e115.mp3"
+      },
+      {
+        "text": "ein Loch bohren",
+        "file": "audio/e116.mp3"
+      },
+      {
+        "text": "eine Schraube einschrauben",
+        "file": "audio/e117.mp3"
+      },
+      {
+        "text": "die Schraube festziehen",
+        "file": "audio/e118.mp3"
+      },
+      {
+        "text": "die Schraube lösen",
+        "file": "audio/e119.mp3"
+      },
+      {
+        "text": "Lebensmittel einkaufen",
+        "file": "audio/e120.mp3"
+      },
+      {
+        "text": "eine Option auswählen",
+        "file": "audio/e121.mp3"
+      },
+      {
+        "text": "ein Geschenk aussuchen",
+        "file": "audio/e122.mp3"
+      },
+      {
+        "text": "eine Jacke anprobieren",
+        "file": "audio/e123.mp3"
+      },
+      {
+        "text": "Die Schuhe passen.",
+        "file": "audio/e124.mp3"
+      },
+      {
+        "text": "Das gefällt mir.",
+        "file": "audio/e125.mp3"
+      },
+      {
+        "text": "Die Farbe steht dir.",
+        "file": "audio/e126.mp3"
+      },
+      {
+        "text": "Wie viel kostet das?",
+        "file": "audio/e127.mp3"
+      },
+      {
+        "text": "zahlen",
+        "file": "audio/e128.mp3"
+      },
+      {
+        "text": "bezahlen",
+        "file": "audio/e129.mp3"
+      },
+      {
+        "text": "bar bezahlen",
+        "file": "audio/e130.mp3"
+      },
+      {
+        "text": "kontaktlos bezahlen",
+        "file": "audio/e131.mp3"
+      },
+      {
+        "text": "Geld sparen",
+        "file": "audio/e132.mp3"
+      },
+      {
+        "text": "zu viel Geld ausgeben",
+        "file": "audio/e133.mp3"
+      },
+      {
+        "text": "sich etwas leisten können",
+        "file": "audio/e134.mp3"
+      },
+      {
+        "text": "ein Buch ausleihen",
+        "file": "audio/e135.mp3"
+      },
+      {
+        "text": "jemandem etwas verleihen",
+        "file": "audio/e136.mp3"
+      },
+      {
+        "text": "etwas online bestellen",
+        "file": "audio/e137.mp3"
+      },
+      {
+        "text": "nach Hause liefern",
+        "file": "audio/e138.mp3"
+      },
+      {
+        "text": "die Ware zurückschicken",
+        "file": "audio/e139.mp3"
+      },
+      {
+        "text": "einen Artikel zurückgeben",
+        "file": "audio/e140.mp3"
+      },
+      {
+        "text": "eine Jacke umtauschen",
+        "file": "audio/e141.mp3"
+      },
+      {
+        "text": "einen defekten Artikel reklamieren",
+        "file": "audio/e142.mp3"
+      },
+      {
+        "text": "den Kaufpreis erstatten",
+        "file": "audio/e143.mp3"
+      },
+      {
+        "text": "im Angebot sein",
+        "file": "audio/e144.mp3"
+      },
+      {
+        "text": "vergleichen",
+        "file": "audio/e145.mp3"
+      },
+      {
+        "text": "nachschauen",
+        "file": "audio/e146.mp3"
+      },
+      {
+        "text": "sich im Laden umsehen",
+        "file": "audio/e147.mp3"
+      },
+      {
+        "text": "an der Kasse anstehen",
+        "file": "audio/e148.mp3"
+      },
+      {
+        "text": "vorrätig sein",
+        "file": "audio/e149.mp3"
+      },
+      {
+        "text": "fehlen",
+        "file": "audio/e150.mp3"
+      },
+      {
+        "text": "reichen",
+        "file": "audio/e151.mp3"
+      },
+      {
+        "text": "sich lohnen",
+        "file": "audio/e152.mp3"
+      },
+      {
+        "text": "um den Preis handeln",
+        "file": "audio/e153.mp3"
+      },
+      {
+        "text": "Geld vom Konto abbuchen",
+        "file": "audio/e154.mp3"
+      },
+      {
+        "text": "Geld abheben",
+        "file": "audio/e155.mp3"
+      },
+      {
+        "text": "Geld einzahlen",
+        "file": "audio/e156.mp3"
+      },
+      {
+        "text": "die Miete überweisen",
+        "file": "audio/e157.mp3"
+      },
+      {
+        "text": "Geld wechseln",
+        "file": "audio/e158.mp3"
+      },
+      {
+        "text": "das Obst wiegen",
+        "file": "audio/e159.mp3"
+      },
+      {
+        "text": "jemandem zuhören",
+        "file": "audio/e160.mp3"
+      },
+      {
+        "text": "eine Geschichte erzählen",
+        "file": "audio/e161.mp3"
+      },
+      {
+        "text": "etwas einfach erklären",
+        "file": "audio/e162.mp3"
+      },
+      {
+        "text": "ein Problem beschreiben",
+        "file": "audio/e163.mp3"
+      },
+      {
+        "text": "meinen",
+        "file": "audio/e164.mp3"
+      },
+      {
+        "text": "etwas behaupten",
+        "file": "audio/e165.mp3"
+      },
+      {
+        "text": "etwas kurz erwähnen",
+        "file": "audio/e166.mp3"
+      },
+      {
+        "text": "etwas vorschlagen",
+        "file": "audio/e167.mp3"
+      },
+      {
+        "text": "jemandem etwas empfehlen",
+        "file": "audio/e168.mp3"
+      },
+      {
+        "text": "auf eine Nachricht reagieren",
+        "file": "audio/e169.mp3"
+      },
+      {
+        "text": "nachhaken",
+        "file": "audio/e170.mp3"
+      },
+      {
+        "text": "sich ausdrücken",
+        "file": "audio/e171.mp3"
+      },
+      {
+        "text": "jemandem ins Wort fallen",
+        "file": "audio/e172.mp3"
+      },
+      {
+        "text": "reden",
+        "file": "audio/e173.mp3"
+      },
+      {
+        "text": "den Satz verstehen",
+        "file": "audio/e174.mp3"
+      },
+      {
+        "text": "eine Aussage missverstehen",
+        "file": "audio/e175.mp3"
+      },
+      {
+        "text": "jemanden ausreden lassen",
+        "file": "audio/e176.mp3"
+      },
+      {
+        "text": "einen Satz nachsprechen",
+        "file": "audio/e177.mp3"
+      },
+      {
+        "text": "ein Wort aussprechen",
+        "file": "audio/e178.mp3"
+      },
+      {
+        "text": "einen Namen buchstabieren",
+        "file": "audio/e179.mp3"
+      },
+      {
+        "text": "ins Deutsche übersetzen",
+        "file": "audio/e180.mp3"
+      },
+      {
+        "text": "über etwas nachdenken",
+        "file": "audio/e181.mp3"
+      },
+      {
+        "text": "sich etwas überlegen",
+        "file": "audio/e182.mp3"
+      },
+      {
+        "text": "sich an etwas erinnern",
+        "file": "audio/e183.mp3"
+      },
+      {
+        "text": "etwas verwechseln",
+        "file": "audio/e184.mp3"
+      },
+      {
+        "text": "glauben",
+        "file": "audio/e185.mp3"
+      },
+      {
+        "text": "vermuten",
+        "file": "audio/e186.mp3"
+      },
+      {
+        "text": "sich wundern",
+        "file": "audio/e187.mp3"
+      },
+      {
+        "text": "bemerken",
+        "file": "audio/e188.mp3"
+      },
+      {
+        "text": "Mir ist aufgefallen, dass …",
+        "file": "audio/e189.mp3"
+      },
+      {
+        "text": "jemanden kennenlernen",
+        "file": "audio/e190.mp3"
+      },
+      {
+        "text": "sich über etwas unterhalten",
+        "file": "audio/e191.mp3"
+      },
+      {
+        "text": "sich für morgen verabreden",
+        "file": "audio/e192.mp3"
+      },
+      {
+        "text": "mitbekommen",
+        "file": "audio/e193.mp3"
+      },
+      {
+        "text": "jemanden einladen",
+        "file": "audio/e194.mp3"
+      },
+      {
+        "text": "jemanden begrüßen",
+        "file": "audio/e195.mp3"
+      },
+      {
+        "text": "sich von jemandem verabschieden",
+        "file": "audio/e196.mp3"
+      },
+      {
+        "text": "versprechen",
+        "file": "audio/e197.mp3"
+      },
+      {
+        "text": "sich für etwas entschuldigen",
+        "file": "audio/e198.mp3"
+      },
+      {
+        "text": "jemandem verzeihen",
+        "file": "audio/e199.mp3"
+      },
+      {
+        "text": "anfangen",
+        "file": "audio/e200.mp3"
+      },
+      {
+        "text": "aufhören",
+        "file": "audio/e201.mp3"
+      },
+      {
+        "text": "unterbrechen",
+        "file": "audio/e202.mp3"
+      },
+      {
+        "text": "fortsetzen",
+        "file": "audio/e203.mp3"
+      },
+      {
+        "text": "beenden",
+        "file": "audio/e204.mp3"
+      },
+      {
+        "text": "schaffen",
+        "file": "audio/e205.mp3"
+      },
+      {
+        "text": "versuchen",
+        "file": "audio/e206.mp3"
+      },
+      {
+        "text": "sich in etwas einarbeiten",
+        "file": "audio/e207.mp3"
+      },
+      {
+        "text": "sich weiterbilden",
+        "file": "audio/e208.mp3"
+      },
+      {
+        "text": "jemandem etwas beibringen",
+        "file": "audio/e209.mp3"
+      },
+      {
+        "text": "sich sprachlich verbessern",
+        "file": "audio/e210.mp3"
+      },
+      {
+        "text": "sich auf eine Prüfung vorbereiten",
+        "file": "audio/e211.mp3"
+      },
+      {
+        "text": "ein Meeting vorbereiten",
+        "file": "audio/e212.mp3"
+      },
+      {
+        "text": "eine Aufgabe nachholen",
+        "file": "audio/e213.mp3"
+      },
+      {
+        "text": "sich um etwas kümmern",
+        "file": "audio/e214.mp3"
+      },
+      {
+        "text": "herausfinden",
+        "file": "audio/e215.mp3"
+      },
+      {
+        "text": "abstimmen",
+        "file": "audio/e216.mp3"
+      },
+      {
+        "text": "entscheiden",
+        "file": "audio/e217.mp3"
+      },
+      {
+        "text": "Daten auswerten",
+        "file": "audio/e218.mp3"
+      },
+      {
+        "text": "einen Bericht erstellen",
+        "file": "audio/e219.mp3"
+      },
+      {
+        "text": "eine Datei bearbeiten",
+        "file": "audio/e220.mp3"
+      },
+      {
+        "text": "eine Datei speichern",
+        "file": "audio/e221.mp3"
+      },
+      {
+        "text": "eine Datei öffnen",
+        "file": "audio/e222.mp3"
+      },
+      {
+        "text": "ein Fenster schließen",
+        "file": "audio/e223.mp3"
+      },
+      {
+        "text": "eine Datei löschen",
+        "file": "audio/e224.mp3"
+      },
+      {
+        "text": "eine Datei hochladen",
+        "file": "audio/e225.mp3"
+      },
+      {
+        "text": "eine Datei herunterladen",
+        "file": "audio/e226.mp3"
+      },
+      {
+        "text": "teilen",
+        "file": "audio/e227.mp3"
+      },
+      {
+        "text": "Text einfügen",
+        "file": "audio/e228.mp3"
+      },
+      {
+        "text": "Text ausschneiden",
+        "file": "audio/e229.mp3"
+      },
+      {
+        "text": "eine Einladung ausschicken",
+        "file": "audio/e230.mp3"
+      },
+      {
+        "text": "eine Frist einhalten",
+        "file": "audio/e231.mp3"
+      },
+      {
+        "text": "die Ergebnisse prüfen",
+        "file": "audio/e232.mp3"
+      },
+      {
+        "text": "eine Untersuchung durchführen",
+        "file": "audio/e233.mp3"
+      },
+      {
+        "text": "die Lautstärke einstellen",
+        "file": "audio/e234.mp3"
+      },
+      {
+        "text": "die Einstellungen anpassen",
+        "file": "audio/e235.mp3"
+      },
+      {
+        "text": "einen Termin festlegen",
+        "file": "audio/e236.mp3"
+      },
+      {
+        "text": "die Aufgaben aufteilen",
+        "file": "audio/e237.mp3"
+      },
+      {
+        "text": "bei einem Projekt mitmachen",
+        "file": "audio/e238.mp3"
+      },
+      {
+        "text": "sich auf eine Stelle bewerben",
+        "file": "audio/e239.mp3"
+      },
+      {
+        "text": "sich müde fühlen",
+        "file": "audio/e240.mp3"
+      },
+      {
+        "text": "Mein Rücken tut weh.",
+        "file": "audio/e241.mp3"
+      },
+      {
+        "text": "Der Kopf schmerzt.",
+        "file": "audio/e242.mp3"
+      },
+      {
+        "text": "unter Schmerzen leiden",
+        "file": "audio/e243.mp3"
+      },
+      {
+        "text": "stark husten",
+        "file": "audio/e244.mp3"
+      },
+      {
+        "text": "ständig niesen",
+        "file": "audio/e245.mp3"
+      },
+      {
+        "text": "sich erkälten",
+        "file": "audio/e246.mp3"
+      },
+      {
+        "text": "sich mit einem Virus anstecken",
+        "file": "audio/e247.mp3"
+      },
+      {
+        "text": "sich am Finger verletzen",
+        "file": "audio/e248.mp3"
+      },
+      {
+        "text": "sich nach der Arbeit erholen",
+        "file": "audio/e249.mp3"
+      },
+      {
+        "text": "sich kurz ausruhen",
+        "file": "audio/e250.mp3"
+      },
+      {
+        "text": "schlafen",
+        "file": "audio/e251.mp3"
+      },
+      {
+        "text": "schnell einschlafen",
+        "file": "audio/e252.mp3"
+      },
+      {
+        "text": "mitten in der Nacht aufwachen",
+        "file": "audio/e253.mp3"
+      },
+      {
+        "text": "schwindelig werden",
+        "file": "audio/e254.mp3"
+      },
+      {
+        "text": "sich aufs Sofa hinlegen",
+        "file": "audio/e255.mp3"
+      },
+      {
+        "text": "sich hinsetzen",
+        "file": "audio/e256.mp3"
+      },
+      {
+        "text": "sich im Bett aufsetzen",
+        "file": "audio/e257.mp3"
+      },
+      {
+        "text": "atmen",
+        "file": "audio/e258.mp3"
+      },
+      {
+        "text": "tief einatmen",
+        "file": "audio/e259.mp3"
+      },
+      {
+        "text": "langsam ausatmen",
+        "file": "audio/e260.mp3"
+      },
+      {
+        "text": "schlucken",
+        "file": "audio/e261.mp3"
+      },
+      {
+        "text": "kauen",
+        "file": "audio/e262.mp3"
+      },
+      {
+        "text": "sich übergeben müssen",
+        "file": "audio/e263.mp3"
+      },
+      {
+        "text": "sich beim Arzt untersuchen lassen",
+        "file": "audio/e264.mp3"
+      },
+      {
+        "text": "messen",
+        "file": "audio/e265.mp3"
+      },
+      {
+        "text": "zwei Kilo abnehmen",
+        "file": "audio/e266.mp3"
+      },
+      {
+        "text": "etwas zunehmen",
+        "file": "audio/e267.mp3"
+      },
+      {
+        "text": "stark schwitzen",
+        "file": "audio/e268.mp3"
+      },
+      {
+        "text": "an den Händen frieren",
+        "file": "audio/e269.mp3"
+      },
+      {
+        "text": "vor Kälte zittern",
+        "file": "audio/e270.mp3"
+      },
+      {
+        "text": "Die Wunde blutet.",
+        "file": "audio/e271.mp3"
+      },
+      {
+        "text": "Die Wunde heilt.",
+        "file": "audio/e272.mp3"
+      },
+      {
+        "text": "eine Entzündung behandeln",
+        "file": "audio/e273.mp3"
+      },
+      {
+        "text": "ein Medikament verschreiben",
+        "file": "audio/e274.mp3"
+      },
+      {
+        "text": "ein Medikament einnehmen",
+        "file": "audio/e275.mp3"
+      },
+      {
+        "text": "auf Zucker verzichten",
+        "file": "audio/e276.mp3"
+      },
+      {
+        "text": "ein Medikament gut vertragen",
+        "file": "audio/e277.mp3"
+      },
+      {
+        "text": "Die Haut juckt.",
+        "file": "audio/e278.mp3"
+      },
+      {
+        "text": "sich am Arm kratzen",
+        "file": "audio/e279.mp3"
+      },
+      {
+        "text": "etwas anbrennen lassen",
+        "file": "audio/e280.mp3"
+      },
+      {
+        "text": "etwas zum Mitnehmen bestellen",
+        "file": "audio/e281.mp3"
+      },
+      {
+        "text": "Gemüse anbraten",
+        "file": "audio/e282.mp3"
+      },
+      {
+        "text": "das Essen aufwärmen",
+        "file": "audio/e283.mp3"
+      },
+      {
+        "text": "das Wasser erhitzen",
+        "file": "audio/e284.mp3"
+      },
+      {
+        "text": "die Suppe aufkochen",
+        "file": "audio/e285.mp3"
+      },
+      {
+        "text": "die Kartoffeln schälen",
+        "file": "audio/e286.mp3"
+      },
+      {
+        "text": "das Gemüse schneiden",
+        "file": "audio/e287.mp3"
+      },
+      {
+        "text": "die Zwiebeln hacken",
+        "file": "audio/e288.mp3"
+      },
+      {
+        "text": "die Karotten raspeln",
+        "file": "audio/e289.mp3"
+      },
+      {
+        "text": "den Käse reiben",
+        "file": "audio/e290.mp3"
+      },
+      {
+        "text": "den Teig rühren",
+        "file": "audio/e291.mp3"
+      },
+      {
+        "text": "die Suppe umrühren",
+        "file": "audio/e292.mp3"
+      },
+      {
+        "text": "die Zutaten vermengen",
+        "file": "audio/e293.mp3"
+      },
+      {
+        "text": "den Teig kneten",
+        "file": "audio/e294.mp3"
+      },
+      {
+        "text": "die Suppe würzen",
+        "file": "audio/e295.mp3"
+      },
+      {
+        "text": "das Wasser salzen",
+        "file": "audio/e296.mp3"
+      },
+      {
+        "text": "das Gemüse pfeffern",
+        "file": "audio/e297.mp3"
+      },
+      {
+        "text": "die Soße abschmecken",
+        "file": "audio/e298.mp3"
+      },
+      {
+        "text": "ein neues Gericht probieren",
+        "file": "audio/e299.mp3"
+      },
+      {
+        "text": "Das schmeckt gut.",
+        "file": "audio/e300.mp3"
+      },
+      {
+        "text": "Das riecht lecker.",
+        "file": "audio/e301.mp3"
+      },
+      {
+        "text": "das Essen genießen",
+        "file": "audio/e302.mp3"
+      },
+      {
+        "text": "die Reste aufbrauchen",
+        "file": "audio/e303.mp3"
+      },
+      {
+        "text": "zusammen frühstücken",
+        "file": "audio/e304.mp3"
+      },
+      {
+        "text": "zu Mittag essen",
+        "file": "audio/e305.mp3"
+      },
+      {
+        "text": "zu Abend essen",
+        "file": "audio/e306.mp3"
+      },
+      {
+        "text": "Wasser einschenken",
+        "file": "audio/e307.mp3"
+      },
+      {
+        "text": "die Blumen gießen",
+        "file": "audio/e308.mp3"
+      },
+      {
+        "text": "Wasser eingießen",
+        "file": "audio/e309.mp3"
+      },
+      {
+        "text": "das Nudelwasser abgießen",
+        "file": "audio/e310.mp3"
+      },
+      {
+        "text": "das Mehl sieben",
+        "file": "audio/e311.mp3"
+      },
+      {
+        "text": "Fleisch auftauen",
+        "file": "audio/e312.mp3"
+      },
+      {
+        "text": "Gemüse einfrieren",
+        "file": "audio/e313.mp3"
+      },
+      {
+        "text": "Lebensmittel kühl lagern",
+        "file": "audio/e314.mp3"
+      },
+      {
+        "text": "Reste im Kühlschrank aufbewahren",
+        "file": "audio/e315.mp3"
+      },
+      {
+        "text": "schnell verderben",
+        "file": "audio/e316.mp3"
+      },
+      {
+        "text": "vom Essen übrig bleiben",
+        "file": "audio/e317.mp3"
+      },
+      {
+        "text": "nach dem Essen satt sein",
+        "file": "audio/e318.mp3"
+      },
+      {
+        "text": "Hunger haben",
+        "file": "audio/e319.mp3"
+      },
+      {
+        "text": "müde",
+        "file": "audio/e320.mp3"
+      },
+      {
+        "text": "erschöpft",
+        "file": "audio/e321.mp3"
+      },
+      {
+        "text": "wach",
+        "file": "audio/e322.mp3"
+      },
+      {
+        "text": "hungrig",
+        "file": "audio/e323.mp3"
+      },
+      {
+        "text": "durstig",
+        "file": "audio/e324.mp3"
+      },
+      {
+        "text": "krank",
+        "file": "audio/e325.mp3"
+      },
+      {
+        "text": "gesund",
+        "file": "audio/e326.mp3"
+      },
+      {
+        "text": "traurig",
+        "file": "audio/e327.mp3"
+      },
+      {
+        "text": "glücklich",
+        "file": "audio/e328.mp3"
+      },
+      {
+        "text": "zufrieden",
+        "file": "audio/e329.mp3"
+      },
+      {
+        "text": "unzufrieden",
+        "file": "audio/e330.mp3"
+      },
+      {
+        "text": "enttäuscht",
+        "file": "audio/e331.mp3"
+      },
+      {
+        "text": "überrascht",
+        "file": "audio/e332.mp3"
+      },
+      {
+        "text": "verärgert",
+        "file": "audio/e333.mp3"
+      },
+      {
+        "text": "wütend",
+        "file": "audio/e334.mp3"
+      },
+      {
+        "text": "ängstlich",
+        "file": "audio/e335.mp3"
+      },
+      {
+        "text": "besorgt",
+        "file": "audio/e336.mp3"
+      },
+      {
+        "text": "aufgeregt",
+        "file": "audio/e337.mp3"
+      },
+      {
+        "text": "gelangweilt",
+        "file": "audio/e338.mp3"
+      },
+      {
+        "text": "neugierig",
+        "file": "audio/e339.mp3"
+      },
+      {
+        "text": "unsicher",
+        "file": "audio/e340.mp3"
+      },
+      {
+        "text": "sicher",
+        "file": "audio/e341.mp3"
+      },
+      {
+        "text": "peinlich",
+        "file": "audio/e342.mp3"
+      },
+      {
+        "text": "unangenehm",
+        "file": "audio/e343.mp3"
+      },
+      {
+        "text": "angenehm",
+        "file": "audio/e344.mp3"
+      },
+      {
+        "text": "einfach",
+        "file": "audio/e345.mp3"
+      },
+      {
+        "text": "schwierig",
+        "file": "audio/e346.mp3"
+      },
+      {
+        "text": "anstrengend",
+        "file": "audio/e347.mp3"
+      },
+      {
+        "text": "dringend",
+        "file": "audio/e348.mp3"
+      },
+      {
+        "text": "rechtzeitig",
+        "file": "audio/e349.mp3"
+      },
+      {
+        "text": "pünktlich",
+        "file": "audio/e350.mp3"
+      },
+      {
+        "text": "spät",
+        "file": "audio/e351.mp3"
+      },
+      {
+        "text": "überfordert",
+        "file": "audio/e352.mp3"
+      },
+      {
+        "text": "zuverlässig",
+        "file": "audio/e353.mp3"
+      },
+      {
+        "text": "schnell",
+        "file": "audio/e354.mp3"
+      },
+      {
+        "text": "leise",
+        "file": "audio/e355.mp3"
+      },
+      {
+        "text": "laut",
+        "file": "audio/e356.mp3"
+      },
+      {
+        "text": "vorsichtig",
+        "file": "audio/e357.mp3"
+      },
+      {
+        "text": "bequem",
+        "file": "audio/e358.mp3"
+      },
+      {
+        "text": "sauber",
+        "file": "audio/e359.mp3"
+      },
+      {
+        "text": "der Termin",
+        "file": "audio/e360.mp3"
+      },
+      {
+        "text": "die Verspätung",
+        "file": "audio/e361.mp3"
+      },
+      {
+        "text": "der Anschluss",
+        "file": "audio/e362.mp3"
+      },
+      {
+        "text": "die Haltestelle",
+        "file": "audio/e363.mp3"
+      },
+      {
+        "text": "der Bahnhof",
+        "file": "audio/e364.mp3"
+      },
+      {
+        "text": "das Gleis",
+        "file": "audio/e365.mp3"
+      },
+      {
+        "text": "der Bahnsteig",
+        "file": "audio/e366.mp3"
+      },
+      {
+        "text": "die Fahrkarte",
+        "file": "audio/e367.mp3"
+      },
+      {
+        "text": "der Fahrkartenautomat",
+        "file": "audio/e368.mp3"
+      },
+      {
+        "text": "der Fahrplan",
+        "file": "audio/e369.mp3"
+      },
+      {
+        "text": "die Strecke",
+        "file": "audio/e370.mp3"
+      },
+      {
+        "text": "die Richtung",
+        "file": "audio/e371.mp3"
+      },
+      {
+        "text": "die Abfahrt",
+        "file": "audio/e372.mp3"
+      },
+      {
+        "text": "die Ankunft",
+        "file": "audio/e373.mp3"
+      },
+      {
+        "text": "der Eingang",
+        "file": "audio/e374.mp3"
+      },
+      {
+        "text": "der Ausgang",
+        "file": "audio/e375.mp3"
+      },
+      {
+        "text": "der Aufzug",
+        "file": "audio/e376.mp3"
+      },
+      {
+        "text": "die Treppe",
+        "file": "audio/e377.mp3"
+      },
+      {
+        "text": "das Stockwerk",
+        "file": "audio/e378.mp3"
+      },
+      {
+        "text": "die Wohnung",
+        "file": "audio/e379.mp3"
+      },
+      {
+        "text": "die Miete",
+        "file": "audio/e380.mp3"
+      },
+      {
+        "text": "der Mietvertrag",
+        "file": "audio/e381.mp3"
+      },
+      {
+        "text": "die Rechnung",
+        "file": "audio/e382.mp3"
+      },
+      {
+        "text": "der Kassenbon",
+        "file": "audio/e383.mp3"
+      },
+      {
+        "text": "der Beleg",
+        "file": "audio/e384.mp3"
+      },
+      {
+        "text": "die Quittung",
+        "file": "audio/e385.mp3"
+      },
+      {
+        "text": "die Gebühr",
+        "file": "audio/e386.mp3"
+      },
+      {
+        "text": "die Versicherung",
+        "file": "audio/e387.mp3"
+      },
+      {
+        "text": "die Überweisung",
+        "file": "audio/e388.mp3"
+      },
+      {
+        "text": "das Rezept",
+        "file": "audio/e389.mp3"
+      },
+      {
+        "text": "das Wartezimmer",
+        "file": "audio/e390.mp3"
+      },
+      {
+        "text": "die Praxis",
+        "file": "audio/e391.mp3"
+      },
+      {
+        "text": "die Sprechstunde",
+        "file": "audio/e392.mp3"
+      },
+      {
+        "text": "die Nachricht",
+        "file": "audio/e393.mp3"
+      },
+      {
+        "text": "die Antwort",
+        "file": "audio/e394.mp3"
+      },
+      {
+        "text": "der Vorschlag",
+        "file": "audio/e395.mp3"
+      },
+      {
+        "text": "die Entscheidung",
+        "file": "audio/e396.mp3"
+      },
+      {
+        "text": "die Frist",
+        "file": "audio/e397.mp3"
+      },
+      {
+        "text": "die Ausnahme",
+        "file": "audio/e398.mp3"
+      },
+      {
+        "text": "die Voraussetzung",
+        "file": "audio/e399.mp3"
+      }
+    ],
+    "examples": [
+      {
+        "text": "Ich steige an der nächsten Haltestelle in den Bus ein.",
+        "file": "audio/x000.mp3"
+      },
+      {
+        "text": "Ich steige an der Universität aus dem Bus aus.",
+        "file": "audio/x001.mp3"
+      },
+      {
+        "text": "Am Ostkreuz steige ich in die S-Bahn um.",
+        "file": "audio/x002.mp3"
+      },
+      {
+        "text": "Wir fahren morgen früh mit dem Auto los.",
+        "file": "audio/x003.mp3"
+      },
+      {
+        "text": "Der Zug fährt um acht Uhr am Bahnhof ab.",
+        "file": "audio/x004.mp3"
+      },
+      {
+        "text": "Ich hoffe, dass wir pünktlich ankommen.",
+        "file": "audio/x005.mp3"
+      },
+      {
+        "text": "Kannst du mich vom Bahnhof abholen?",
+        "file": "audio/x006.mp3"
+      },
+      {
+        "text": "Ich fahre heute Abend nach Hause zurück.",
+        "file": "audio/x007.mp3"
+      },
+      {
+        "text": "Ab dort fahren wir mit der Bahn weiter.",
+        "file": "audio/x008.mp3"
+      },
+      {
+        "text": "Die Abfahrt verzögert sich um zwanzig Minuten.",
+        "file": "audio/x009.mp3"
+      },
+      {
+        "text": "Wir fahren am Wochenende ein paar Tage weg.",
+        "file": "audio/x010.mp3"
+      },
+      {
+        "text": "Nächste Woche verreise ich für drei Tage.",
+        "file": "audio/x011.mp3"
+      },
+      {
+        "text": "Ich reise lieber mit dem Zug als mit dem Auto.",
+        "file": "audio/x012.mp3"
+      },
+      {
+        "text": "Nächsten Monat fliege ich nach Istanbul.",
+        "file": "audio/x013.mp3"
+      },
+      {
+        "text": "Unser Flugzeug landet um sechs Uhr.",
+        "file": "audio/x014.mp3"
+      },
+      {
+        "text": "Wir fliegen morgen früh ab.",
+        "file": "audio/x015.mp3"
+      },
+      {
+        "text": "Ich möchte einen Flug nach Ankara buchen.",
+        "file": "audio/x016.mp3"
+      },
+      {
+        "text": "Kann ich meinen Flug auf Freitag umbuchen?",
+        "file": "audio/x017.mp3"
+      },
+      {
+        "text": "Ich möchte meine Bestellung stornieren.",
+        "file": "audio/x018.mp3"
+      },
+      {
+        "text": "Ich werde mich wahrscheinlich um zehn Minuten verspäten.",
+        "file": "audio/x019.mp3"
+      },
+      {
+        "text": "Wir müssen uns beeilen, sonst verpassen wir den Zug.",
+        "file": "audio/x020.mp3"
+      },
+      {
+        "text": "Ich bin zum Zug gerannt.",
+        "file": "audio/x021.mp3"
+      },
+      {
+        "text": "Ich laufe jeden Tag zehn Minuten zu Fuß.",
+        "file": "audio/x022.mp3"
+      },
+      {
+        "text": "Zum Glück habe ich den Anschluss noch erwischt.",
+        "file": "audio/x023.mp3"
+      },
+      {
+        "text": "Du musst diese Fahrkarte vor der Fahrt entwerten.",
+        "file": "audio/x024.mp3"
+      },
+      {
+        "text": "An der Ampel biegst du links ab.",
+        "file": "audio/x025.mp3"
+      },
+      {
+        "text": "Bitte überquere die Straße an der Ampel.",
+        "file": "audio/x026.mp3"
+      },
+      {
+        "text": "Ohne Navi habe ich mich verlaufen.",
+        "file": "audio/x027.mp3"
+      },
+      {
+        "text": "Wir haben uns auf dem Weg zum Hotel verfahren.",
+        "file": "audio/x028.mp3"
+      },
+      {
+        "text": "Ich habe leider den letzten Zug verpasst.",
+        "file": "audio/x029.mp3"
+      },
+      {
+        "text": "Ich warte seit zehn Minuten auf den Bus.",
+        "file": "audio/x030.mp3"
+      },
+      {
+        "text": "Folge einfach den Schildern zum Ausgang.",
+        "file": "audio/x031.mp3"
+      },
+      {
+        "text": "Kannst du bitte deinen Ausweis mitbringen?",
+        "file": "audio/x032.mp3"
+      },
+      {
+        "text": "Schnall dich bitte im Auto an.",
+        "file": "audio/x033.mp3"
+      },
+      {
+        "text": "Ich musste einem Fahrradfahrer ausweichen.",
+        "file": "audio/x034.mp3"
+      },
+      {
+        "text": "Der Fahrer musste plötzlich bremsen.",
+        "file": "audio/x035.mp3"
+      },
+      {
+        "text": "Hält dieser Bus an der nächsten Haltestelle?",
+        "file": "audio/x036.mp3"
+      },
+      {
+        "text": "Mein Zug fällt heute leider aus.",
+        "file": "audio/x037.mp3"
+      },
+      {
+        "text": "Wir müssen zwei Stunden vor Abflug einchecken.",
+        "file": "audio/x038.mp3"
+      },
+      {
+        "text": "Ich kehre am Sonntag nach Berlin zurück.",
+        "file": "audio/x039.mp3"
+      },
+      {
+        "text": "Ich möchte einen Termin beim Zahnarzt vereinbaren.",
+        "file": "audio/x040.mp3"
+      },
+      {
+        "text": "Könnte ich meinen Termin auf Donnerstag verschieben?",
+        "file": "audio/x041.mp3"
+      },
+      {
+        "text": "Leider muss ich meinen Termin absagen.",
+        "file": "audio/x042.mp3"
+      },
+      {
+        "text": "Können Sie mir den Termin schriftlich bestätigen?",
+        "file": "audio/x043.mp3"
+      },
+      {
+        "text": "Ich möchte meinen Vertrag um ein Jahr verlängern.",
+        "file": "audio/x044.mp3"
+      },
+      {
+        "text": "Mein Pass läuft bald ab, deshalb muss ich ihn erneuern.",
+        "file": "audio/x045.mp3"
+      },
+      {
+        "text": "Ich möchte eine Aufenthaltserlaubnis beantragen.",
+        "file": "audio/x046.mp3"
+      },
+      {
+        "text": "Bis wann muss ich die Unterlagen einreichen?",
+        "file": "audio/x047.mp3"
+      },
+      {
+        "text": "Könnten Sie mir beim Ausfüllen des Formulars helfen?",
+        "file": "audio/x048.mp3"
+      },
+      {
+        "text": "Wo muss ich den Vertrag unterschreiben?",
+        "file": "audio/x049.mp3"
+      },
+      {
+        "text": "Bitte legen Sie Ihren Ausweis vor.",
+        "file": "audio/x050.mp3"
+      },
+      {
+        "text": "Ich muss nachweisen, dass ich die Gebühr bezahlt habe.",
+        "file": "audio/x051.mp3"
+      },
+      {
+        "text": "Ich werde bei der Behörde noch einmal nachfragen.",
+        "file": "audio/x052.mp3"
+      },
+      {
+        "text": "Ich muss heute ein paar Dinge erledigen.",
+        "file": "audio/x053.mp3"
+      },
+      {
+        "text": "Ich habe noch keine Bestätigung erhalten.",
+        "file": "audio/x054.mp3"
+      },
+      {
+        "text": "Gestern habe ich einen Brief bekommen.",
+        "file": "audio/x055.mp3"
+      },
+      {
+        "text": "Sie können die Unterlagen am Empfang abgeben.",
+        "file": "audio/x056.mp3"
+      },
+      {
+        "text": "Ich möchte mich von dem Kurs abmelden.",
+        "file": "audio/x057.mp3"
+      },
+      {
+        "text": "Ich habe mich für einen Deutschkurs angemeldet.",
+        "file": "audio/x058.mp3"
+      },
+      {
+        "text": "Kann ich an der Besprechung online teilnehmen?",
+        "file": "audio/x059.mp3"
+      },
+      {
+        "text": "Kann ich morgen kurz vorbeikommen?",
+        "file": "audio/x060.mp3"
+      },
+      {
+        "text": "Bitte melden Sie sich, sobald Sie etwas wissen.",
+        "file": "audio/x061.mp3"
+      },
+      {
+        "text": "Tragen Sie sich bitte in die Liste ein.",
+        "file": "audio/x062.mp3"
+      },
+      {
+        "text": "Ich möchte meinen Handyvertrag kündigen.",
+        "file": "audio/x063.mp3"
+      },
+      {
+        "text": "Die Ärztin ruft gleich Ihren Namen auf.",
+        "file": "audio/x064.mp3"
+      },
+      {
+        "text": "Können Sie mir eine Bescheinigung ausstellen?",
+        "file": "audio/x065.mp3"
+      },
+      {
+        "text": "Ich möchte einen Fehler auf der Rechnung beanstanden.",
+        "file": "audio/x066.mp3"
+      },
+      {
+        "text": "Ich möchte mich über den nächtlichen Lärm beschweren.",
+        "file": "audio/x067.mp3"
+      },
+      {
+        "text": "Kannst du mir diese E-Mail weiterleiten?",
+        "file": "audio/x068.mp3"
+      },
+      {
+        "text": "Könnten Sie mir die Unterlagen zuschicken?",
+        "file": "audio/x069.mp3"
+      },
+      {
+        "text": "Darf ich Sie kurz um Hilfe bitten?",
+        "file": "audio/x070.mp3"
+      },
+      {
+        "text": "Für den Antrag benötige ich noch einen Nachweis.",
+        "file": "audio/x071.mp3"
+      },
+      {
+        "text": "Der Kunde verlangt eine schriftliche Erklärung.",
+        "file": "audio/x072.mp3"
+      },
+      {
+        "text": "Ich stimme deinem Vorschlag zu.",
+        "file": "audio/x073.mp3"
+      },
+      {
+        "text": "Ich möchte dieser Entscheidung widersprechen.",
+        "file": "audio/x074.mp3"
+      },
+      {
+        "text": "Welche Abteilung ist dafür zuständig?",
+        "file": "audio/x075.mp3"
+      },
+      {
+        "text": "Mein Ausweis läuft nächsten Monat ab.",
+        "file": "audio/x076.mp3"
+      },
+      {
+        "text": "Die Zahlung ist Ende des Monats fällig.",
+        "file": "audio/x077.mp3"
+      },
+      {
+        "text": "Können wir das Problem heute klären?",
+        "file": "audio/x078.mp3"
+      },
+      {
+        "text": "Ich wollte mich nach Ihren Öffnungszeiten erkundigen.",
+        "file": "audio/x079.mp3"
+      },
+      {
+        "text": "Ich muss noch das Badezimmer putzen.",
+        "file": "audio/x080.mp3"
+      },
+      {
+        "text": "Reinige die Oberfläche mit einem feuchten Tuch.",
+        "file": "audio/x081.mp3"
+      },
+      {
+        "text": "Am Wochenende räume ich die Wohnung auf.",
+        "file": "audio/x082.mp3"
+      },
+      {
+        "text": "Ich muss den Küchenboden wischen.",
+        "file": "audio/x083.mp3"
+      },
+      {
+        "text": "Kannst du bitte den Tisch abwischen?",
+        "file": "audio/x084.mp3"
+      },
+      {
+        "text": "Ich fege zuerst den Flur.",
+        "file": "audio/x085.mp3"
+      },
+      {
+        "text": "Kannst du den Teppich saugen?",
+        "file": "audio/x086.mp3"
+      },
+      {
+        "text": "Ich staubsauge einmal pro Woche das Wohnzimmer.",
+        "file": "audio/x087.mp3"
+      },
+      {
+        "text": "Ich muss nach dem Essen das Geschirr spülen.",
+        "file": "audio/x088.mp3"
+      },
+      {
+        "text": "Spül die Tasse bitte kurz ab.",
+        "file": "audio/x089.mp3"
+      },
+      {
+        "text": "Ich trockne das Geschirr mit einem Handtuch ab.",
+        "file": "audio/x090.mp3"
+      },
+      {
+        "text": "Die Wäsche muss noch trocknen.",
+        "file": "audio/x091.mp3"
+      },
+      {
+        "text": "Ich hänge die Wäsche auf den Balkon.",
+        "file": "audio/x092.mp3"
+      },
+      {
+        "text": "Ich lege die trockene Wäsche zusammen.",
+        "file": "audio/x093.mp3"
+      },
+      {
+        "text": "Ich muss mein Hemd für morgen bügeln.",
+        "file": "audio/x094.mp3"
+      },
+      {
+        "text": "Falte das Handtuch bitte zweimal.",
+        "file": "audio/x095.mp3"
+      },
+      {
+        "text": "Ich muss die Regale noch abstauben.",
+        "file": "audio/x096.mp3"
+      },
+      {
+        "text": "Wirf die Verpackung bitte weg.",
+        "file": "audio/x097.mp3"
+      },
+      {
+        "text": "Wo kann ich alte Batterien entsorgen?",
+        "file": "audio/x098.mp3"
+      },
+      {
+        "text": "Ich bringe die alten Kartons zur Sammelstelle.",
+        "file": "audio/x099.mp3"
+      },
+      {
+        "text": "Kannst du den Mülleimer ausleeren?",
+        "file": "audio/x100.mp3"
+      },
+      {
+        "text": "Ich fülle meine Wasserflasche noch auf.",
+        "file": "audio/x101.mp3"
+      },
+      {
+        "text": "Das Spülmittel ist fast leer; ich fülle es nach.",
+        "file": "audio/x102.mp3"
+      },
+      {
+        "text": "Schalte bitte das Licht ein.",
+        "file": "audio/x103.mp3"
+      },
+      {
+        "text": "Kannst du die Heizung ausschalten?",
+        "file": "audio/x104.mp3"
+      },
+      {
+        "text": "Steck den Stecker bitte in die Steckdose.",
+        "file": "audio/x105.mp3"
+      },
+      {
+        "text": "Zieh vor der Reparatur den Stecker.",
+        "file": "audio/x106.mp3"
+      },
+      {
+        "text": "Kannst du bitte das Fenster aufmachen?",
+        "file": "audio/x107.mp3"
+      },
+      {
+        "text": "Mach bitte die Tür hinter dir zu.",
+        "file": "audio/x108.mp3"
+      },
+      {
+        "text": "Vergiss nicht, die Tür abzuschließen.",
+        "file": "audio/x109.mp3"
+      },
+      {
+        "text": "Ich schließe die Wohnung mit meinem Schlüssel auf.",
+        "file": "audio/x110.mp3"
+      },
+      {
+        "text": "Wir sollten das Schlafzimmer kurz lüften.",
+        "file": "audio/x111.mp3"
+      },
+      {
+        "text": "Im Winter muss ich die Wohnung heizen.",
+        "file": "audio/x112.mp3"
+      },
+      {
+        "text": "Lass den Tee ein bisschen abkühlen.",
+        "file": "audio/x113.mp3"
+      },
+      {
+        "text": "Ich muss das Gefrierfach abtauen.",
+        "file": "audio/x114.mp3"
+      },
+      {
+        "text": "Ich befestige das Teil mit etwas Kleber.",
+        "file": "audio/x115.mp3"
+      },
+      {
+        "text": "Ich muss zwei Löcher in die Wand bohren.",
+        "file": "audio/x116.mp3"
+      },
+      {
+        "text": "Ich schraube die Schraube vorsichtig ein.",
+        "file": "audio/x117.mp3"
+      },
+      {
+        "text": "Zieh die Schraube nicht zu fest an.",
+        "file": "audio/x118.mp3"
+      },
+      {
+        "text": "Ich kann die Schraube nicht lösen.",
+        "file": "audio/x119.mp3"
+      },
+      {
+        "text": "Ich kaufe auf dem Heimweg Lebensmittel ein.",
+        "file": "audio/x120.mp3"
+      },
+      {
+        "text": "Du musst zuerst eine Option auswählen.",
+        "file": "audio/x121.mp3"
+      },
+      {
+        "text": "Ich suche ein Geschenk für meine Nichte aus.",
+        "file": "audio/x122.mp3"
+      },
+      {
+        "text": "Darf ich diese Jacke anprobieren?",
+        "file": "audio/x123.mp3"
+      },
+      {
+        "text": "Die Schuhe passen mir leider nicht.",
+        "file": "audio/x124.mp3"
+      },
+      {
+        "text": "Die Farbe gefällt mir sehr gut.",
+        "file": "audio/x125.mp3"
+      },
+      {
+        "text": "Diese Farbe steht dir wirklich gut.",
+        "file": "audio/x126.mp3"
+      },
+      {
+        "text": "Wie viel kostet diese Tasche?",
+        "file": "audio/x127.mp3"
+      },
+      {
+        "text": "Kann ich hier mit Karte zahlen?",
+        "file": "audio/x128.mp3"
+      },
+      {
+        "text": "Ich habe an der Kasse schon bezahlt.",
+        "file": "audio/x129.mp3"
+      },
+      {
+        "text": "Kann ich auch bar bezahlen?",
+        "file": "audio/x130.mp3"
+      },
+      {
+        "text": "Hier kann man kontaktlos bezahlen.",
+        "file": "audio/x131.mp3"
+      },
+      {
+        "text": "Ich möchte diesen Monat etwas Geld sparen.",
+        "file": "audio/x132.mp3"
+      },
+      {
+        "text": "Ich habe heute zu viel Geld ausgegeben.",
+        "file": "audio/x133.mp3"
+      },
+      {
+        "text": "Das kann ich mir im Moment nicht leisten.",
+        "file": "audio/x134.mp3"
+      },
+      {
+        "text": "Kann ich dieses Buch für eine Woche ausleihen?",
+        "file": "audio/x135.mp3"
+      },
+      {
+        "text": "Ich verleihe mein Fahrrad ungern.",
+        "file": "audio/x136.mp3"
+      },
+      {
+        "text": "Ich habe die Schuhe online bestellt.",
+        "file": "audio/x137.mp3"
+      },
+      {
+        "text": "Können Sie das Paket nach Hause liefern?",
+        "file": "audio/x138.mp3"
+      },
+      {
+        "text": "Ich muss die Ware innerhalb von vierzehn Tagen zurückschicken.",
+        "file": "audio/x139.mp3"
+      },
+      {
+        "text": "Kann ich diesen Artikel ohne Kassenbon zurückgeben?",
+        "file": "audio/x140.mp3"
+      },
+      {
+        "text": "Ich würde die Jacke gern gegen eine andere Größe umtauschen.",
+        "file": "audio/x141.mp3"
+      },
+      {
+        "text": "Ich möchte diesen defekten Artikel reklamieren.",
+        "file": "audio/x142.mp3"
+      },
+      {
+        "text": "Wann wird mir der Kaufpreis erstattet?",
+        "file": "audio/x143.mp3"
+      },
+      {
+        "text": "Ist dieses Produkt gerade im Angebot?",
+        "file": "audio/x144.mp3"
+      },
+      {
+        "text": "Ich möchte die beiden Preise vergleichen.",
+        "file": "audio/x145.mp3"
+      },
+      {
+        "text": "Ich schaue kurz nach, ob das noch verfügbar ist.",
+        "file": "audio/x146.mp3"
+      },
+      {
+        "text": "Ich schaue mich erst einmal im Laden um.",
+        "file": "audio/x147.mp3"
+      },
+      {
+        "text": "An der Kasse mussten wir lange anstehen.",
+        "file": "audio/x148.mp3"
+      },
+      {
+        "text": "Ist diese Größe noch vorrätig?",
+        "file": "audio/x149.mp3"
+      },
+      {
+        "text": "Mir fehlt noch ein Euro.",
+        "file": "audio/x150.mp3"
+      },
+      {
+        "text": "Das Geld reicht leider nicht.",
+        "file": "audio/x151.mp3"
+      },
+      {
+        "text": "Der Umweg lohnt sich nicht.",
+        "file": "audio/x152.mp3"
+      },
+      {
+        "text": "Auf dem Flohmarkt kann man um den Preis handeln.",
+        "file": "audio/x153.mp3"
+      },
+      {
+        "text": "Der Betrag wurde gestern von meinem Konto abgebucht.",
+        "file": "audio/x154.mp3"
+      },
+      {
+        "text": "Ich muss noch Geld am Automaten abheben.",
+        "file": "audio/x155.mp3"
+      },
+      {
+        "text": "Kann ich hier Bargeld einzahlen?",
+        "file": "audio/x156.mp3"
+      },
+      {
+        "text": "Ich muss heute die Miete überweisen.",
+        "file": "audio/x157.mp3"
+      },
+      {
+        "text": "Wo kann ich Euro in Lira wechseln?",
+        "file": "audio/x158.mp3"
+      },
+      {
+        "text": "Du musst das Obst erst wiegen.",
+        "file": "audio/x159.mp3"
+      },
+      {
+        "text": "Kannst du mir bitte kurz zuhören?",
+        "file": "audio/x160.mp3"
+      },
+      {
+        "text": "Ich erzähle dir, was heute passiert ist.",
+        "file": "audio/x161.mp3"
+      },
+      {
+        "text": "Kannst du mir das einfacher erklären?",
+        "file": "audio/x162.mp3"
+      },
+      {
+        "text": "Ich versuche, das Problem zu beschreiben.",
+        "file": "audio/x163.mp3"
+      },
+      {
+        "text": "Was meinst du damit genau?",
+        "file": "audio/x164.mp3"
+      },
+      {
+        "text": "Er behauptet, dass er nichts davon wusste.",
+        "file": "audio/x165.mp3"
+      },
+      {
+        "text": "Das hast du vorhin nicht erwähnt.",
+        "file": "audio/x166.mp3"
+      },
+      {
+        "text": "Darf ich etwas anderes vorschlagen?",
+        "file": "audio/x167.mp3"
+      },
+      {
+        "text": "Kannst du mir ein gutes Buch empfehlen?",
+        "file": "audio/x168.mp3"
+      },
+      {
+        "text": "Ich habe noch nicht auf ihre Nachricht reagiert.",
+        "file": "audio/x169.mp3"
+      },
+      {
+        "text": "Wenn ich keine Antwort bekomme, hake ich nach.",
+        "file": "audio/x170.mp3"
+      },
+      {
+        "text": "Auf Deutsch kann ich mich noch nicht so gut ausdrücken.",
+        "file": "audio/x171.mp3"
+      },
+      {
+        "text": "Bitte fall mir nicht ins Wort.",
+        "file": "audio/x172.mp3"
+      },
+      {
+        "text": "Wir müssen später noch darüber reden.",
+        "file": "audio/x173.mp3"
+      },
+      {
+        "text": "Ich habe den letzten Satz nicht verstanden.",
+        "file": "audio/x174.mp3"
+      },
+      {
+        "text": "Entschuldigung, ich habe dich missverstanden.",
+        "file": "audio/x175.mp3"
+      },
+      {
+        "text": "Kannst du mich bitte ausreden lassen?",
+        "file": "audio/x176.mp3"
+      },
+      {
+        "text": "Ich spreche den Satz langsam nach.",
+        "file": "audio/x177.mp3"
+      },
+      {
+        "text": "Wie spricht man dieses Wort aus?",
+        "file": "audio/x178.mp3"
+      },
+      {
+        "text": "Könntest du deinen Namen buchstabieren?",
+        "file": "audio/x179.mp3"
+      },
+      {
+        "text": "Kannst du das ins Deutsche übersetzen?",
+        "file": "audio/x180.mp3"
+      },
+      {
+        "text": "Ich muss erst darüber nachdenken.",
+        "file": "audio/x181.mp3"
+      },
+      {
+        "text": "Ich überlege mir noch eine Lösung.",
+        "file": "audio/x182.mp3"
+      },
+      {
+        "text": "Ich kann mich nicht mehr daran erinnern.",
+        "file": "audio/x183.mp3"
+      },
+      {
+        "text": "Ich verwechsle immer diese beiden Wörter.",
+        "file": "audio/x184.mp3"
+      },
+      {
+        "text": "Ich glaube, dass das funktionieren wird.",
+        "file": "audio/x185.mp3"
+      },
+      {
+        "text": "Ich vermute, dass sie schon unterwegs ist.",
+        "file": "audio/x186.mp3"
+      },
+      {
+        "text": "Ich wundere mich, warum das so lange dauert.",
+        "file": "audio/x187.mp3"
+      },
+      {
+        "text": "Hast du den Unterschied bemerkt?",
+        "file": "audio/x188.mp3"
+      },
+      {
+        "text": "Mir ist aufgefallen, dass die Tür schleift.",
+        "file": "audio/x189.mp3"
+      },
+      {
+        "text": "Ich möchte meine neuen Kollegen kennenlernen.",
+        "file": "audio/x190.mp3"
+      },
+      {
+        "text": "Wir haben uns lange über die Reise unterhalten.",
+        "file": "audio/x191.mp3"
+      },
+      {
+        "text": "Wir haben uns für morgen verabredet.",
+        "file": "audio/x192.mp3"
+      },
+      {
+        "text": "Ich habe das gar nicht mitbekommen.",
+        "file": "audio/x193.mp3"
+      },
+      {
+        "text": "Ich möchte dich zum Abendessen einladen.",
+        "file": "audio/x194.mp3"
+      },
+      {
+        "text": "Sie hat uns freundlich begrüßt.",
+        "file": "audio/x195.mp3"
+      },
+      {
+        "text": "Ich muss mich jetzt von allen verabschieden.",
+        "file": "audio/x196.mp3"
+      },
+      {
+        "text": "Ich verspreche dir, dass ich mich darum kümmere.",
+        "file": "audio/x197.mp3"
+      },
+      {
+        "text": "Ich möchte mich für die Verspätung entschuldigen.",
+        "file": "audio/x198.mp3"
+      },
+      {
+        "text": "Kannst du mir bitte verzeihen?",
+        "file": "audio/x199.mp3"
+      },
+      {
+        "text": "Wann können wir mit dem Projekt anfangen?",
+        "file": "audio/x200.mp3"
+      },
+      {
+        "text": "Ich möchte heute etwas früher aufhören.",
+        "file": "audio/x201.mp3"
+      },
+      {
+        "text": "Tut mir leid, dass ich dich unterbreche.",
+        "file": "audio/x202.mp3"
+      },
+      {
+        "text": "Wir setzen das Gespräch morgen fort.",
+        "file": "audio/x203.mp3"
+      },
+      {
+        "text": "Wir sollten die Aufgabe heute beenden.",
+        "file": "audio/x204.mp3"
+      },
+      {
+        "text": "Ich habe es endlich geschafft.",
+        "file": "audio/x205.mp3"
+      },
+      {
+        "text": "Ich versuche, das Problem selbst zu lösen.",
+        "file": "audio/x206.mp3"
+      },
+      {
+        "text": "Ich muss mich erst in das neue System einarbeiten.",
+        "file": "audio/x207.mp3"
+      },
+      {
+        "text": "Ich möchte mich beruflich weiterbilden.",
+        "file": "audio/x208.mp3"
+      },
+      {
+        "text": "Kannst du mir zeigen, wie das geht?",
+        "file": "audio/x209.mp3"
+      },
+      {
+        "text": "Ich möchte mich beim Sprechen verbessern.",
+        "file": "audio/x210.mp3"
+      },
+      {
+        "text": "Ich bereite mich auf das Vorstellungsgespräch vor.",
+        "file": "audio/x211.mp3"
+      },
+      {
+        "text": "Ich muss noch die Präsentation vorbereiten.",
+        "file": "audio/x212.mp3"
+      },
+      {
+        "text": "Die verpasste Stunde muss ich nachholen.",
+        "file": "audio/x213.mp3"
+      },
+      {
+        "text": "Ich kümmere mich morgen darum.",
+        "file": "audio/x214.mp3"
+      },
+      {
+        "text": "Ich versuche herauszufinden, woran es liegt.",
+        "file": "audio/x215.mp3"
+      },
+      {
+        "text": "Wir müssen den Termin miteinander abstimmen.",
+        "file": "audio/x216.mp3"
+      },
+      {
+        "text": "Ich kann mich noch nicht entscheiden.",
+        "file": "audio/x217.mp3"
+      },
+      {
+        "text": "Ich muss die Daten noch auswerten.",
+        "file": "audio/x218.mp3"
+      },
+      {
+        "text": "Ich erstelle heute einen kurzen Bericht.",
+        "file": "audio/x219.mp3"
+      },
+      {
+        "text": "Kannst du diese Datei bearbeiten?",
+        "file": "audio/x220.mp3"
+      },
+      {
+        "text": "Vergiss nicht, deine Änderungen zu speichern.",
+        "file": "audio/x221.mp3"
+      },
+      {
+        "text": "Kannst du die Datei bitte öffnen?",
+        "file": "audio/x222.mp3"
+      },
+      {
+        "text": "Schließ bitte das Fenster auf deinem Bildschirm.",
+        "file": "audio/x223.mp3"
+      },
+      {
+        "text": "Ich habe die Datei aus Versehen gelöscht.",
+        "file": "audio/x224.mp3"
+      },
+      {
+        "text": "Ich lade die Unterlagen gleich hoch.",
+        "file": "audio/x225.mp3"
+      },
+      {
+        "text": "Ich habe die Datei gerade heruntergeladen.",
+        "file": "audio/x226.mp3"
+      },
+      {
+        "text": "Kannst du das Dokument mit mir teilen?",
+        "file": "audio/x227.mp3"
+      },
+      {
+        "text": "Füge den Text bitte hier ein.",
+        "file": "audio/x228.mp3"
+      },
+      {
+        "text": "Markiere den Text und schneide ihn aus.",
+        "file": "audio/x229.mp3"
+      },
+      {
+        "text": "Wir schicken die Einladung morgen aus.",
+        "file": "audio/x230.mp3"
+      },
+      {
+        "text": "Wir müssen die Frist unbedingt einhalten.",
+        "file": "audio/x231.mp3"
+      },
+      {
+        "text": "Ich werde die Ergebnisse noch einmal prüfen.",
+        "file": "audio/x232.mp3"
+      },
+      {
+        "text": "Wir führen morgen eine Untersuchung durch.",
+        "file": "audio/x233.mp3"
+      },
+      {
+        "text": "Kannst du die Lautstärke etwas niedriger einstellen?",
+        "file": "audio/x234.mp3"
+      },
+      {
+        "text": "Du kannst die Einstellungen später anpassen.",
+        "file": "audio/x235.mp3"
+      },
+      {
+        "text": "Lass uns einen festen Termin festlegen.",
+        "file": "audio/x236.mp3"
+      },
+      {
+        "text": "Wir sollten die Aufgaben gerecht aufteilen.",
+        "file": "audio/x237.mp3"
+      },
+      {
+        "text": "Darf ich bei dem Projekt mitmachen?",
+        "file": "audio/x238.mp3"
+      },
+      {
+        "text": "Ich möchte mich auf diese Stelle bewerben.",
+        "file": "audio/x239.mp3"
+      },
+      {
+        "text": "Heute fühle ich mich ziemlich müde.",
+        "file": "audio/x240.mp3"
+      },
+      {
+        "text": "Mein Rücken tut seit gestern weh.",
+        "file": "audio/x241.mp3"
+      },
+      {
+        "text": "Mein Kopf schmerzt seit dem Morgen.",
+        "file": "audio/x242.mp3"
+      },
+      {
+        "text": "Er leidet seit Wochen unter Rückenschmerzen.",
+        "file": "audio/x243.mp3"
+      },
+      {
+        "text": "Ich muss ständig husten.",
+        "file": "audio/x244.mp3"
+      },
+      {
+        "text": "Seit heute Morgen muss ich oft niesen.",
+        "file": "audio/x245.mp3"
+      },
+      {
+        "text": "Ich glaube, ich habe mich erkältet.",
+        "file": "audio/x246.mp3"
+      },
+      {
+        "text": "Ich habe mich vermutlich im Büro angesteckt.",
+        "file": "audio/x247.mp3"
+      },
+      {
+        "text": "Ich habe mich beim Kochen am Finger verletzt.",
+        "file": "audio/x248.mp3"
+      },
+      {
+        "text": "Nach der Arbeit brauche ich Zeit, um mich zu erholen.",
+        "file": "audio/x249.mp3"
+      },
+      {
+        "text": "Ich möchte mich kurz ausruhen.",
+        "file": "audio/x250.mp3"
+      },
+      {
+        "text": "Ich habe letzte Nacht schlecht geschlafen.",
+        "file": "audio/x251.mp3"
+      },
+      {
+        "text": "Gestern konnte ich nicht einschlafen.",
+        "file": "audio/x252.mp3"
+      },
+      {
+        "text": "Ich bin mitten in der Nacht aufgewacht.",
+        "file": "audio/x253.mp3"
+      },
+      {
+        "text": "Mir wird plötzlich schwindelig.",
+        "file": "audio/x254.mp3"
+      },
+      {
+        "text": "Ich lege mich kurz aufs Sofa.",
+        "file": "audio/x255.mp3"
+      },
+      {
+        "text": "Setz dich bitte einen Moment hin.",
+        "file": "audio/x256.mp3"
+      },
+      {
+        "text": "Ich habe mich langsam im Bett aufgesetzt.",
+        "file": "audio/x257.mp3"
+      },
+      {
+        "text": "Ich kann gerade nicht richtig atmen.",
+        "file": "audio/x258.mp3"
+      },
+      {
+        "text": "Atme bitte tief ein.",
+        "file": "audio/x259.mp3"
+      },
+      {
+        "text": "Und jetzt atme langsam wieder aus.",
+        "file": "audio/x260.mp3"
+      },
+      {
+        "text": "Es tut beim Schlucken weh.",
+        "file": "audio/x261.mp3"
+      },
+      {
+        "text": "Ich kann auf dieser Seite kaum kauen.",
+        "file": "audio/x262.mp3"
+      },
+      {
+        "text": "Mir ist übel und ich muss mich vielleicht übergeben.",
+        "file": "audio/x263.mp3"
+      },
+      {
+        "text": "Ich möchte mich beim Arzt untersuchen lassen.",
+        "file": "audio/x264.mp3"
+      },
+      {
+        "text": "Können Sie bitte meinen Blutdruck messen?",
+        "file": "audio/x265.mp3"
+      },
+      {
+        "text": "Ich habe in zwei Monaten zwei Kilo abgenommen.",
+        "file": "audio/x266.mp3"
+      },
+      {
+        "text": "Im Urlaub habe ich ein bisschen zugenommen.",
+        "file": "audio/x267.mp3"
+      },
+      {
+        "text": "Beim Sport schwitze ich schnell.",
+        "file": "audio/x268.mp3"
+      },
+      {
+        "text": "Mir frieren die Hände.",
+        "file": "audio/x269.mp3"
+      },
+      {
+        "text": "Ich zittere vor Kälte.",
+        "file": "audio/x270.mp3"
+      },
+      {
+        "text": "Die kleine Wunde blutet noch.",
+        "file": "audio/x271.mp3"
+      },
+      {
+        "text": "Die Wunde heilt langsam.",
+        "file": "audio/x272.mp3"
+      },
+      {
+        "text": "Der Arzt behandelt die Entzündung.",
+        "file": "audio/x273.mp3"
+      },
+      {
+        "text": "Die Ärztin hat mir ein Medikament verschrieben.",
+        "file": "audio/x274.mp3"
+      },
+      {
+        "text": "Ich muss dieses Medikament zweimal täglich einnehmen.",
+        "file": "audio/x275.mp3"
+      },
+      {
+        "text": "Ich versuche, auf Zucker zu verzichten.",
+        "file": "audio/x276.mp3"
+      },
+      {
+        "text": "Ich vertrage dieses Medikament nicht gut.",
+        "file": "audio/x277.mp3"
+      },
+      {
+        "text": "Meine Haut juckt seit gestern.",
+        "file": "audio/x278.mp3"
+      },
+      {
+        "text": "Versuche, dich nicht zu kratzen.",
+        "file": "audio/x279.mp3"
+      },
+      {
+        "text": "Oh nein, ich habe das Gemüse anbrennen lassen.",
+        "file": "audio/x280.mp3"
+      },
+      {
+        "text": "Ich bestelle einen Kaffee zum Mitnehmen.",
+        "file": "audio/x281.mp3"
+      },
+      {
+        "text": "Ich brate das Gemüse kurz in der Pfanne an.",
+        "file": "audio/x282.mp3"
+      },
+      {
+        "text": "Ich wärme das Essen von gestern auf.",
+        "file": "audio/x283.mp3"
+      },
+      {
+        "text": "Du musst das Wasser erst erhitzen.",
+        "file": "audio/x284.mp3"
+      },
+      {
+        "text": "Lass die Suppe einmal kurz aufkochen.",
+        "file": "audio/x285.mp3"
+      },
+      {
+        "text": "Kannst du bitte die Kartoffeln schälen?",
+        "file": "audio/x286.mp3"
+      },
+      {
+        "text": "Ich schneide die Gurke in dünne Scheiben.",
+        "file": "audio/x287.mp3"
+      },
+      {
+        "text": "Ich hacke die Zwiebeln ganz fein.",
+        "file": "audio/x288.mp3"
+      },
+      {
+        "text": "Raspel bitte zwei Karotten.",
+        "file": "audio/x289.mp3"
+      },
+      {
+        "text": "Ich reibe etwas Käse über die Nudeln.",
+        "file": "audio/x290.mp3"
+      },
+      {
+        "text": "Rühr den Teig bitte gründlich.",
+        "file": "audio/x291.mp3"
+      },
+      {
+        "text": "Vergiss nicht, die Suppe umzurühren.",
+        "file": "audio/x292.mp3"
+      },
+      {
+        "text": "Vermenge die Zutaten in einer Schüssel.",
+        "file": "audio/x293.mp3"
+      },
+      {
+        "text": "Knete den Teig ungefähr fünf Minuten.",
+        "file": "audio/x294.mp3"
+      },
+      {
+        "text": "Ich würze die Suppe mit etwas Pfeffer.",
+        "file": "audio/x295.mp3"
+      },
+      {
+        "text": "Du kannst das Wasser leicht salzen.",
+        "file": "audio/x296.mp3"
+      },
+      {
+        "text": "Pfeffere das Gemüse erst zum Schluss.",
+        "file": "audio/x297.mp3"
+      },
+      {
+        "text": "Ich muss die Soße noch abschmecken.",
+        "file": "audio/x298.mp3"
+      },
+      {
+        "text": "Möchtest du dieses Gericht mal probieren?",
+        "file": "audio/x299.mp3"
+      },
+      {
+        "text": "Das schmeckt wirklich gut.",
+        "file": "audio/x300.mp3"
+      },
+      {
+        "text": "Die Suppe riecht lecker.",
+        "file": "audio/x301.mp3"
+      },
+      {
+        "text": "Wir haben das Essen sehr genossen.",
+        "file": "audio/x302.mp3"
+      },
+      {
+        "text": "Ich möchte die Reste von gestern aufbrauchen.",
+        "file": "audio/x303.mp3"
+      },
+      {
+        "text": "Wollen wir morgen zusammen frühstücken?",
+        "file": "audio/x304.mp3"
+      },
+      {
+        "text": "Wir essen meistens um eins zu Mittag.",
+        "file": "audio/x305.mp3"
+      },
+      {
+        "text": "Wir essen heute erst spät zu Abend.",
+        "file": "audio/x306.mp3"
+      },
+      {
+        "text": "Kannst du mir etwas Wasser einschenken?",
+        "file": "audio/x307.mp3"
+      },
+      {
+        "text": "Ich muss noch die Blumen gießen.",
+        "file": "audio/x308.mp3"
+      },
+      {
+        "text": "Gieß bitte langsam das Wasser ein.",
+        "file": "audio/x309.mp3"
+      },
+      {
+        "text": "Gieß nach dem Kochen das Nudelwasser ab.",
+        "file": "audio/x310.mp3"
+      },
+      {
+        "text": "Siebe das Mehl, bevor du es verwendest.",
+        "file": "audio/x311.mp3"
+      },
+      {
+        "text": "Ich muss das Fleisch noch auftauen.",
+        "file": "audio/x312.mp3"
+      },
+      {
+        "text": "Ich friere das Gemüse portionsweise ein.",
+        "file": "audio/x313.mp3"
+      },
+      {
+        "text": "Diese Lebensmittel muss man kühl lagern.",
+        "file": "audio/x314.mp3"
+      },
+      {
+        "text": "Bewahre die Reste im Kühlschrank auf.",
+        "file": "audio/x315.mp3"
+      },
+      {
+        "text": "Die Erdbeeren verderben leider sehr schnell.",
+        "file": "audio/x316.mp3"
+      },
+      {
+        "text": "Ist vom Abendessen noch etwas übrig geblieben?",
+        "file": "audio/x317.mp3"
+      },
+      {
+        "text": "Danke, ich bin schon satt.",
+        "file": "audio/x318.mp3"
+      },
+      {
+        "text": "Ich habe seit Stunden Hunger.",
+        "file": "audio/x319.mp3"
+      },
+      {
+        "text": "Ich bin heute ziemlich müde.",
+        "file": "audio/x320.mp3"
+      },
+      {
+        "text": "Nach dem langen Tag bin ich völlig erschöpft.",
+        "file": "audio/x321.mp3"
+      },
+      {
+        "text": "Ich bin seit sechs Uhr wach.",
+        "file": "audio/x322.mp3"
+      },
+      {
+        "text": "Ich bin hungrig, lass uns etwas essen.",
+        "file": "audio/x323.mp3"
+      },
+      {
+        "text": "Ich bin durstig und brauche Wasser.",
+        "file": "audio/x324.mp3"
+      },
+      {
+        "text": "Ich bin heute leider krank.",
+        "file": "audio/x325.mp3"
+      },
+      {
+        "text": "Ich fühle mich wieder gesund.",
+        "file": "audio/x326.mp3"
+      },
+      {
+        "text": "Ich war traurig über die Nachricht.",
+        "file": "audio/x327.mp3"
+      },
+      {
+        "text": "Ich bin glücklich mit meiner Entscheidung.",
+        "file": "audio/x328.mp3"
+      },
+      {
+        "text": "Mit dem Ergebnis bin ich zufrieden.",
+        "file": "audio/x329.mp3"
+      },
+      {
+        "text": "Mit der Lieferung bin ich unzufrieden.",
+        "file": "audio/x330.mp3"
+      },
+      {
+        "text": "Ich bin von der Antwort enttäuscht.",
+        "file": "audio/x331.mp3"
+      },
+      {
+        "text": "Ich war über den Preis überrascht.",
+        "file": "audio/x332.mp3"
+      },
+      {
+        "text": "Ich bin über die Verspätung verärgert.",
+        "file": "audio/x333.mp3"
+      },
+      {
+        "text": "Ich war wirklich wütend.",
+        "file": "audio/x334.mp3"
+      },
+      {
+        "text": "Vor der Prüfung bin ich etwas ängstlich.",
+        "file": "audio/x335.mp3"
+      },
+      {
+        "text": "Ich bin wegen des Termins besorgt.",
+        "file": "audio/x336.mp3"
+      },
+      {
+        "text": "Vor dem Gespräch bin ich aufgeregt.",
+        "file": "audio/x337.mp3"
+      },
+      {
+        "text": "Bei der langen Wartezeit war ich gelangweilt.",
+        "file": "audio/x338.mp3"
+      },
+      {
+        "text": "Ich bin neugierig, wie das funktioniert.",
+        "file": "audio/x339.mp3"
+      },
+      {
+        "text": "Ich bin noch unsicher, was ich tun soll.",
+        "file": "audio/x340.mp3"
+      },
+      {
+        "text": "Bist du sicher, dass das stimmt?",
+        "file": "audio/x341.mp3"
+      },
+      {
+        "text": "Das war mir wirklich peinlich.",
+        "file": "audio/x342.mp3"
+      },
+      {
+        "text": "Die Situation war mir unangenehm.",
+        "file": "audio/x343.mp3"
+      },
+      {
+        "text": "Das Gespräch war sehr angenehm.",
+        "file": "audio/x344.mp3"
+      },
+      {
+        "text": "Die Aufgabe ist einfacher als gedacht.",
+        "file": "audio/x345.mp3"
+      },
+      {
+        "text": "Die Erklärung finde ich schwierig.",
+        "file": "audio/x346.mp3"
+      },
+      {
+        "text": "Der lange Weg war ziemlich anstrengend.",
+        "file": "audio/x347.mp3"
+      },
+      {
+        "text": "Ich brauche dringend einen Termin.",
+        "file": "audio/x348.mp3"
+      },
+      {
+        "text": "Zum Glück sind wir rechtzeitig gekommen.",
+        "file": "audio/x349.mp3"
+      },
+      {
+        "text": "Der Zug ist heute pünktlich.",
+        "file": "audio/x350.mp3"
+      },
+      {
+        "text": "Entschuldigung, ich bin zu spät.",
+        "file": "audio/x351.mp3"
+      },
+      {
+        "text": "Bei so vielen Aufgaben fühle ich mich überfordert.",
+        "file": "audio/x352.mp3"
+      },
+      {
+        "text": "Er ist zuverlässig und hält seine Versprechen.",
+        "file": "audio/x353.mp3"
+      },
+      {
+        "text": "Das ging aber schnell.",
+        "file": "audio/x354.mp3"
+      },
+      {
+        "text": "Kannst du bitte etwas leiser sprechen?",
+        "file": "audio/x355.mp3"
+      },
+      {
+        "text": "Die Musik ist mir zu laut.",
+        "file": "audio/x356.mp3"
+      },
+      {
+        "text": "Sei bitte vorsichtig mit dem Glas.",
+        "file": "audio/x357.mp3"
+      },
+      {
+        "text": "Diese Schuhe sind sehr bequem.",
+        "file": "audio/x358.mp3"
+      },
+      {
+        "text": "Die Küche ist jetzt wieder sauber.",
+        "file": "audio/x359.mp3"
+      },
+      {
+        "text": "Ich habe morgen einen Termin beim Arzt.",
+        "file": "audio/x360.mp3"
+      },
+      {
+        "text": "Wegen der Verspätung komme ich später an.",
+        "file": "audio/x361.mp3"
+      },
+      {
+        "text": "Ich habe den Anschluss nach Potsdam verpasst.",
+        "file": "audio/x362.mp3"
+      },
+      {
+        "text": "Wo ist die nächste Bushaltestelle?",
+        "file": "audio/x363.mp3"
+      },
+      {
+        "text": "Am Bahnhof war es heute sehr voll.",
+        "file": "audio/x364.mp3"
+      },
+      {
+        "text": "Von welchem Gleis fährt der Zug ab?",
+        "file": "audio/x365.mp3"
+      },
+      {
+        "text": "Der Zug wartet schon am Bahnsteig.",
+        "file": "audio/x366.mp3"
+      },
+      {
+        "text": "Ich brauche noch eine Fahrkarte.",
+        "file": "audio/x367.mp3"
+      },
+      {
+        "text": "Der Fahrkartenautomat ist leider kaputt.",
+        "file": "audio/x368.mp3"
+      },
+      {
+        "text": "Steht die Abfahrt schon im Fahrplan?",
+        "file": "audio/x369.mp3"
+      },
+      {
+        "text": "Diese Strecke kenne ich noch nicht.",
+        "file": "audio/x370.mp3"
+      },
+      {
+        "text": "Wir fahren in die falsche Richtung.",
+        "file": "audio/x371.mp3"
+      },
+      {
+        "text": "Die Abfahrt ist für acht Uhr geplant.",
+        "file": "audio/x372.mp3"
+      },
+      {
+        "text": "Unsere Ankunft ist gegen neun Uhr.",
+        "file": "audio/x373.mp3"
+      },
+      {
+        "text": "Wo ist der Eingang zum Gebäude?",
+        "file": "audio/x374.mp3"
+      },
+      {
+        "text": "Wo finde ich den Ausgang?",
+        "file": "audio/x375.mp3"
+      },
+      {
+        "text": "Der Aufzug ist heute außer Betrieb.",
+        "file": "audio/x376.mp3"
+      },
+      {
+        "text": "Nimm die Treppe in den zweiten Stock.",
+        "file": "audio/x377.mp3"
+      },
+      {
+        "text": "Die Praxis ist im dritten Stockwerk.",
+        "file": "audio/x378.mp3"
+      },
+      {
+        "text": "Wir wohnen in einer kleinen Wohnung.",
+        "file": "audio/x379.mp3"
+      },
+      {
+        "text": "Die Miete ist dieses Jahr gestiegen.",
+        "file": "audio/x380.mp3"
+      },
+      {
+        "text": "Ich muss meinen Mietvertrag noch einmal lesen.",
+        "file": "audio/x381.mp3"
+      },
+      {
+        "text": "Ich habe die Rechnung noch nicht bezahlt.",
+        "file": "audio/x382.mp3"
+      },
+      {
+        "text": "Kann ich bitte den Kassenbon bekommen?",
+        "file": "audio/x383.mp3"
+      },
+      {
+        "text": "Ich brauche einen Beleg für die Zahlung.",
+        "file": "audio/x384.mp3"
+      },
+      {
+        "text": "Können Sie mir bitte eine Quittung ausstellen?",
+        "file": "audio/x385.mp3"
+      },
+      {
+        "text": "Für die Anmeldung fällt eine Gebühr an.",
+        "file": "audio/x386.mp3"
+      },
+      {
+        "text": "Übernimmt die Versicherung die Kosten?",
+        "file": "audio/x387.mp3"
+      },
+      {
+        "text": "Ich habe eine Überweisung zum Facharzt bekommen.",
+        "file": "audio/x388.mp3"
+      },
+      {
+        "text": "Die Ärztin hat mir ein Rezept ausgestellt.",
+        "file": "audio/x389.mp3"
+      },
+      {
+        "text": "Das Wartezimmer ist heute sehr voll.",
+        "file": "audio/x390.mp3"
+      },
+      {
+        "text": "Die Praxis öffnet morgen um acht.",
+        "file": "audio/x391.mp3"
+      },
+      {
+        "text": "Wann beginnt die nächste Sprechstunde?",
+        "file": "audio/x392.mp3"
+      },
+      {
+        "text": "Ich habe dir eine Nachricht geschickt.",
+        "file": "audio/x393.mp3"
+      },
+      {
+        "text": "Ich warte noch auf deine Antwort.",
+        "file": "audio/x394.mp3"
+      },
+      {
+        "text": "Dein Vorschlag klingt gut.",
+        "file": "audio/x395.mp3"
+      },
+      {
+        "text": "Ich habe noch keine Entscheidung getroffen.",
+        "file": "audio/x396.mp3"
+      },
+      {
+        "text": "Die Frist endet am Freitag.",
+        "file": "audio/x397.mp3"
+      },
+      {
+        "text": "Das ist eine Ausnahme, nicht die Regel.",
+        "file": "audio/x398.mp3"
+      },
+      {
+        "text": "Welche Voraussetzungen muss ich erfüllen?",
+        "file": "audio/x399.mp3"
+      }
+    ]
+  }
+}

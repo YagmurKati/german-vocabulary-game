@@ -63,6 +63,15 @@ button,select{font:inherit}button{cursor:pointer;transition:transform .08s,backg
 #pwa-install-banner.visible{display:block}
 #pwa-install-inner{background:#eaf7f1;color:#164c3a;border:1px solid #b7dbc9;border-radius:13px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
 #pwa-install-button{background:#157e5a;border:0;color:white;padding:9px 15px;border-radius:9px;font-weight:800}
+
+/* Consistent pre-recorded German pronunciation, independent of device TTS */
+.audio-switch{margin-top:14px;border:1px solid #bfe0d3;background:#f2fbf7;border-radius:12px;padding:14px}
+.audio-switch label{display:block;font-size:12px;font-weight:800;color:#2c5b4c;margin-bottom:7px}
+.audio-switch select{width:100%;padding:9px;border-radius:8px;border:1px solid #c0dcd2;background:white;font-size:13px}
+.audio-switch .audio-explain{font-size:12px;color:#476a60;line-height:1.5;margin:8px 0 0}
+#audio-download-btn{margin-top:8px;font-size:12px}
+.german-voice-box[hidden]{display:none!important}
+.example-audio-btn{margin:10px 0 0;border:1px solid #b9d6e9;background:#fff;color:#244967;border-radius:9px;padding:8px 12px;font-weight:750;font-size:12px}
 </style></head>
 <body>
 <header><div class="shell"><div class="eyebrow">Deutsch lernen · B1–B2 · Free &amp; offline</div><h1>Wortspiel <span aria-hidden="true">✦</span></h1><p>Two different learning libraries. Practice English-like German vocabulary or real-life phrases for travel, shopping, appointments, work and everyday conversations.</p></div></header>
@@ -107,11 +116,21 @@ button,select{font:inherit}button{cursor:pointer;transition:transform .08s,backg
       <div id="word" class="word">organize</div>
       <div id="tap-hint" class="help">Tap or press Space to reveal German</div>
     </div>
-    <div id="example" class="example-area"><b>German in context · Beispiel</b><div class="ex-de" id="example-de"></div><div class="ex-en" id="example-en"></div></div>
+    <div id="example" class="example-area"><b>German in context · Beispiel</b><div class="ex-de" id="example-de"></div><div class="ex-en" id="example-en"></div><button class="example-audio-btn" id="example-audio-btn" type="button">◖)) Hear example in German</button></div>
     <div id="usage-note" class="usage-note" style="display:none"></div>
     <div class="actions"><button type="button" id="again-btn" class="action again" disabled>↻ Practice again <span class="nowrap">[1]</span></button><button type="button" id="known-btn" class="action known" disabled>✓ I know it <span class="nowrap">[2]</span></button></div>
     <div class="subactions"><div class="buttons-inline"><button type="button" id="prev" class="mini-btn">← Previous</button><button type="button" id="next" class="mini-btn">Next →</button></div><div class="buttons-inline"><button type="button" id="sound" class="mini-btn" aria-label="Hear German pronunciation">◖)) Hear German</button></div></div>
-    <div class="german-voice-box"><label for="german-voice">German pronunciation voice (de-DE preferred)</label><div class="voice-row"><select id="german-voice" aria-label="Choose a German pronunciation voice"><option>Checking German voices…</option></select><button id="refresh-voices" class="mini-btn" type="button" title="Reload available German speech voices">↻ Refresh</button></div><p id="german-voice-status" class="german-voice-status" role="status" aria-live="polite">Loading available German voices…</p></div>
+    <div class="audio-switch">
+ <label for="audio-mode">German audio source</label>
+ <select id="audio-mode" aria-label="German audio source">
+  <option value="recorded">Same recorded German voice on every device (recommended)</option>
+  <option value="device">My device’s German voice (may sound different)</option>
+ </select>
+ <p id="audio-info" class="audio-explain" role="status">Recorded pronunciation uses the same audio files on Mac, Windows, Android and iPhone. Recordings become available after running the GitHub audio-generation workflow.</p>
+ <button type="button" id="audio-download-btn" class="mini-btn">Save all German audio for offline use</button>
+ <p id="offline-audio-status" class="audio-explain">Offline audio is optional; it can use significant storage and Wi-Fi data.</p>
+</div>
+<div class="german-voice-box" id="device-voice-box" hidden><label for="german-voice">German pronunciation voice (de-DE preferred)</label><div class="voice-row"><select id="german-voice" aria-label="Choose a German pronunciation voice"><option>Checking German voices…</option></select><button id="refresh-voices" class="mini-btn" type="button" title="Reload available German speech voices">↻ Refresh</button></div><p id="german-voice-status" class="german-voice-status" role="status" aria-live="polite">Loading available German voices…</p></div>
     <p class="hint">Keyboard: <b>Space</b> reveal · <b>1</b> practice again · <b>2</b> I know it · <b>← / →</b> navigate · <b>S</b> hear German.</p>
   </div>
   <div id="emptystage" class="empty" style="display:none"><div class="emoji" aria-hidden="true">🎉</div><h3 id="empty-title">Session complete!</h3><p id="empty-copy"></p><button type="button" id="restart" class="action known">Start again</button></div>
@@ -186,18 +205,94 @@ function refreshGermanVoices(showUnavailable=false){
   }
  }
 }
-function sayGerman(){
+// Recorded mode is the default and never substitutes a device voice silently.
+const AUDIO_MODE_PREF='wortspiel-audio-mode-v1';
+let audioMode='recorded', recordingPlayer=null, recordedManifest=null, manifestRequest=null;
+try {audioMode=localStorage.getItem(AUDIO_MODE_PREF)||'recorded';}catch(e){}
+if(!['recorded','device'].includes(audioMode))audioMode='recorded';
+function setAudioMode(next){
+ audioMode=next;
+ el('audio-mode').value=next;
+ el('device-voice-box').hidden=next!=='device';
+ try{localStorage.setItem(AUDIO_MODE_PREF,next);}catch(e){}
+ if(recordingPlayer){recordingPlayer.pause();recordingPlayer=null;}
+ if(next==='device')refreshGermanVoices();
+}
+async function getRecordedManifest(){
+ if(recordedManifest)return recordedManifest;
+ if(!manifestRequest)manifestRequest=fetch('./audio/tracks.json',{cache:'no-store'}).then(async r=>{
+   if(!r.ok)throw Error('German recordings have not been published yet');
+   const d=await r.json();
+   if(d.version!==1||d.collections.lookalikes.length!==400||d.collections.everyday.length!==400||d.collections.examples.length!==400)throw Error('The audio track list is incomplete');
+   recordedManifest=d;
+   return d;
+ }).finally(()=>{manifestRequest=null;});
+ return manifestRequest;
+}
+function playRecorded(example=false){
  if(!queue.length||cursor>=queue.length)return;
+ const idx=queue[cursor];
+ // Construct the playback path immediately inside the tap handler. This avoids
+ // losing the user gesture on iOS Safari while waiting for a network request.
+ const prefix=example?'x':library==='lookalikes'?'l':'e';
+ const filename='./audio/'+prefix+String(idx).padStart(3,'0')+'.mp3';
+ if(recordingPlayer){recordingPlayer.pause();recordingPlayer.currentTime=0;}
+ const player=new Audio(filename);
+ recordingPlayer=player;
+ player.play().catch(err=>{
+  toast('Recorded audio unavailable. Run the GitHub audio-generation workflow first.');
+  console.warn('Wortspiel recorded pronunciation:',filename,err);
+ });
+}
+function playDeviceGerman(text){
  refreshGermanVoices(true);
  const voice=germanVoices.find(v=>voiceKey(v)===el('german-voice').value);
- if(!voice){toast('German voice unavailable. See voice settings below the card.');return;}
+ if(!voice){toast('No German device voice available.');return;}
  try{
   speechSynthesis.cancel();
-  const utterance=new SpeechSynthesisUtterance(activeLibrary()[queue[cursor]].de);
+  const utterance=new SpeechSynthesisUtterance(text);
   utterance.lang=voice.lang;utterance.voice=voice;utterance.rate=.80;
-  utterance.onerror=e=>{if(e.error!=='canceled'&&e.error!=='interrupted')toast('German pronunciation failed. Try another German voice.');};
+  utterance.onerror=e=>{if(e.error!=='canceled'&&e.error!=='interrupted')toast('German device voice failed.');};
   speechSynthesis.speak(utterance);
- }catch(e){toast('Could not play German. Choose another German voice.');}
+ }catch(e){toast('German device voice unavailable.');}
+}
+function sayGerman(){
+ if(!queue.length||cursor>=queue.length)return;
+ if(audioMode==='recorded')return playRecorded(false);
+ playDeviceGerman(activeLibrary()[queue[cursor]].de);
+}
+function sayGermanExample(){
+ if(library!=='everyday'||!queue.length||cursor>=queue.length)return;
+ if(audioMode==='recorded')return playRecorded(true);
+ playDeviceGerman(activeLibrary()[queue[cursor]].example);
+}
+async function downloadAudioForOffline(){
+ const btn=el('audio-download-btn'), status=el('offline-audio-status');
+ if(!('caches' in window)){status.textContent='Offline audio storage is not supported by this browser.';return;}
+ btn.disabled=true;
+ try{
+  const list=await getRecordedManifest(), entries=Object.values(list.collections).flat();
+  const cache=await caches.open('wortspiel-recorded-german-v1');
+  let ok=0,failed=0,index=0;
+  status.textContent='Downloading '+entries.length+' recordings. Use Wi-Fi; keep this page open.';
+  async function worker(){
+   while(index<entries.length){
+    const track=entries[index++],url=new URL('./'+track.file, location.href).href;
+    try{
+     if(!(await cache.match(url))){
+      const r=await fetch(url);
+      if(!r.ok)throw Error('HTTP '+r.status);
+      await cache.put(url,r.clone());
+     }
+     ok++;
+    }catch(err){failed++;}
+    if((ok+failed)%20===0||ok+failed===entries.length)status.textContent=`Audio saved: ${ok}/${entries.length}`+(failed?` (${failed} failed)`:'')+'.';
+   }
+  }
+  await Promise.all(Array.from({length:4},worker));
+  status.textContent=failed?`Saved ${ok}; ${failed} failed. Try again on Wi-Fi.`:`All ${ok} German recordings saved for offline playback on this device.`;
+ }catch(e){status.textContent='Audio files are not available yet. Generate them in GitHub Actions first.';}
+ finally{btn.disabled=false;}
 }
 if('speechSynthesis' in window){
  if(typeof speechSynthesis.addEventListener==='function')speechSynthesis.addEventListener('voiceschanged',()=>refreshGermanVoices());
@@ -216,6 +311,10 @@ el('deck').addEventListener('change',e=>{deck=e.target.value;buildQueue();});el(
 el('flashcard').addEventListener('click',flip);el('flashcard').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();flip();}});
 el('again-btn').addEventListener('click',()=>rate('again'));el('known-btn').addEventListener('click',()=>rate('known'));el('prev').addEventListener('click',()=>next(-1));el('next').addEventListener('click',()=>next(1));el('restart').addEventListener('click',buildQueue);el('sound').addEventListener('click',sayGerman);
 el('refresh-voices').addEventListener('click',()=>refreshGermanVoices(true));
+el('audio-mode').addEventListener('change',e=>setAudioMode(e.target.value));
+el('example-audio-btn').addEventListener('click',sayGermanExample);
+el('audio-download-btn').addEventListener('click',downloadAudioForOffline);
+setAudioMode(audioMode);
 el('german-voice').addEventListener('change',e=>{
  preferredVoiceKey=e.target.value;
  try{localStorage.setItem(VOICE_PREF_KEY,preferredVoiceKey);}catch(err){}
