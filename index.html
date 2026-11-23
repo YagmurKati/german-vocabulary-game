@@ -1,5 +1,11 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#1a2854">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Wortspiel · Learn German · 800 cards</title><meta name="description" content="Two German vocabulary games in one site: English lookalikes and practical German for everyday life. Free, offline, with pronunciation and learning progress.">
 <style>
 :root{--bg:#f5f7fb;--ink:#16243a;--sub:#60718a;--border:#dce4ef;--violet:#6951c6;--blue:#3268d8;--green:#157e5a;--red:#b74c59;--white:#fff;--shade:#f4f2fc;}
@@ -51,9 +57,18 @@ button,select{font:inherit}button{cursor:pointer;transition:transform .08s,backg
 @media(max-width:680px){.library-picker{grid-template-columns:1fr 1fr;gap:8px}.library-tile{padding:12px 10px;min-height:116px;gap:8px;align-items:flex-start;flex-direction:column}.library-icon{width:35px;height:35px;flex-basis:35px;font-size:17px}.library-tile b{font-size:14px}.library-tile small{font-size:11px}.example-area{padding:13px}.sidebar .secondary-zone{display:block}}
 
 [hidden]{display:none!important}
+
+/* Progressive web app install UI: only appears when supported */
+#pwa-install-banner{display:none;max-width:980px;margin:10px auto -22px;padding:0 18px;position:relative;z-index:1}
+#pwa-install-banner.visible{display:block}
+#pwa-install-inner{background:#eaf7f1;color:#164c3a;border:1px solid #b7dbc9;border-radius:13px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+#pwa-install-button{background:#157e5a;border:0;color:white;padding:9px 15px;border-radius:9px;font-weight:800}
 </style></head>
 <body>
 <header><div class="shell"><div class="eyebrow">Deutsch lernen · B1–B2 · Free &amp; offline</div><h1>Wortspiel <span aria-hidden="true">✦</span></h1><p>Two different learning libraries. Practice English-like German vocabulary or real-life phrases for travel, shopping, appointments, work and everyday conversations.</p></div></header>
+<div id="pwa-install-banner" role="region" aria-label="Install Wortspiel">
+<div id="pwa-install-inner"><span><b>Install Wortspiel</b> on your phone to use it like an app, even offline.</span>
+<button type="button" id="pwa-install-button">Install app</button></div></div>
 <main>
 <nav class="library-picker" role="tablist" aria-label="Choose vocabulary library">
   <button class="library-tile" role="tab" type="button" id="tab-lookalikes" aria-selected="true" aria-controls="lookalikes-options" data-lib="lookalikes"><span class="library-icon" aria-hidden="true">✦</span><span><b>English lookalikes</b><small>400 similar German–English words</small></span></button>
@@ -210,4 +225,34 @@ el('export').addEventListener('click',download);el('import').addEventListener('c
 el('reset').addEventListener('click',()=>{if(!confirm('Reset all 800-word progress on this device? Download a backup first if needed.'))return;records={};save();buildQueue();toast('Progress reset.');});
 document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const t=e.target;if(t&&['INPUT','SELECT','TEXTAREA','BUTTON'].includes(t.tagName))return;if(e.key===' '){e.preventDefault();flip();}else if(e.key==='1'){rate('again');}else if(e.key==='2'){rate('known');}else if(e.key==='ArrowLeft'){next(-1);}else if(e.key==='ArrowRight'){next(1);}else if(e.key.toLowerCase()==='s'){sayGerman();}});
 load();changeLibrary('lookalikes');
-</script></body></html>
+</script>
+<script>
+// PWA only. The flashcards and saved progress remain identical to the original site.
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js', {scope:'./'}).catch(err => {
+      console.warn('Wortspiel offline installation unavailable:', err);
+    });
+  });
+}
+let deferredWortspielInstall = null;
+const installBanner = document.getElementById('pwa-install-banner');
+const installButton = document.getElementById('pwa-install-button');
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault();
+  deferredWortspielInstall = event;
+  installBanner.classList.add('visible');
+});
+installButton.addEventListener('click', async () => {
+  if (!deferredWortspielInstall) return;
+  const promptEvent = deferredWortspielInstall;
+  deferredWortspielInstall = null;
+  installBanner.classList.remove('visible');
+  try { await promptEvent.prompt(); } catch (err) { console.warn('Install canceled/unavailable', err); }
+});
+window.addEventListener('appinstalled', () => {
+  deferredWortspielInstall = null;
+  installBanner.classList.remove('visible');
+});
+</script>
+</body></html>
