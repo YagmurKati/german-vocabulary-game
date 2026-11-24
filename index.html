@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light">
 <meta name="theme-color" content="#1a2854">
+<script>
+(function(){
+  var choice=null;try{choice=localStorage.getItem('wortspiel-ui-theme')}catch(e){}
+  var prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var theme=(choice==='dark'||choice==='light')?choice:(prefersDark?'dark':'light');
+  document.documentElement.setAttribute('data-theme',theme);
+  document.querySelector('meta[name="theme-color"]').setAttribute('content',theme==='dark'?'#121b34':'#1a2854');
+})();
+</script>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -11,12 +20,12 @@
 :root{--bg:#f5f7fb;--ink:#16243a;--sub:#60718a;--border:#dce4ef;--violet:#6951c6;--blue:#3268d8;--green:#157e5a;--red:#b74c59;--white:#fff;--shade:#f4f2fc;}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
 header{background:linear-gradient(112deg,#172a53,#443b8f);color:white;padding:26px 22px 48px}
-.shell{max-width:980px;margin:auto}.hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.hero-copy{max-width:620px}header .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;font-weight:800;color:#b6befc}h1{font-size:clamp(28px,4vw,43px);line-height:1.12;margin:9px 0}header p{margin:0;color:#e3e6ff;max-width:580px;line-height:1.5}.header-actions{display:flex;align-items:flex-start;justify-content:flex-end;min-width:120px}main{max-width:980px;margin:-29px auto 36px;padding:0 18px}.layout{display:grid;grid-template-columns:255px 1fr;gap:17px;align-items:start}
+.shell{max-width:980px;margin:auto}.hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.hero-copy{max-width:620px}header .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;font-weight:800;color:#b6befc}h1{font-size:clamp(28px,4vw,43px);line-height:1.12;margin:9px 0}header p{margin:0;color:#e3e6ff;max-width:580px;line-height:1.5}.header-actions{display:flex;align-items:flex-start;justify-content:flex-end;flex-wrap:wrap;gap:9px;min-width:120px}main{max-width:980px;margin:-29px auto 36px;padding:0 18px}.layout{display:grid;grid-template-columns:255px 1fr;gap:17px;align-items:start}
 .panel{background:white;border:1px solid var(--border);border-radius:18px;box-shadow:0 12px 35px #12223a0a;padding:20px}
 .panel h2{font-size:16px;margin:0 0 15px}.statbig{font-size:37px;line-height:1;font-weight:800;margin-bottom:6px;letter-spacing:-.04em}.muted{color:var(--sub);font-size:13px;line-height:1.5}.progressbar{height:10px;background:#e9eef7;border-radius:99px;overflow:hidden;margin:15px 0 10px}.progressbar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#2eaa80,#51c9ac);transition:width .3s}.ministats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}.ministat{border:1px solid var(--border);padding:11px;border-radius:12px;background:#fbfcff}.ministat strong{display:block;font-size:20px}.ministat small{color:var(--sub)}.caption{font-size:12px;font-weight:750;text-transform:uppercase;color:var(--sub);letter-spacing:.08em;margin:18px 0 8px}
 button,select{font:inherit}button{cursor:pointer;transition:transform .08s,background .15s,border-color .15s}button:active{transform:scale(.98)}button:focus-visible,select:focus-visible,.flashcard:focus-visible{outline:3px solid #9886ff;outline-offset:3px}.sidebarbtn{display:block;width:100%;border:1px solid var(--border);background:white;border-radius:11px;padding:10px 12px;text-align:left;color:var(--ink);margin-bottom:7px;font-weight:650}.sidebarbtn:hover{background:#f5f6ff}.sidebarbtn.active{border-color:#a59aef;background:#f0eeff;color:#49329e}.mini-btn{border:1px solid var(--border);border-radius:9px;color:var(--ink);background:#fff;padding:7px 11px;font-size:12px;font-weight:700}.mini-btn:hover{background:#f4f6fd}.buttons-inline{display:flex;gap:7px;flex-wrap:wrap}.study{padding:25px}.studyhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.pill{display:inline-block;font-weight:750;background:#f0efff;color:#5842a4;border-radius:99px;font-size:12px;padding:6px 12px}.pill-soft{background:#f0f4fa;color:#50627e}.flashcard{width:100%;min-height:285px;border:2px solid #dedcf6;border-radius:19px;background:radial-gradient(ellipse at 86% 9%,#f5f1ff,transparent 65%),linear-gradient(150deg,#fff,#fafbff);text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:34px 18px;cursor:pointer;user-select:none;box-shadow:0 12px 22px #1f27500d}
 .flashcard .lang{color:#6f669a;font-size:11px;font-weight:850;letter-spacing:.18em;text-transform:uppercase;margin-bottom:17px}.flashcard .word{font-size:clamp(27px,4.7vw,42px);font-weight:800;line-height:1.24;overflow-wrap:anywhere;letter-spacing:-.025em}.flashcard .help{margin-top:20px;font-size:13px;color:#7a86a0}.flashcard.flipped{background:radial-gradient(ellipse at 86% 9%,#eafaf5,transparent 65%),linear-gradient(150deg,#fff,#f9fffc);border-color:#abddcc}.flashcard.flipped .lang{color:var(--green)}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.action{border:0;padding:15px 10px;border-radius:13px;color:white;font-size:15px;font-weight:800}.again{background:var(--red)}.known{background:var(--green)}.action:disabled{opacity:.34;cursor:not-allowed}.subactions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:15px}.hint{font-size:12px;color:var(--sub);margin:16px 0 0;line-height:1.55}.count{font-weight:700;font-size:13px}.study select{border:1px solid var(--border);border-radius:10px;padding:8px 11px;background:white;max-width:100%}.empty{text-align:center;padding:43px 20px;min-height:280px;display:flex;align-items:center;justify-content:center;flex-direction:column}.empty .emoji{font-size:39px;margin-bottom:10px}.empty h3{font-size:23px;margin:0 0 7px}.empty p{color:var(--sub);max-width:360px;line-height:1.5}.foot{font-size:12px;color:#718099;text-align:center;margin:22px 8px 0}.note{background:#fff9e8;border:1px solid #f5e5b5;border-radius:12px;padding:11px 12px;font-size:12px;line-height:1.55;color:#68592c;margin-top:18px}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#192b42;color:white;padding:12px 16px;border-radius:12px;box-shadow:0 8px 30px #101d3850;display:none;font-size:13px;z-index:20;max-width:90vw}.toast.show{display:block}.spaced{margin-top:17px}.nowrap{white-space:nowrap}
-@media(max-width:680px){header{padding-bottom:40px}main{margin-top:-22px}.hero-row{flex-direction:column;gap:12px}.header-actions{min-width:0;width:100%;justify-content:flex-start}.layout{grid-template-columns:1fr}.sidebar .statsrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center}.sidebar .statbig{font-size:30px}.sidebar .progressbar{margin:9px 0}.study{padding:16px}.studyhead{margin-bottom:14px}.flashcard{min-height:250px;padding:27px 12px}.panel{padding:16px}.sidebar .secondary-zone{display:none}.ministats{margin-top:6px}}
+@media(max-width:680px){header{padding-bottom:40px}main{margin-top:-22px}.hero-row{flex-direction:column;gap:12px}.header-actions{min-width:0;width:100%;justify-content:flex-end}.layout{grid-template-columns:1fr}.sidebar .statsrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center}.sidebar .statbig{font-size:30px}.sidebar .progressbar{margin:9px 0}.study{padding:16px}.studyhead{margin-bottom:14px}.flashcard{min-height:250px;padding:27px 12px}.panel{padding:16px}.sidebar .secondary-zone{display:none}.ministats{margin-top:6px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 
 .usage-note{margin:12px 0 0;background:#f3f9fd;border:1px solid #cbddec;color:#334d67;padding:12px 15px;border-radius:12px;font-size:13px;line-height:1.5}.deck-select{width:100%;padding:10px 11px;border-radius:11px;border:1px solid var(--border);color:var(--ink);background:#fbfcff;font-weight:700}.deck-caption{margin:15px 0 7px}.deck-hint{margin:7px 0 8px;font-size:12px;color:var(--sub);line-height:1.5}
@@ -71,14 +80,132 @@ button,select{font:inherit}button{cursor:pointer;transition:transform .08s,backg
 #audio-download-btn{margin-top:8px;font-size:12px}
 .german-voice-box[hidden]{display:none!important}
 .example-audio-btn{margin:10px 0 0;border:1px solid #b9d6e9;background:#fff;color:#244967;border-radius:9px;padding:8px 12px;font-weight:750;font-size:12px}
+
+/* Dark mode: a single palette for all library cards, flashcards, controls and audio settings. */
+#theme-toggle{border:1px solid rgba(225,231,255,.38);color:white;background:rgba(255,255,255,.12);padding:10px 14px;border-radius:12px;font-weight:750;cursor:pointer;white-space:nowrap;line-height:1.25}
+#theme-toggle:hover{background:rgba(255,255,255,.22)}
+#theme-toggle #theme-icon{font-size:16px;vertical-align:-1px;margin-right:3px}
+html[data-theme="dark"]{color-scheme:dark;--bg:#0d1526;--ink:#e9f1ff;--sub:#b1bed3;--border:#34425b;--white:#142137;--shade:#212c47;--green:#218e70;--red:#b84758}
+html[data-theme="dark"] header{background:linear-gradient(112deg,#111b32,#30285b)}
+html[data-theme="dark"] header .eyebrow{color:#bdc5ff}
+html[data-theme="dark"] header p{color:#dbe1f9}
+html[data-theme="dark"] .panel{background:#142137;box-shadow:0 13px 36px #030a1b65}
+html[data-theme="dark"] .progressbar{background:#2b3853}
+html[data-theme="dark"] .ministat{background:#1b2b44}
+html[data-theme="dark"] .sidebarbtn{background:#182840;color:var(--ink)}
+html[data-theme="dark"] .sidebarbtn:hover{background:#253450}
+html[data-theme="dark"] .sidebarbtn.active{border-color:#9080e4;background:#332b5b;color:#f4efff}
+html[data-theme="dark"] .mini-btn{background:#1c2d47;color:var(--ink)}
+html[data-theme="dark"] .mini-btn:hover{background:#2a3d5b}
+html[data-theme="dark"] .pill{background:#342e63;color:#d7ccff}
+html[data-theme="dark"] .pill-soft{background:#23334c;color:#cad9ed}
+html[data-theme="dark"] .flashcard{border-color:#50507d;background:radial-gradient(ellipse at 86% 9%,#35305b,transparent 65%),linear-gradient(150deg,#202e4a,#17243c);box-shadow:0 12px 25px #050b1d52}
+html[data-theme="dark"] .flashcard .lang{color:#c6b9f2}
+html[data-theme="dark"] .flashcard .help{color:#b5c3dc}
+html[data-theme="dark"] .flashcard.flipped{background:radial-gradient(ellipse at 86% 9%,#214b4b,transparent 65%),linear-gradient(150deg,#1b3c40,#182f38);border-color:#4c9d85}
+html[data-theme="dark"] .flashcard.flipped .lang{color:#99e2c7}
+html[data-theme="dark"] .study select,html[data-theme="dark"] .deck-select,html[data-theme="dark"] .control-group select{background:#1d2b44;color:var(--ink);border-color:var(--border)}
+html[data-theme="dark"] .foot{color:#9fadc4}
+html[data-theme="dark"] .note{background:#373020;border-color:#76603a;color:#f6dda7}
+html[data-theme="dark"] .toast{background:#2b3d5b;color:#fff}
+html[data-theme="dark"] .usage-note{background:#1c3447;border-color:#3e647e;color:#d2e6f7}
+html[data-theme="dark"] .german-voice-box{background:#1b2b44;border-color:#3a4d69}
+html[data-theme="dark"] .german-voice-box label{color:#b9d6f3}
+html[data-theme="dark"] .voice-row select{background:#162339;border-color:#405676;color:var(--ink)}
+html[data-theme="dark"] .german-voice-status{color:#b8c8dc}
+html[data-theme="dark"] .german-voice-status.error{color:#f4a8b0}
+html[data-theme="dark"] .library-tile{background:#17253c;border-color:#3c4c67;box-shadow:0 8px 27px #03081756}
+html[data-theme="dark"] .library-tile:hover{border-color:#8f80df;background:#252b49}
+html[data-theme="dark"] .library-tile[aria-selected="true"]{border-color:#a391fa;background:#302b55;box-shadow:0 8px 25px #0b0e2463}
+html[data-theme="dark"] .library-icon{background:#39315e}
+html[data-theme="dark"] .library-tile:nth-child(2) .library-icon{background:#21483f}
+html[data-theme="dark"] .library-tile small{color:#c3d0e5}
+html[data-theme="dark"] .example-area{background:#1b344a;border-color:#3c627d}
+html[data-theme="dark"] .example-area b{color:#a9c7e6}
+html[data-theme="dark"] .example-area .ex-en{color:#c2d0e7}
+html[data-theme="dark"] .section-info{color:#b8c7df}
+html[data-theme="dark"] .audio-switch{background:#19362f;border-color:#356957}
+html[data-theme="dark"] .audio-switch label{color:#b1ead2}
+html[data-theme="dark"] .audio-switch select{background:#132a2c;border-color:#4c8170;color:var(--ink)}
+html[data-theme="dark"] .audio-switch .audio-explain{color:#b3d7c9}
+html[data-theme="dark"] .example-audio-btn{background:#1e3548;border-color:#486b83;color:#d8eefa}
+html[data-theme="dark"] .action.again{background:#ae4056}
+html[data-theme="dark"] .action.known{background:#187960}
+html[data-theme="dark"] .action:disabled{opacity:.42}
+@media(max-width:680px){#theme-toggle{padding:9px 12px}#pwa-install-button{padding:10px 12px}}
+
+/* Compact mobile-first study screen: flashcards appear before the progress dashboard. */
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.mobile-quick-controls{display:none}
+@media(max-width:680px){
+ header{padding:10px 12px 28px}
+ .shell.hero-row{flex-direction:row;align-items:center;justify-content:space-between;gap:8px}
+ .hero-copy{min-width:0;flex:1}
+ header .eyebrow,header p{display:none}
+ header h1{font-size:26px;margin:0;white-space:nowrap;line-height:1.15}
+ .header-actions{display:flex;width:auto;min-width:0;flex:0 0 auto;gap:6px;align-items:center}
+ #theme-toggle{padding:8px 9px;font-size:13px;line-height:1}
+ #theme-toggle #theme-label{display:none}
+ #theme-toggle #theme-icon{margin:0;font-size:17px}
+ #pwa-install-button{padding:8px 10px;border-radius:9px;font-size:12px}
+ main{display:flex;flex-direction:column;gap:8px;margin:-14px auto 22px;padding:0 10px}
+ .layout{display:contents}
+ .library-picker{order:0;grid-template-columns:1fr 1fr;gap:6px;margin:0}
+ .library-tile{min-height:45px;padding:9px 10px;flex-direction:row;align-items:center;justify-content:center;border-radius:12px;gap:5px}
+ .library-tile b{font-size:12px;margin:0;line-height:1.1}
+ .library-tile .library-icon,.library-tile small{display:none}
+ .mobile-quick-controls{order:1;display:grid;grid-template-columns:1fr;gap:6px;background:var(--white);border:1px solid var(--border);border-radius:13px;padding:8px;box-shadow:0 5px 16px #13223b0b}
+ .mobile-filter-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;min-width:0}
+ .mobile-quick-controls select{width:100%;min-width:0;font-size:12px;font-weight:650;line-height:1.2;border:1px solid var(--border);border-radius:8px;padding:8px 23px 8px 9px;color:var(--ink);background:var(--white);text-overflow:ellipsis;height:36px}
+ .mobile-quick-controls select:focus-visible{outline:2px solid #9183ed;outline-offset:1px}
+ .study{order:2;padding:12px!important;border-radius:14px}
+ .sidebar{order:3;margin-top:6px}
+ .foot{order:4;margin-top:6px}
+ .studyhead{margin-bottom:9px;gap:6px}
+ .studyhead .pill{padding:5px 7px;font-size:10px}
+ .studyhead .count{font-size:12px;white-space:nowrap}
+ .study .section-info{display:none}
+ .flashcard{min-height:clamp(153px,23dvh,190px);padding:15px 10px;border-radius:14px;box-shadow:none}
+ .flashcard.flipped{min-height:145px}
+ .flashcard .lang{font-size:10px;margin-bottom:8px;letter-spacing:.12em}
+ .flashcard .word{font-size:clamp(23px,6.4vw,32px)}
+ .flashcard .help{font-size:11px;margin-top:10px}
+ .actions{gap:8px;margin-top:9px}
+ .action{font-size:13px;padding:11px 5px;border-radius:10px}
+ .subactions{margin-top:9px;gap:7px}
+ .subactions .buttons-inline{gap:6px}
+ .subactions .mini-btn{font-size:11px;padding:8px 10px}
+ .example-area{margin-top:9px;padding:10px;font-size:12px}
+ .example-area .ex-de{font-size:14px;margin-bottom:3px}
+ .example-area .ex-en{font-size:12px}
+ .example-audio-btn{margin-top:7px;padding:7px 9px}
+ .usage-note{padding:8px 10px;font-size:12px}
+ .audio-switch{margin-top:12px;padding:10px}
+ .study .hint{display:none}
+}
 </style></head>
 <body>
-<header><div class="shell hero-row"><div class="hero-copy"><div class="eyebrow">Deutsch lernen · B1–B2 · Free &amp; offline</div><h1>Wortspiel <span aria-hidden="true">✦</span></h1><p>Two different learning libraries. Practice English-like German vocabulary or real-life phrases for travel, shopping, appointments, work and everyday conversations.</p></div><div class="header-actions"><button type="button" id="pwa-install-button" aria-label="Install app">Install app</button></div></div></header>
+<header><div class="shell hero-row"><div class="hero-copy"><div class="eyebrow">Deutsch lernen · B1–B2 · Free &amp; offline</div><h1>Wortspiel <span aria-hidden="true">✦</span></h1><p>Two different learning libraries. Practice English-like German vocabulary or real-life phrases for travel, shopping, appointments, work and everyday conversations.</p></div><div class="header-actions"><button type="button" id="theme-toggle" aria-pressed="false" aria-label="Switch to dark mode" title="Toggle light and dark mode"><span id="theme-icon" aria-hidden="true">☾</span> <span id="theme-label">Dark mode</span></button><button type="button" id="pwa-install-button" aria-label="Install app">Install app</button></div></div></header>
 <main>
 <nav class="library-picker" role="tablist" aria-label="Choose vocabulary library">
   <button class="library-tile" role="tab" type="button" id="tab-lookalikes" aria-selected="true" aria-controls="lookalikes-options" data-lib="lookalikes"><span class="library-icon" aria-hidden="true">✦</span><span><b>English lookalikes</b><small>400 similar German–English words</small></span></button>
   <button class="library-tile" role="tab" type="button" id="tab-everyday" aria-selected="false" aria-controls="everyday-options" data-lib="everyday"><span class="library-icon" aria-hidden="true">🏙️</span><span><b>Everyday German</b><small>400 expressions in 10 real-life topics</small></span></button>
 </nav>
+<!-- Mobile-only controls keep word selection close to the flashcard. The original controls remain in the progress panel for desktop. -->
+<div class="mobile-quick-controls" role="group" aria-label="Quick vocabulary practice settings">
+  <label class="visually-hidden" for="mobile-wordset">Word set or everyday topic</label>
+  <select id="mobile-wordset" aria-label="Word set or everyday topic"></select>
+  <div class="mobile-filter-row">
+    <label class="visually-hidden" for="mobile-type">Word type</label>
+    <select id="mobile-type" aria-label="Word type"></select>
+    <label class="visually-hidden" for="mobile-mode">Practice mode</label>
+    <select id="mobile-mode" aria-label="Practice mode">
+      <option value="all">All selected</option>
+      <option value="again">↻ Difficult</option>
+      <option value="new">○ Not reviewed</option>
+    </select>
+  </div>
+</div>
 <div class="layout">
 <section class="panel sidebar" aria-label="Progress and practice options">
   <h2>Your progress</h2>
@@ -155,7 +282,17 @@ function stats(){const x=counts(),pct=x.total?Math.round(100*x.known/x.total):0;
 function buildQueue(){queue=selectedIds().filter(i=>mode==='all'||(mode==='new'&&!records[cardKey(i)])||(mode==='again'&&records[cardKey(i)]==='again'));cursor=0;flipped=false;render();}
 function changeLibrary(next){if(!['lookalikes','everyday'].includes(next))return;library=next;document.querySelectorAll('[data-lib]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.lib===next)));el('lookalikes-options').hidden=next!=='lookalikes';el('everyday-options').hidden=next!=='everyday';el('section-info').textContent=next==='everyday'?'Everyday German · Learn natural phrases in real situations':'English lookalikes · 400 familiar-looking German words';mode='all';document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));buildQueue();}
 function changeMode(next){mode=next;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===next));buildQueue();}
-function render(){stats();el('mode-label').textContent=mode==='all'?'All selected words':mode==='again'?'Difficult words':'Not reviewed';const n=queue.length,empty=n===0||cursor>=n;el('cardstage').style.display=empty?'none':'block';el('emptystage').style.display=empty?'flex':'none';el('session-count').textContent=empty?`${n} in session`:`${cursor+1} / ${n}`;
+function syncMobileControls(){
+ const setSource=el(library==='lookalikes'?'deck':'everyday-topic');
+ const typeSource=el(library==='lookalikes'?'lookalike-type':'everyday-type');
+ const mobileSet=el('mobile-wordset'), mobileType=el('mobile-type');
+ if(mobileSet.dataset.source!==setSource.id){mobileSet.innerHTML=setSource.innerHTML;mobileSet.dataset.source=setSource.id;}
+ if(mobileType.dataset.source!==typeSource.id){mobileType.innerHTML=typeSource.innerHTML;mobileType.dataset.source=typeSource.id;}
+ mobileSet.value=setSource.value;
+ mobileType.value=typeSource.value;
+ el('mobile-mode').value=mode;
+}
+function render(){syncMobileControls();stats();el('mode-label').textContent=mode==='all'?'All selected words':mode==='again'?'Difficult words':'Not reviewed';const n=queue.length,empty=n===0||cursor>=n;el('cardstage').style.display=empty?'none':'block';el('emptystage').style.display=empty?'flex':'none';el('session-count').textContent=empty?`${n} in session`:`${cursor+1} / ${n}`;
  if(empty){const x=counts();el('empty-title').textContent=n===0?'Nothing in this selection':'Session complete!';el('empty-copy').textContent=n===0?(mode==='again'?'Mark cards “Practice again” to collect difficult words here.':mode==='new'?'All selected words have been reviewed.':'Try choosing a different topic or word type.'):`You now know ${x.known} of ${x.total} selected words. Select a new topic or review difficult words.`;el('type-label').textContent='Ready';return;}
  const c=activeLibrary()[queue[cursor]];el('type-label').textContent=c.type;el('lang').textContent=flipped?'DEUTSCH · ANSWER':'ENGLISH · PROMPT';el('word').textContent=flipped?c.de:c.en;el('tap-hint').textContent=flipped?'Tap to see the English prompt':'Tap or press Space to reveal German';el('flashcard').classList.toggle('flipped',flipped);el('again-btn').disabled=!flipped;el('known-btn').disabled=!flipped;el('prev').disabled=cursor===0;el('next').disabled=cursor===n-1;
  const showExample=library==='everyday'&&flipped;el('example').style.display=showExample?'block':'none';if(showExample){el('example-de').textContent=c.example;el('example-en').textContent=c.exampleEn;}
@@ -304,6 +441,16 @@ async function importData(e){const f=e.target.files?.[0];if(!f)return;try{const 
 document.querySelectorAll('[data-lib]').forEach(b=>b.addEventListener('click',()=>changeLibrary(b.dataset.lib)));
 document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>changeMode(b.dataset.mode)));
 el('deck').addEventListener('change',e=>{deck=e.target.value;buildQueue();});el('lookalike-type').addEventListener('change',e=>{lookalikeType=e.target.value;buildQueue();});el('everyday-topic').addEventListener('change',e=>{everydayTopic=e.target.value;buildQueue();});el('everyday-type').addEventListener('change',e=>{everydayType=e.target.value;buildQueue();});
+// The compact mobile dropdowns mirror the original selectors, preserving their filter logic and progress.
+el('mobile-wordset').addEventListener('change', e=>{
+ const original=el(library==='lookalikes'?'deck':'everyday-topic');
+ original.value=e.target.value;original.dispatchEvent(new Event('change',{bubbles:true}));
+});
+el('mobile-type').addEventListener('change', e=>{
+ const original=el(library==='lookalikes'?'lookalike-type':'everyday-type');
+ original.value=e.target.value;original.dispatchEvent(new Event('change',{bubbles:true}));
+});
+el('mobile-mode').addEventListener('change', e=>changeMode(e.target.value));
 el('flashcard').addEventListener('click',flip);el('flashcard').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();flip();}});
 el('again-btn').addEventListener('click',()=>rate('again'));el('known-btn').addEventListener('click',()=>rate('known'));el('prev').addEventListener('click',()=>next(-1));el('next').addEventListener('click',()=>next(1));el('restart').addEventListener('click',buildQueue);el('sound').addEventListener('click',sayGerman);
 el('refresh-voices').addEventListener('click',()=>refreshGermanVoices(true));
@@ -320,6 +467,33 @@ el('export').addEventListener('click',download);el('import').addEventListener('c
 el('reset').addEventListener('click',()=>{if(!confirm('Reset all 800-word progress on this device? Download a backup first if needed.'))return;records={};save();buildQueue();toast('Progress reset.');});
 document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const t=e.target;if(t&&['INPUT','SELECT','TEXTAREA','BUTTON'].includes(t.tagName))return;if(e.key===' '){e.preventDefault();flip();}else if(e.key==='1'){rate('again');}else if(e.key==='2'){rate('known');}else if(e.key==='ArrowLeft'){next(-1);}else if(e.key==='ArrowRight'){next(1);}else if(e.key.toLowerCase()==='s'){sayGerman();}});
 load();changeLibrary('lookalikes');
+</script>
+<script>
+(function(){
+  var toggle=document.getElementById('theme-toggle');
+  var label=document.getElementById('theme-label');
+  var icon=document.getElementById('theme-icon');
+  function update(theme){
+    document.documentElement.setAttribute('data-theme',theme);
+    var dark=theme==='dark';
+    toggle.setAttribute('aria-pressed',String(dark));
+    toggle.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');
+    label.textContent=dark?'Light mode':'Dark mode';
+    icon.textContent=dark?'☀':'☾';
+    document.querySelector('meta[name="theme-color"]').setAttribute('content',dark?'#121b34':'#1a2854');
+  }
+  update(document.documentElement.getAttribute('data-theme')||'light');
+  toggle.addEventListener('click',function(){
+    var next=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    update(next);
+    try{localStorage.setItem('wortspiel-ui-theme',next)}catch(e){}
+  });
+  var media=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)');
+  if(media && typeof media.addEventListener==='function')media.addEventListener('change',function(e){
+    var stored=null;try{stored=localStorage.getItem('wortspiel-ui-theme')}catch(err){}
+    if(stored!=='light'&&stored!=='dark')update(e.matches?'dark':'light');
+  });
+})();
 </script>
 <script>
 // PWA only. The flashcards and saved progress remain identical to the original site.
