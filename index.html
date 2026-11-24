@@ -362,20 +362,40 @@ async function getRecordedManifest(){
  }).finally(()=>{manifestRequest=null;});
  return manifestRequest;
 }
+// Recordings are hosted on Pages and also in the public GitHub repository.
+// The direct GitHub source is a fallback if mobile browsers cannot play a Pages URL.
+const DIRECT_AUDIO_ROOT='https://raw.githubusercontent.com/YagmurKati/german-vocabulary-game/main/';
 function playRecorded(example=false){
  if(!queue.length||cursor>=queue.length)return;
  const idx=queue[cursor];
- // Construct the playback path immediately inside the tap handler. This avoids
- // losing the user gesture on iOS Safari while waiting for a network request.
  const prefix=example?'x':library==='lookalikes'?'l':'e';
- const filename='./audio/'+prefix+String(idx).padStart(3,'0')+'.mp3';
- if(recordingPlayer){recordingPlayer.pause();recordingPlayer.currentTime=0;}
- const player=new Audio(filename);
+ const file='audio/'+prefix+String(idx).padStart(3,'0')+'.mp3';
+ if(recordingPlayer){recordingPlayer.pause();recordingPlayer.removeAttribute('src');recordingPlayer.load();}
+ const player=new Audio();
  recordingPlayer=player;
- player.play().catch(err=>{
-  toast('Recorded audio unavailable. Run the GitHub audio-generation workflow first.');
-  console.warn('Wortspiel recorded pronunciation:',filename,err);
- });
+ const siteUrl='./'+file;
+ const githubUrl=DIRECT_AUDIO_ROOT+file;
+ function showError(err){
+  if(recordingPlayer!==player)return;
+  toast('Unable to play the German recording. Check your connection or saved offline audio.');
+  console.warn('Wortspiel audio playback:',player.currentSrc,err);
+ }
+ // GitHub's original files play correctly on Android even when the site's
+ // service-worker audio endpoint does not. Use the same file bytes online.
+ function attempt(url,fallback){
+  if(recordingPlayer!==player)return;
+  player.src=url;
+  const promise=player.play();
+  if(promise&&typeof promise.catch==='function'){
+   promise.catch(err=>{
+    if(recordingPlayer!==player)return;
+    if(fallback){attempt(fallback,null);}
+    else showError(err);
+   });
+  }
+ }
+ if(navigator.onLine===false)attempt(siteUrl,null);
+ else attempt(githubUrl,siteUrl);
 }
 function playDeviceGerman(text){
  refreshGermanVoices(true);
@@ -413,8 +433,15 @@ async function downloadAudioForOffline(){
     const track=entries[index++],url=new URL('./'+track.file, location.href).href;
     try{
      if(!(await cache.match(url))){
-      const r=await fetch(url);
-      if(!r.ok)throw Error('HTTP '+r.status);
+      let r;
+      try{
+       r=await fetch(url);
+       if(!r.ok)throw Error('Website audio HTTP '+r.status);
+      }catch(e){
+       // Same recordings; direct source bypasses a faulty Pages/service-worker response.
+       r=await fetch(DIRECT_AUDIO_ROOT+track.file);
+       if(!r.ok)throw Error('Direct audio HTTP '+r.status);
+      }
       await cache.put(url,r.clone());
      }
      ok++;
