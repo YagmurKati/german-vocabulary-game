@@ -2,7 +2,7 @@
 // Force refresh for corrected noun illustrations: Verspätung, Anschluss, Haltestelle, Fahrkartenautomat
 'use strict';
 // Refresh cached app shell and PWA manifest for the WortFlip name change.
-const CACHE_NAME = 'wortspiel-pwa-v13-noun-picture-display-fix';
+const CACHE_NAME = 'wortspiel-pwa-v15-100-speaking-pictures';;
 const CACHE_PREFIX = 'wortspiel-pwa-';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './audio/tracks.json',
