@@ -1,6 +1,6 @@
 'use strict';
 // Refresh cached app shell and PWA manifest for the WortFlip name change.
-const CACHE_NAME = 'wortspiel-pwa-v8-everyday-illustrations';
+const CACHE_NAME = 'wortspiel-pwa-v9-correct-picture-mappings';
 const CACHE_PREFIX = 'wortspiel-pwa-';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './audio/tracks.json',
