@@ -1,6 +1,6 @@
 'use strict';
 // Refresh cached app shell and PWA manifest for the WortFlip name change.
-const CACHE_NAME = 'wortspiel-pwa-v6-illustrations-phase4';
+const CACHE_NAME = 'wortspiel-pwa-v7-illustrations-phase5';
 const CACHE_PREFIX = 'wortspiel-pwa-';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './audio/tracks.json',
@@ -119,6 +119,26 @@ const ASSETS = [
   './images/l268.webp',
   './images/l271.webp',
   './images/l272.webp'
+  './images/e080.webp',
+  './images/e083.webp',
+  './images/e092.webp',
+  './images/e097.webp',
+  './images/e286.webp',
+  './images/e288.webp',
+  './images/e289.webp',
+  './images/e361.webp',
+  './images/e362.webp',
+  './images/e363b.webp',
+  './images/e368b.webp',
+  './images/e369b.webp',
+  './images/e370.webp',
+  './images/e371.webp',
+  './images/e373b.webp',
+  './images/e382.webp',
+  './images/e385.webp',
+  './images/e386.webp',
+  './images/e389.webp',
+  './images/e390.webp',
 ];
 const APP_ROOT = new URL('./', self.registration.scope);
 
