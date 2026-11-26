@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Preview 10 pronunciation samples first, or generate all 1200 files'
+        description: 'Preview the voice, or generate all 1600 word and example recordings'
         required: true
         type: choice
         default: preview
@@ -46,22 +46,77 @@ jobs:
           name: wortspiel-german-pronunciation-preview
           path: audio/*.mp3
           retention-days: 7
-      - name: Create all 1200 German audio clips
+      - name: Ensure the original 1200 German recordings
         if: inputs.mode == 'all'
         run: python scripts/generate_german_audio.py --model de_DE-thorsten-medium.onnx
+      - name: Generate 400 new English-lookalike sentence recordings
+        if: inputs.mode == 'all'
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import subprocess
+          import tempfile
+          import wave
+          import re
+          from piper import PiperVoice
+          
+          site = Path('index.html').read_text(encoding='utf-8')
+          match = re.search(r'const LOOKALIKE_CARDS=(\[.*?\]);\s*const EVERYDAY_CARDS=', site, re.S)
+          if not match:
+              raise SystemExit('Cannot find LOOKALIKE_CARDS in index.html')
+          lookalikes = json.loads(match.group(1))
+          if len(lookalikes) != 400 or any(not x.get('example') for x in lookalikes):
+              raise SystemExit('Expected 400 nonempty German lookalike examples')
+          
+          manifest_file = Path('audio/tracks.json')
+          manifest = json.loads(manifest_file.read_text(encoding='utf-8'))
+          for name in ('lookalikes', 'everyday', 'examples'):
+              if len(manifest['collections'][name]) != 400:
+                  raise SystemExit('Existing audio manifest is not complete')
+          if any(manifest['collections']['lookalikes'][i]['text'] != c['de'] for i, c in enumerate(lookalikes)):
+              raise SystemExit('Lookalike words differ from original audio track order')
+          
+          voice = PiperVoice.load(str(Path('de_DE-thorsten-medium.onnx').resolve()))
+          with tempfile.TemporaryDirectory() as tmp:
+              wav = Path(tmp) / 'sentence.wav'
+              for i, card in enumerate(lookalikes):
+                  filename = f'y{i:03d}.mp3'
+                  output = Path('audio') / filename
+                  if output.is_file() and output.stat().st_size > 1024:
+                      continue
+                  with wave.open(str(wav), 'wb') as stream:
+                      voice.synthesize_wav(card['example'], stream)
+                  subprocess.run([
+                      'ffmpeg', '-hide_banner', '-loglevel', 'error', '-y',
+                      '-i', str(wav), '-vn', '-ac', '1', '-ar', '24000',
+                      '-codec:a', 'libmp3lame', '-b:a', '48k', str(output)
+                  ], check=True)
+                  if output.stat().st_size < 800:
+                      raise SystemExit(f'Audio file too small: {output}')
+                  if (i + 1) % 50 == 0:
+                      print(f'Generated {i + 1} of 400 lookalike example sentences', flush=True)
+          
+          manifest['collections']['lookalike_examples'] = [
+              {'text': c['example'], 'file': f'audio/y{i:03d}.mp3'}
+              for i, c in enumerate(lookalikes)
+          ]
+          manifest_file.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print('All 400 extra sentences have audio tracks; manifest updated to 1600 files.')
+          PY
       - name: Check generated count and file types
         if: inputs.mode == 'all'
         run: |
-          test "$(find audio -maxdepth 1 -name '*.mp3' | wc -l)" -eq 1200
-          file audio/l000.mp3 audio/e000.mp3 audio/x000.mp3
+          test "$(find audio -maxdepth 1 -name '*.mp3' | wc -l)" -eq 1600
+          file audio/l000.mp3 audio/e000.mp3 audio/x000.mp3 audio/y000.mp3
       - name: Publish audio files to the same repository
         if: inputs.mode == 'all'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add audio/*.mp3
+          git add audio/*.mp3 audio/tracks.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Add consistent German pronunciation recordings (Piper)'
+            git commit -m 'Add recorded German examples for all 400 lookalike words'
             git push
           fi
       - name: Ask GitHub Pages to rebuild from main
