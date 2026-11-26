@@ -41,7 +41,7 @@ button,select{font:inherit}button{cursor:pointer;transition:transform .08s,backg
 .german-voice-status.error{color:#9a3444}
 
 /* Two genuinely separate study libraries, each with its own selector. */
-.library-picker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:20px}
+.library-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:20px}
 .library-tile{appearance:none;display:flex;gap:12px;align-items:center;text-align:left;padding:18px;background:#fff;border:2px solid #dce4ef;border-radius:18px;color:var(--ink);min-height:94px;box-shadow:0 8px 26px #11284a0d;cursor:pointer}
 .library-tile:hover{border-color:#adabe7;background:#fcfbff}
 .library-tile[aria-selected="true"]{border-color:#6651c2;background:#f2efff;box-shadow:0 8px 22px #6751bf19}
@@ -216,9 +216,7 @@ html[data-theme="dark"] .word-picture{border-color:#43556d;background:#243047}
 <main>
 <nav class="library-picker" role="tablist" aria-label="Choose vocabulary library">
   <button class="library-tile" role="tab" type="button" id="tab-lookalikes" aria-selected="true" aria-controls="lookalikes-options" data-lib="lookalikes"><span class="library-icon" aria-hidden="true">✦</span><span><b>English lookalikes</b><small>400 similar German–English words</small></span></button>
-  <button class="library-tile" role="tab" type="button" id="tab-everyday" aria-selected="false" aria-controls="everyday-options" data-lib="everyday"><span class="library-icon" aria-hidden="true">🏙️</span><span><b>Everyday German</b><small>400 expressions in 10 real-life topics</small></span></button>
-  <button class="library-tile" role="tab" type="button" id="tab-nouns" aria-selected="false" aria-controls="nouns-options" data-lib="nouns"><span class="library-icon" aria-hidden="true">📚</span><span><b>Everyday nouns</b><small>200 useful everyday nouns</small></span></button>
-  <button class="library-tile" role="tab" type="button" id="tab-speaking" aria-selected="false" aria-controls="speaking-options" data-lib="speaking"><span class="library-icon" aria-hidden="true">💬</span><span><b>Speaking essentials</b><small>100 everyday conversation nouns</small></span></button>
+  <button class="library-tile" role="tab" type="button" id="tab-everyday" aria-selected="false" aria-controls="everyday-options" data-lib="everyday"><span class="library-icon" aria-hidden="true">🏙️</span><span><b>Everyday German</b><small>700 expressions &amp; useful nouns</small></span></button>
 </nav>
 <!-- Mobile-only controls keep word selection close to the flashcard. The original controls remain in the progress panel for desktop. -->
 <div class="mobile-quick-controls" role="group" aria-label="Quick vocabulary practice settings">
@@ -246,21 +244,49 @@ html[data-theme="dark"] .word-picture{border-color:#43556d;background:#243047}
     <div class="control-group"><label for="lookalike-type">Part of speech</label><select id="lookalike-type"><option value="all">All word types</option><option value="Verb">Verbs</option><option value="Adjektiv">Adjectives</option><option value="Nomen">Nouns</option></select></div>
   </div>
   <div id="everyday-options" role="tabpanel" aria-labelledby="tab-everyday" hidden>
-    <div class="control-group"><label for="everyday-topic">Everyday German · Choose a topic</label><select id="everyday-topic"><option value="all">All 400 everyday expressions</option><option value="Transport &amp; travel">Transport &amp; travel · 40</option><option value="Appointments &amp; official matters">Appointments &amp; official matters · 40</option><option value="Home &amp; cleaning">Home &amp; cleaning · 40</option><option value="Shopping &amp; money">Shopping &amp; money · 40</option><option value="Conversation &amp; relationships">Conversation &amp; relationships · 40</option><option value="Work, studying &amp; digital life">Work, studying &amp; digital life · 40</option><option value="Health &amp; body">Health &amp; body · 40</option><option value="Food &amp; cooking">Food &amp; cooking · 40</option><option value="Feelings &amp; useful descriptions">Feelings &amp; useful descriptions · 40</option><option value="Everyday nouns &amp; essential places">Everyday nouns &amp; essential places · 40</option></select></div>
+    <div class="control-group"><label for="everyday-topic">Everyday German · Choose a set or topic</label>
+      <select id="everyday-topic">
+        <option value="all">All Everyday German · 700</option>
+        <option value="group:expressions">All expressions · 400</option>
+        <option value="group:nouns">All nouns · 300</option>
+        <option value="group:practical">Practical nouns · 200</option>
+        <option value="group:conversation">Conversational nouns · 100</option>
+        <optgroup label="Everyday expressions">
+        <option value="Transport &amp; travel">Transport &amp; travel · 40</option>
+        <option value="Appointments &amp; official matters">Appointments &amp; official matters · 40</option>
+        <option value="Home &amp; cleaning">Home &amp; cleaning · 40</option>
+        <option value="Shopping &amp; money">Shopping &amp; money · 40</option>
+        <option value="Conversation &amp; relationships">Conversation &amp; relationships · 40</option>
+        <option value="Work, studying &amp; digital life">Work, studying &amp; digital life · 40</option>
+        <option value="Health &amp; body">Health &amp; body · 40</option>
+        <option value="Food &amp; cooking">Food &amp; cooking · 40</option>
+        <option value="Feelings &amp; useful descriptions">Feelings &amp; useful descriptions · 40</option>
+        <option value="Everyday nouns &amp; essential places">Everyday nouns &amp; essential places · 40</option>
+        </optgroup>
+        <optgroup label="Practical nouns">
+        <option value="Home &amp; repairs">Home &amp; repairs · 20</option>
+        <option value="Transport &amp; city">Transport &amp; city · 20</option>
+        <option value="Shopping &amp; services">Shopping &amp; services · 20</option>
+        <option value="Official matters &amp; paperwork">Official matters &amp; paperwork · 20</option>
+        <option value="Health &amp; pharmacy">Health &amp; pharmacy · 20</option>
+        <option value="Work &amp; study">Work &amp; study · 20</option>
+        <option value="Communication &amp; relationships">Communication &amp; relationships · 20</option>
+        <option value="Money &amp; contracts">Money &amp; contracts · 20</option>
+        <option value="Food &amp; household">Food &amp; household · 20</option>
+        <option value="Digital life &amp; environment">Digital life &amp; environment · 20</option>
+        </optgroup>
+        <optgroup label="Conversational nouns">
+        <option value="Daily life &amp; plans">Daily life &amp; plans · 20</option>
+        <option value="Explaining &amp; understanding">Explaining &amp; understanding · 20</option>
+        <option value="People &amp; feelings">People &amp; feelings · 20</option>
+        <option value="Conversation &amp; communication">Conversation &amp; communication · 20</option>
+        <option value="Everyday errands &amp; situations">Everyday errands &amp; situations · 20</option>
+        </optgroup>
+      </select>
+    </div>
     <div class="control-group"><label for="everyday-type">Part of speech</label><select id="everyday-type"><option value="all">All types</option><option value="Verb / expression">Verbs &amp; expressions</option><option value="Adjective">Adjectives</option><option value="Noun">Nouns</option></select></div>
-    <p class="deck-hint">English first → German answer → a natural German example with English translation. All four libraries include examples.</p>
-  </div>
-  <div id="nouns-options" role="tabpanel" aria-labelledby="tab-nouns" hidden>
-    <div class="control-group"><label for="nouns-topic">Everyday nouns · Choose a topic</label><select id="nouns-topic"><option value="all">All 200 everyday nouns</option><option value="Home &amp; repairs">Home &amp; repairs · 20</option><option value="Transport &amp; city">Transport &amp; city · 20</option><option value="Shopping &amp; services">Shopping &amp; services · 20</option><option value="Official matters &amp; paperwork">Official matters &amp; paperwork · 20</option><option value="Health &amp; pharmacy">Health &amp; pharmacy · 20</option><option value="Work &amp; study">Work &amp; study · 20</option><option value="Communication &amp; relationships">Communication &amp; relationships · 20</option><option value="Money &amp; contracts">Money &amp; contracts · 20</option><option value="Food &amp; household">Food &amp; household · 20</option><option value="Digital life &amp; environment">Digital life &amp; environment · 20</option></select></div>
-    <div class="control-group"><label for="nouns-type">Part of speech</label><select id="nouns-type"><option value="all">All nouns</option></select></div>
-    <p class="deck-hint">Mainly B1–B2 nouns with their articles, plural forms, example sentences and English translations. Levels are estimates.</p>
-    <p class="deck-hint">Audio for these new cards uses the German speech voice installed on your device. Existing recorded audio remains unchanged.</p>
-  </div>
-  <div id="speaking-options" role="tabpanel" aria-labelledby="tab-speaking" hidden>
-    <div class="control-group"><label for="speaking-topic">Speaking essentials · Choose a topic</label><select id="speaking-topic"><option value="all">All 100 conversational nouns</option><option value="Daily life &amp; plans">Daily life &amp; plans · 20</option><option value="Explaining &amp; understanding">Explaining &amp; understanding · 20</option><option value="People &amp; feelings">People &amp; feelings · 20</option><option value="Conversation &amp; communication">Conversation &amp; communication · 20</option><option value="Everyday errands &amp; situations">Everyday errands &amp; situations · 20</option></select></div>
-    <div class="control-group"><label for="speaking-type">Part of speech</label><select id="speaking-type"><option value="all">All nouns</option></select></div>
-    <p class="deck-hint">69 practical A2 words and 31 B1 words, with articles, plurals and short, reusable German example sentences. A2 words appear under the existing A1–A2 level filter.</p>
-    <p class="deck-hint">German pronunciation uses your device's German voice. Illustrations are not included in this new set yet; the existing 200 noun illustrations remain unchanged.</p>
+    <p class="deck-hint">400 expressions and 300 nouns in one library. Choose any set or topic, or study all 700 together. Every card has a German example and English translation; noun cards include plurals.</p>
+    <p class="deck-hint">Recorded audio remains available for the original 400 expressions. The 300 newer noun cards use your device's German voice.</p>
   </div>
   <div class="control-group cefr-group"><label for="cefr-level">Vocabulary level (estimated)</label><select id="cefr-level" aria-label="Estimated CEFR level"><option value="all">All levels</option><option value="A1–A2">A1–A2</option><option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option></select><p class="deck-hint">Practice-level estimates, not official CEFR classifications.</p></div>
   <div class="stats-block"><div class="statsrow"><div><div class="statbig" id="mastery">0%</div><div class="muted">Words marked “I know it” in this selection</div></div><div><div class="progressbar" role="progressbar" aria-label="Known vocabulary" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="bar"><span id="barfill"></span></div><div class="muted"><b id="known-summary">0</b> of <b id="total-count">200</b> mastered</div></div></div>
@@ -271,7 +297,7 @@ html[data-theme="dark"] .word-picture{border-color:#43556d;background:#243047}
   <button type="button" class="sidebarbtn" data-mode="new">○ Not reviewed <span id="new-btn">(200)</span></button>
   <div class="caption">Your progress file</div>
   <div class="buttons-inline"><button id="export" class="mini-btn" type="button">↓ Save backup</button><button id="import" class="mini-btn" type="button">↑ Restore backup</button><input id="importFile" type="file" accept="application/json,.json" hidden></div>
-  <div class="note" id="storageNote">Your learning progress for all four libraries is saved in this browser, if storage is available. Existing ratings for the original 400 words use the same storage IDs as before. To move between devices, use <b>Save backup</b> and <b>Restore backup</b>.</div>
+  <div class="note" id="storageNote">Your learning progress for both libraries (all 1,100 cards) is saved in this browser, if storage is available. Existing ratings for the original 400 words use the same storage IDs as before. To move between devices, use <b>Save backup</b> and <b>Restore backup</b>.</div>
   <div class="buttons-inline spaced"><button id="reset" type="button" class="mini-btn">Reset all progress</button></div>
 </section>
 <section class="panel study" aria-label="Flashcard game">
@@ -314,14 +340,29 @@ const SPEAKING_CARDS=[{"de":"die Gegend","plural":"die Gegenden","en":"neighborh
 const USAGE_NOTES={"arrangieren":"✓ \"Blumen arrangieren\" or \"ein Treffen arrangieren\" are correct. For making an appointment, say \"einen Termin vereinbaren\".","irritieren":"\"Das irritiert mich\" often means \"That confuses/unsettles me,\" not just \"That annoys me.\"","studieren":"Usually studying at a university. For learning German at home, use \"Deutsch lernen\".","kontrollieren":"Often means \"check/inspect\". For controlling a machine, German may use \"steuern\".","realisieren":"Can mean \"realize/recognize\" or \"make something happen/implement\" depending on context.","passieren":"Means \"happen\" in everyday speech: \"Was ist passiert?\" = \"What happened?\"","sich engagieren":"\"Ich engagiere mich ehrenamtlich\" = \"I volunteer / get involved.\"","liken":"Informal social media word: \"ein Foto liken\". For liking something generally, use \"mögen\".","managen":"Common especially at work: \"ein Projekt managen\". \"organisieren\" is often simpler.","googeln":"Everyday informal: \"Ich google das schnell.\" = \"I’ll quickly Google it.\"","evaluieren":"Common in academic/professional contexts; everyday \"bewerten\" or \"prüfen\" can be simpler.","konservieren":"Often preserving food or materials, not \"conserving energy\" (\"Energie sparen\").","die Creme":"Usually skincare cream. Cream for coffee or whipped cream is usually \"Sahne\".","die Daten":"Plural: \"die Daten sind...\" = \"the data are...\". Singular: \"das Datum\" = date.","die Bank":"Means both a bank (money) and a bench (seat). Context decides.","genial":"Often means \"brilliant/amazing\", not necessarily relating to a genius.","gratis":"\"gratis\" = free of charge. \"frei\" can mean free/available.","sich orientieren":"\"Ich muss mich erst orientieren.\" = \"I need to get my bearings first.\"","qualifizieren":"\"Ich habe mich für die Stelle qualifiziert.\" = \"I qualified for the position.\"","waschen":"\"Ich wasche meine Hände.\" = \"I wash my hands.\"","warnen":"\"Ich warne dich.\" = \"I’m warning you.\"","packen":"\"Ich packe meinen Koffer.\" = \"I’m packing my suitcase.\"","wünschen":"\"Ich wünsche dir viel Glück.\" = \"I wish you good luck.\"","von zu Hause aus":"For working from home: \"Ich arbeite von zu Hause aus.\"","das Format":"\"das Dateiformat\" = \"file format\".","filtern":"\"Ich filtere die Ergebnisse.\" = \"I filter the results.\"","konfigurieren":"\"Ich konfiguriere den Router.\" = \"I configure the router.\"","priorisieren":"\"Ich muss meine Aufgaben priorisieren.\" = \"I need to prioritize my tasks.\"","stressen":"\"Das stresst mich.\" = \"That stresses me out.\"","professionell":"Often means professional in quality or conduct."};
 const STORE_KEY='wortspiel-de-en-100-progress-v1'; // Same as the original game: keep old 0..399 rating keys.
 const el=id=>document.getElementById(id);
-let records={},canStore=true,library='lookalikes',deck='original',lookalikeType='all',everydayTopic='all',everydayType='all',nounTopic='all',speakingTopic='all',cefrLevel='all',mode='all',queue=[],cursor=0,flipped=false;
-function activeLibrary(){return library==='lookalikes'?LOOKALIKE_CARDS:library==='everyday'?EVERYDAY_CARDS:library==='nouns'?NOUN_CARDS:SPEAKING_CARDS;}
-function cardKey(i){return library==='lookalikes'?String(i):library==='everyday'?'d'+i:library==='nouns'?'n'+i:'s'+i;}
+// Preserve the original card order and rating IDs. None of the 1,100 existing
+// flashcards is re-numbered in localStorage when the library tabs are merged.
+const COMBINED_EVERYDAY_CARDS=EVERYDAY_CARDS.concat(NOUN_CARDS,SPEAKING_CARDS);
+let records={},canStore=true,library='lookalikes',deck='original',lookalikeType='all',everydayTopic='all',everydayType='all',cefrLevel='all',mode='all',queue=[],cursor=0,flipped=false;
+function activeLibrary(){return library==='lookalikes'?LOOKALIKE_CARDS:COMBINED_EVERYDAY_CARDS;}
+function cardKey(i){
+ if(library==='lookalikes')return String(i);
+ if(i<400)return 'd'+i;
+ if(i<600)return 'n'+(i-400);
+ return 's'+(i-600);
+}
+function everydaySegment(i){return i<400?'expressions':i<600?'practical':'conversation';}
+function matchesEverydayTopic(i,card){
+ if(everydayTopic==='all')return true;
+ if(everydayTopic==='group:expressions')return i<400;
+ if(everydayTopic==='group:nouns')return i>=400;
+ if(everydayTopic==='group:practical')return i>=400&&i<600;
+ if(everydayTopic==='group:conversation')return i>=600;
+ return everydayTopic===card.topic;
+}
 function selectedIds(){const cards=activeLibrary();return cards.map((_,i)=>i).filter(i=>{
  if(library==='lookalikes')return (deck==='all'||(deck==='original'&&i<100)||(deck==='set2'&&i>=100&&i<200)||(deck==='set3'&&i>=200&&i<300)||(deck==='set4'&&i>=300&&i<400))&&(lookalikeType==='all'||cards[i].type===lookalikeType)&&(cefrLevel==='all'||cards[i].cefr===cefrLevel);
- if(library==='nouns')return (nounTopic==='all'||cards[i].topic===nounTopic)&&(cefrLevel==='all'||cards[i].cefr===cefrLevel);
- if(library==='speaking')return (speakingTopic==='all'||cards[i].topic===speakingTopic)&&(cefrLevel==='all'||cards[i].cefr===cefrLevel);
- return (everydayTopic==='all'||cards[i].topic===everydayTopic)&&(everydayType==='all'||cards[i].type===everydayType)&&(cefrLevel==='all'||cards[i].cefr===cefrLevel);
+ return matchesEverydayTopic(i,cards[i])&&(everydayType==='all'||cards[i].type===everydayType)&&(cefrLevel==='all'||cards[i].cefr===cefrLevel);
 });}
 function cleanRatings(src){const out={};for(const [id,value] of Object.entries(src)){if((/^\d{1,3}$/.test(id)&&Number(id)<400||/^d\d{1,3}$/.test(id)&&Number(id.slice(1))<400||/^n\d{1,3}$/.test(id)&&Number(id.slice(1))<200||/^s\d{1,2}$/.test(id)&&Number(id.slice(1))<100)&&(value==='known'||value==='again'))out[id]=value;}return out;}
 function load(){try{const value=localStorage.getItem(STORE_KEY);if(value){const data=JSON.parse(value);if(data?.version===1&&data.records&&typeof data.records==='object')records=cleanRatings(data.records);}}catch(err){canStore=false;}if(!canStore)el('storageNote').textContent='Your browser is blocking automatic local saves. Use Save backup frequently to keep your progress.';}
@@ -329,32 +370,62 @@ function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify({version:1,rec
 function counts(){const ids=selectedIds();const known=ids.filter(i=>records[cardKey(i)]==='known').length;const again=ids.filter(i=>records[cardKey(i)]==='again').length;return{total:ids.length,known,again,unseen:ids.length-known-again};}
 function stats(){const x=counts(),pct=x.total?Math.round(100*x.known/x.total):0;el('known').textContent=x.known;el('hard').textContent=x.again;el('unseen').textContent=x.unseen;el('reviewed').textContent=x.total-x.unseen;el('known-summary').textContent=x.known;el('total-count').textContent=x.total;el('mastery').textContent=pct+'%';el('barfill').style.width=pct+'%';el('bar').setAttribute('aria-valuenow',pct);el('hard-btn').textContent='('+x.again+')';el('new-btn').textContent='('+x.unseen+')';}
 function buildQueue(){queue=selectedIds().filter(i=>mode==='all'||(mode==='new'&&!records[cardKey(i)])||(mode==='again'&&records[cardKey(i)]==='again'));cursor=0;flipped=false;render();}
-function changeLibrary(next){if(!['lookalikes','everyday','nouns','speaking'].includes(next))return;library=next;document.querySelectorAll('[data-lib]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.lib===next)));el('lookalikes-options').hidden=next!=='lookalikes';el('everyday-options').hidden=next!=='everyday';el('nouns-options').hidden=next!=='nouns';el('speaking-options').hidden=next!=='speaking';el('section-info').textContent=next==='speaking'?'Speaking essentials · 100 high-use conversational nouns and reusable phrases':next==='nouns'?'Everyday nouns · 200 practical words with articles, plurals, and examples':next==='everyday'?'Everyday German · Learn natural phrases in real situations':'English lookalikes · 400 words with German example sentences';const nounAudio=next==='nouns'||next==='speaking';el('audio-mode').value=nounAudio?'device':audioMode;el('audio-mode').disabled=nounAudio;el('device-voice-box').hidden=!(nounAudio||audioMode==='device');el('nouns-audio-note').hidden=!nounAudio;el('audio-download-btn').hidden=nounAudio;el('offline-audio-status').hidden=nounAudio;el('picture-toggle').parentElement.hidden=false;if(nounAudio)refreshGermanVoices();mode='all';document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));buildQueue();}
+function changeLibrary(next){
+ if(!['lookalikes','everyday'].includes(next))return;
+ library=next;
+ document.querySelectorAll('[data-lib]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.lib===next)));
+ el('lookalikes-options').hidden=next!=='lookalikes';
+ el('everyday-options').hidden=next!=='everyday';
+ el('section-info').textContent=next==='everyday'?'Everyday German · 700 expressions and nouns with examples, plurals, and pictures':'English lookalikes · 400 words with German example sentences';
+ el('picture-toggle').parentElement.hidden=false;
+ mode='all';
+ document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+ buildQueue();
+}
 function changeMode(next){mode=next;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===next));buildQueue();}
 function syncMobileControls(){
- const setSource=el(library==='lookalikes'?'deck':library==='everyday'?'everyday-topic':library==='nouns'?'nouns-topic':'speaking-topic');
- const typeSource=el(library==='lookalikes'?'lookalike-type':library==='everyday'?'everyday-type':library==='nouns'?'nouns-type':'speaking-type');
- const mobileSet=el('mobile-wordset'), mobileType=el('mobile-type');
+ const setSource=el(library==='lookalikes'?'deck':'everyday-topic');
+ const typeSource=el(library==='lookalikes'?'lookalike-type':'everyday-type');
+ const mobileSet=el('mobile-wordset'),mobileType=el('mobile-type');
  if(mobileSet.dataset.source!==setSource.id){mobileSet.innerHTML=setSource.innerHTML;mobileSet.dataset.source=setSource.id;}
  if(mobileType.dataset.source!==typeSource.id){mobileType.innerHTML=typeSource.innerHTML;mobileType.dataset.source=typeSource.id;}
  mobileSet.value=setSource.value;
  mobileType.value=typeSource.value;
-  el('mobile-level').value=cefrLevel;
+ el('mobile-level').value=cefrLevel;
  el('mobile-mode').value=mode;
 }
 
 // Generated first-batch illustrations; unlisted cards do not show a picture.
 const WORD_PICTURES={"everyday":{"0":"e000","1":"e001","2":"e002","3":"e003","4":"e004","5":"e005","6":"e006","7":"e007","8":"e008","9":"e009","10":"e010","11":"e011","12":"e012","13":"e013","14":"e014","15":"e015","16":"e016","17":"e017","18":"e018","19":"e019","20":"e020","21":"e021","22":"e026","23":"e023","24":"e024","25":"e025","26":"e026","27":"e027","28":"e028","29":"e029","30":"e030","31":"e031","32":"e032","33":"e033","34":"e034","35":"e035","36":"e363","37":"e037","38":"e038","39":"e039","40":"e040","41":"e041","42":"e042","43":"e040","44":"e044","45":"e045","46":"e046","47":"e047","48":"e048","49":"e049","50":"e050","51":"e051","52":"e052","53":"e053","54":"e054","55":"e055","56":"e047","57":"e057","58":"e058","59":"e059","60":"e060","61":"e061","62":"e062","63":"e063","64":"e064","65":"e065","66":"e066","67":"e067","68":"e068","69":"e069","70":"e070","71":"e071","72":"e072","73":"e073","74":"e074","75":"e075","76":"e076","77":"e077","78":"e078","79":"e079","80":"e080","81":"e081","82":"e082","83":"e083","84":"e081","85":"e085","86":"e086","87":"e087","88":"e088","89":"e089","90":"e090","91":"e091","92":"e092","93":"e093","94":"e094","95":"e093","96":"e096","97":"e097","98":"e098","99":"e099","100":"e100","101":"e101","102":"e102","103":"e103","104":"e104","105":"e105","106":"e106","107":"e107","108":"e108","109":"e109","110":"e110","111":"e111","112":"e112","113":"e113","114":"e114","115":"e115","116":"e116","117":"e117","118":"e118","119":"e119","120":"e120","121":"e121","122":"e122","123":"e123","124":"e124","125":"e125","126":"e126","127":"e127","128":"e128","129":"e129","130":"e130","131":"e131","132":"e132","133":"e133","134":"e134","135":"e135","136":"e136","137":"e137","138":"e138","139":"e139","140":"e140","141":"e141","142":"e142","143":"e143","144":"e144","145":"e145","146":"e146","147":"e147","148":"e148","149":"e149","150":"e150","151":"e151","152":"e152","153":"e153","154":"e154","155":"e155","156":"e156","157":"e157","158":"e158","159":"e159","160":"e160","161":"e161","162":"e162","163":"e163","164":"e164","165":"e165","166":"e166","167":"e167","168":"e168","169":"e169","170":"e170","171":"e171","172":"e172","173":"e173","174":"e174","175":"e175","176":"e176","177":"e177","178":"e178","179":"e179","180":"e180","181":"e181","182":"e182","183":"e183","184":"e184","185":"e185","186":"e186","187":"e187","188":"e188","189":"e189","190":"e190","191":"e191","192":"e192","193":"e193","194":"e194","195":"e195","196":"e196","197":"e197","198":"e198","199":"e199","200":"e200","201":"e201","202":"e202","203":"e203","204":"e204","205":"e205","206":"e206","207":"e207","208":"e208","209":"e209","210":"e210","211":"e211","212":"e212","213":"e213","214":"e214","215":"e215","216":"e216","217":"e217","218":"e218","219":"e219","220":"e220","221":"e221","222":"e222","223":"e223","224":"e224","225":"e225","226":"e226","227":"e227","228":"e228","229":"e229","230":"e230","231":"e236","232":"e232","233":"e232","234":"e234","235":"e235","236":"e236","237":"e237","238":"e238","239":"e239","240":"e240","241":"e243","242":"e242","243":"e243","244":"e244","245":"e245","246":"e246","247":"e247","248":"e248","249":"e249","250":"e250","251":"e251","252":"e252","253":"e253","254":"e254","255":"e255","256":"e256","257":"e257","258":"e258","259":"e259","260":"e260","261":"e261","262":"e262","263":"e263","264":"e264","265":"e265","266":"e266","267":"e267","268":"e268","269":"e269","270":"e270","271":"e271","272":"e272","273":"e273","274":"e274","275":"e275","276":"e276","277":"e277","278":"e278","279":"e279","280":"e280","281":"e281","282":"e282","283":"e283","284":"e284","285":"e285","286":"e361","287":"e287","288":"e362","289":"e363b","290":"e290","291":"e291","292":"e292","293":"e293","294":"e294","295":"e295","296":"e296","297":"e297","298":"e298","299":"e299","300":"e300","301":"e301","302":"e302","303":"e303","304":"e304","305":"e305","306":"e306","307":"e307","308":"e308","309":"e309","310":"e310","311":"e311","312":"e312","313":"e313","314":"e314","315":"e315","316":"e316","317":"e317","318":"e318","319":"e319","320":"e320","321":"e321","322":"e322","323":"e323","324":"e324","325":"e325","326":"e326","327":"e327","328":"e328","329":"e329","330":"e330","331":"e331","332":"e332","333":"e333","334":"e334","335":"e335","336":"e336","337":"e337","338":"e338","339":"e339","340":"e340","341":"e341","342":"e342","343":"e343","344":"e344","345":"e345","346":"e346","347":"e347","348":"e348","349":"e349","350":"e350","351":"e351","352":"e352","353":"e353","354":"e354","355":"e355","356":"e356","357":"e357","358":"e358","359":"e359","360":"e360","361":"e286","362":"e288","363":"e289","364":"e364","365":"e365","366":"e365","367":"e367","368":"e390","369":"e369b","370":"e370","371":"e371","372":"e369","373":"e373b","374":"e374","375":"e375","376":"e376","377":"e377","378":"e378","379":"e379","380":"e380","381":"e049","382":"e382","383":"e383","384":"e384","385":"e385","386":"e386","387":"e387","388":"e388","389":"e389","390":"e368b","391":"e391","392":"e392","393":"e393","394":"e394","395":"e395","396":"e396","397":"e397","398":"e398","399":"e399"},"lookalikes":{"0":"l000","2":"l002","6":"l006","7":"l007","8":"l008","15":"l015","17":"l017","23":"l023","25":"l015","28":"l028","31":"l031","32":"l002","35":"l035","36":"l036","40":"l040","46":"l046","51":"l051","55":"l055","58":"l058","59":"l059","61":"l061","62":"l062","88":"l088","99":"l099","101":"l101","129":"l129","139":"l046","161":"l161","163":"l031","190":"e363","192":"e047","196":"l017","200":"l200","220":"l220","241":"l241","242":"l242","246":"l246","266":"l266","268":"l268","271":"l271","272":"l272","338":"l272","393":"e123","397":"e236"},"nouns":{"0":"n000","1":"n001","2":"n002","3":"n003","4":"n004","5":"n005","6":"n006","7":"n007","8":"n008","9":"n009","10":"n010","11":"n011","12":"n012","13":"n013","14":"n014","15":"n015","16":"n016","17":"n017","18":"n018","19":"n019","20":"n020","21":"n021","22":"n022","23":"n023","24":"n024","25":"n025","26":"n026","27":"n027","28":"n028","29":"n029","30":"n030","31":"n031","32":"n032","33":"n033","34":"n034","35":"n035","36":"n036","37":"n037","38":"n038","39":"n039","40":"n040","41":"n041","42":"n042","43":"n043","44":"n044","45":"n045","46":"n046","47":"n047","48":"n048","49":"n049","50":"n050","51":"n051","52":"n052","53":"n053","54":"n054","55":"n055","56":"n056","57":"n057","58":"n058","59":"n059","60":"n060","61":"n061","62":"n062","63":"n063","64":"n064","65":"n065","66":"n066","67":"n067","68":"n068","69":"n069","70":"n070","71":"n071","72":"n072","73":"n073","74":"n074","75":"n075","76":"n076","77":"n077","78":"n078","79":"n079","80":"n080","81":"n081","82":"n082","83":"n083","84":"n084","85":"n085","86":"n086","87":"n087","88":"n088","89":"n089","90":"n090","91":"n091","92":"n092","93":"n093","94":"n094","95":"n095","96":"n096","97":"n097","98":"n098","99":"n099","100":"n100","101":"n101","102":"n102","103":"n103","104":"n104","105":"n105","106":"n106","107":"n107","108":"n108","109":"n109","110":"n110","111":"n111","112":"n112","113":"n113","114":"n114","115":"n115","116":"n116","117":"n117","118":"n118","119":"n119","120":"n120","121":"n121","122":"n122","123":"n123","124":"n124","125":"n125","126":"n126","127":"n127","128":"n128","129":"n129","130":"n130","131":"n131","132":"n132","133":"n133","134":"n134","135":"n135","136":"n136","137":"n137","138":"n138","139":"n139","140":"n140","141":"n141","142":"n142","143":"n143","144":"n144","145":"n145","146":"n146","147":"n147","148":"n148","149":"n149","150":"n150","151":"n151","152":"n152","153":"n153","154":"n154","155":"n155","156":"n156","157":"n157","158":"n158","159":"n159","160":"n160","161":"n161","162":"n162","163":"n163","164":"n164","165":"n165","166":"n166","167":"n167","168":"n168","169":"n169","170":"n170","171":"n171","172":"n172","173":"n173","174":"n174","175":"n175","176":"n176","177":"n177","178":"n178","179":"n179","180":"n180","181":"n181","182":"n182","183":"n183","184":"n184","185":"n185","186":"n186","187":"n187","188":"n188","189":"n189","190":"n190","191":"n191","192":"n192","193":"n193","194":"n194","195":"n195","196":"n196","197":"n197","198":"n198","199":"n199"},"speaking":{"0":"s000","1":"s001","2":"s002","3":"s003","4":"s004","5":"s005","6":"s006","7":"s007","8":"s008","9":"s009","10":"s010","11":"s011","12":"s012","13":"s013","14":"s014","15":"s015","16":"s016","17":"s017","18":"s018","19":"s019","20":"s020","21":"s021","22":"s022","23":"s023","24":"s024","25":"s025","26":"s026","27":"s027","28":"s028","29":"s029","30":"s030","31":"s031","32":"s032","33":"s033","34":"s034","35":"s035","36":"s036","37":"s037","38":"s038","39":"s039","40":"s040","41":"s041","42":"s042","43":"s043","44":"s044","45":"s045","46":"s046","47":"s047","48":"s048","49":"s049","50":"s050","51":"s051","52":"s052","53":"s053","54":"s054","55":"s055","56":"s056","57":"s057","58":"s058","59":"s059","60":"s060","61":"s061","62":"s062","63":"s063","64":"s064","65":"s065","66":"s066","67":"s067","68":"s068","69":"s069","70":"s070","71":"s071","72":"s072","73":"s073","74":"s074","75":"s075","76":"s076","77":"s077","78":"s078","79":"s079","80":"s080","81":"s081","82":"s082","83":"s083","84":"s084","85":"s085","86":"s086","87":"s087","88":"s088","89":"s089","90":"s090","91":"s091","92":"s092","93":"s093","94":"s094","95":"s095","96":"s096","97":"s097","98":"s098","99":"s099"}};
-// Keep the mapped illustrations for all 200 Everyday Nouns cards.
+// Keep the mapped illustrations for all 700 Everyday German cards (400 + 200 + 100).
 const PICTURE_PREF_KEY='wortflip-show-pictures-v1';
 let showPictures=true;
 try{showPictures=localStorage.getItem(PICTURE_PREF_KEY)!=='false'}catch(e){}
 function syncPicturePreference(){el('picture-toggle').checked=showPictures;}
 
-function render(){syncMobileControls();stats();el('mode-label').textContent=mode==='all'?'All selected words':mode==='again'?'Difficult words':'Not reviewed';const n=queue.length,empty=n===0||cursor>=n;el('cardstage').style.display=empty?'none':'block';el('emptystage').style.display=empty?'flex':'none';el('session-count').textContent=empty?`${n} in session`:`${cursor+1} / ${n}`;
+// Original illustration assignments remain keyed by their source deck indices.
+function imageKeyForCard(i){
+ if(library==='lookalikes')return WORD_PICTURES.lookalikes?.[i];
+ if(i<400)return WORD_PICTURES.everyday?.[i];
+ if(i<600)return WORD_PICTURES.nouns?.[i-400];
+ return WORD_PICTURES.speaking?.[i-600];
+}
+function canPlayRecording(){return library==='lookalikes'||(library==='everyday'&&queue.length>0&&cursor<queue.length&&queue[cursor]<400);}
+function syncCardAudioControls(){
+ const deviceOnly=!canPlayRecording();
+ el('audio-mode').value=deviceOnly?'device':audioMode;
+ el('audio-mode').disabled=deviceOnly;
+ el('device-voice-box').hidden=!(deviceOnly||audioMode==='device');
+ el('nouns-audio-note').hidden=!deviceOnly;
+ el('audio-download-btn').hidden=deviceOnly;
+ el('offline-audio-status').hidden=deviceOnly;
+ if(deviceOnly)refreshGermanVoices();
+}
+
+function render(){syncMobileControls();stats();syncCardAudioControls();el('mode-label').textContent=mode==='all'?'All selected words':mode==='again'?'Difficult words':'Not reviewed';const n=queue.length,empty=n===0||cursor>=n;el('cardstage').style.display=empty?'none':'block';el('emptystage').style.display=empty?'flex':'none';el('session-count').textContent=empty?`${n} in session`:`${cursor+1} / ${n}`;
  if(empty){const x=counts();el('empty-title').textContent=n===0?'Nothing in this selection':'Session complete!';el('empty-copy').textContent=n===0?(mode==='again'?'Mark cards “Practice again” to collect difficult words here.':mode==='new'?'All selected words have been reviewed.':'Try choosing a different topic or word type.'):`You now know ${x.known} of ${x.total} selected words. Select a new topic or review difficult words.`;el('type-label').textContent='Ready';return;}
  const c=activeLibrary()[queue[cursor]];el('type-label').textContent=c.type;el('lang').textContent=flipped?'DEUTSCH · ANSWER':'ENGLISH · PROMPT';el('word').textContent=flipped?c.de:c.en;el('tap-hint').textContent=flipped?'Tap to see the English prompt':'Tap or press Space to reveal German';el('flashcard').classList.toggle('flipped',flipped);el('again-btn').disabled=!flipped;el('known-btn').disabled=!flipped;el('prev').disabled=cursor===0;el('next').disabled=cursor===n-1;
- // Both libraries use the same example panel after the German answer is revealed.
+ // Both main libraries use the same example panel after the German answer is revealed.
  // Never reveal the example on the front, to preserve active recall.
  const showExample=flipped&&Boolean(c.example&&c.exampleEn);
  const examplePanel=el('example');
@@ -362,10 +433,10 @@ function render(){syncMobileControls();stats();el('mode-label').textContent=mode
  if(showExample){
   el('example-de').textContent=c.example;
   el('example-en').textContent=c.exampleEn;
-  // Both libraries have matching pre-recorded example-sentence audio.
+  // Play a recording for the 400 original expressions, or device voice for newer nouns.
   el('example-audio-btn').hidden=false;
  }
- const pictureKey=WORD_PICTURES[library]&&WORD_PICTURES[library][queue[cursor]];
+ const pictureKey=imageKeyForCard(queue[cursor]);
  const displayPicture=showExample&&showPictures&&Boolean(pictureKey);
  const pictureFrame=el('word-picture-frame');
  pictureFrame.hidden=!displayPicture;
@@ -381,7 +452,7 @@ function render(){syncMobileControls();stats();el('mode-label').textContent=mode
   const picture=el('word-picture');
   if(picture.hasAttribute('src'))picture.removeAttribute('src');
  }
- const note=flipped?(library==='lookalikes'?USAGE_NOTES[c.de]:(library==='nouns'||library==='speaking')?'Plural: '+c.plural:c.note):null;el('usage-note').style.display=note?'block':'none';el('usage-note').textContent=note?((library==='nouns'||library==='speaking')?note:'Usage: '+note):'';
+ const note=flipped?(library==='lookalikes'?USAGE_NOTES[c.de]:(library==='everyday'&&queue[cursor]>=400)?'Plural: '+c.plural:c.note):null;el('usage-note').style.display=note?'block':'none';el('usage-note').textContent=note?((library==='everyday'&&queue[cursor]>=400)?note:'Usage: '+note):'';
 }
 function flip(){if(queue.length===0||cursor>=queue.length)return;flipped=!flipped;render();}
 function rate(value){if(!flipped||cursor>=queue.length)return;records[cardKey(queue[cursor])]=value;save();cursor++;flipped=false;render();}
@@ -496,14 +567,12 @@ function playDeviceGerman(text){
 }
 function sayGerman(){
  if(!queue.length||cursor>=queue.length)return;
- if(library==='nouns'||library==='speaking')return playDeviceGerman(activeLibrary()[queue[cursor]].de);
- if(audioMode==='recorded')return playRecorded(false);
+ if(canPlayRecording()&&audioMode==='recorded')return playRecorded(false);
  playDeviceGerman(activeLibrary()[queue[cursor]].de);
 }
 function sayGermanExample(){
  if(!queue.length||cursor>=queue.length)return;
- if(library==='nouns'||library==='speaking')return playDeviceGerman(activeLibrary()[queue[cursor]].example);
- if(audioMode==='recorded')return playRecorded(true);
+ if(canPlayRecording()&&audioMode==='recorded')return playRecorded(true);
  playDeviceGerman(activeLibrary()[queue[cursor]].example);
 }
 async function downloadAudioForOffline(){
@@ -561,14 +630,14 @@ el('picture-toggle').addEventListener('change',event=>{
 });
 document.querySelectorAll('[data-lib]').forEach(b=>b.addEventListener('click',()=>changeLibrary(b.dataset.lib)));
 document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>changeMode(b.dataset.mode)));
-el('deck').addEventListener('change',e=>{deck=e.target.value;buildQueue();});el('lookalike-type').addEventListener('change',e=>{lookalikeType=e.target.value;buildQueue();});el('everyday-topic').addEventListener('change',e=>{everydayTopic=e.target.value;buildQueue();});el('everyday-type').addEventListener('change',e=>{everydayType=e.target.value;buildQueue();});el('nouns-topic').addEventListener('change',e=>{nounTopic=e.target.value;buildQueue();});el('speaking-topic').addEventListener('change',e=>{speakingTopic=e.target.value;buildQueue();});el('cefr-level').addEventListener('change',e=>{cefrLevel=e.target.value;buildQueue();});
+el('deck').addEventListener('change',e=>{deck=e.target.value;buildQueue();});el('lookalike-type').addEventListener('change',e=>{lookalikeType=e.target.value;buildQueue();});el('everyday-topic').addEventListener('change',e=>{everydayTopic=e.target.value;buildQueue();});el('everyday-type').addEventListener('change',e=>{everydayType=e.target.value;buildQueue();});el('cefr-level').addEventListener('change',e=>{cefrLevel=e.target.value;buildQueue();});
 // The compact mobile dropdowns mirror the original selectors, preserving their filter logic and progress.
 el('mobile-wordset').addEventListener('change', e=>{
- const original=el(library==='lookalikes'?'deck':library==='everyday'?'everyday-topic':library==='nouns'?'nouns-topic':'speaking-topic');
+ const original=el(library==='lookalikes'?'deck':'everyday-topic');
  original.value=e.target.value;original.dispatchEvent(new Event('change',{bubbles:true}));
 });
 el('mobile-type').addEventListener('change', e=>{
- const original=el(library==='lookalikes'?'lookalike-type':library==='everyday'?'everyday-type':library==='nouns'?'nouns-type':'speaking-type');
+ const original=el(library==='lookalikes'?'lookalike-type':'everyday-type');
  original.value=e.target.value;original.dispatchEvent(new Event('change',{bubbles:true}));
 });
 el('mobile-level').addEventListener('change', e=>{
