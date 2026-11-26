@@ -1,17 +1,33 @@
 'use strict';
 // Refresh cached app shell and PWA manifest for the WortFlip name change.
-const CACHE_NAME = 'wortspiel-pwa-v4-illustrations-phase2';
+const CACHE_NAME = 'wortspiel-pwa-v5-illustrations-phase3';
 const CACHE_PREFIX = 'wortspiel-pwa-';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './audio/tracks.json',
   './icon-192.png', './icon-512.png',
   './icon-maskable-512.png', './apple-touch-icon.png',
-  './images/e000.webp', './images/e001.webp', './images/e002.webp', './images/e004.webp',
-  './images/e009.webp', './images/e016.webp', './images/e024.webp', './images/e029.webp',
-  './images/e040.webp', './images/e041.webp', './images/e048.webp', './images/e050.webp',
-  './images/e120.webp', './images/e210.webp', './images/e364.webp', './images/e367.webp',
-  './images/e377.webp', './images/l000.webp', './images/l035.webp', './images/l088.webp',
-  './images/l099.webp'
+  './images/e000.webp',   './images/e001.webp',   './images/e002.webp',   './images/e004.webp',
+  './images/e006.webp',   './images/e008.webp',   './images/e009.webp',   './images/e012.webp',
+  './images/e013.webp',   './images/e016.webp',   './images/e017.webp',   './images/e020.webp',
+  './images/e021.webp',   './images/e024.webp',   './images/e025.webp',   './images/e029.webp',
+  './images/e030.webp',   './images/e031.webp',   './images/e038.webp',   './images/e040.webp',
+  './images/e041.webp',   './images/e042.webp',   './images/e046.webp',   './images/e047.webp',
+  './images/e048.webp',   './images/e049.webp',   './images/e050.webp',   './images/e055.webp',
+  './images/e070.webp',   './images/e079.webp',   './images/e082.webp',   './images/e086.webp',
+  './images/e087.webp',   './images/e094.webp',   './images/e116.webp',   './images/e120.webp',
+  './images/e123.webp',   './images/e128.webp',   './images/e131.webp',   './images/e137.webp',
+  './images/e147.webp',   './images/e148.webp',   './images/e155.webp',   './images/e210.webp',
+  './images/e211.webp',   './images/e226.webp',   './images/e232.webp',   './images/e236.webp',
+  './images/e240.webp',   './images/e244.webp',   './images/e257.webp',   './images/e264.webp',
+  './images/e275.webp',   './images/e282.webp',   './images/e287.webp',   './images/e363.webp',
+  './images/e364.webp',   './images/e365.webp',   './images/e367.webp',   './images/e368.webp',
+  './images/e369.webp',   './images/e377.webp',   './images/e383.webp',   './images/e387.webp',
+  './images/e391.webp',   './images/l000.webp',   './images/l002.webp',   './images/l006.webp',
+  './images/l007.webp',   './images/l015.webp',   './images/l017.webp',   './images/l023.webp',
+  './images/l031.webp',   './images/l035.webp',   './images/l040.webp',   './images/l046.webp',
+  './images/l058.webp',   './images/l059.webp',   './images/l062.webp',   './images/l088.webp',
+  './images/l099.webp',   './images/l101.webp',   './images/l129.webp',   './images/l266.webp',
+  './images/l271.webp',   './images/l272.webp'
 ];
 const APP_ROOT = new URL('./', self.registration.scope);
 
