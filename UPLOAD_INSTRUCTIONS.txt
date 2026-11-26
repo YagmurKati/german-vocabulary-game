@@ -1,0 +1,15 @@
+WortFlip Listening: level, progress and situation filters
+
+1. Unzip this file.
+2. In your GitHub repository root, replace ONLY index.html and sw.js.
+3. Commit both files and wait for GitHub Pages to deploy.
+4. Open WortFlip -> Listen.
+
+New controls:
+- German level: All, A1–A2, B1, B2, C1
+- Review status: Not reviewed + difficult (default, skips known); Not reviewed; Difficult; All; Known
+- Collection -> Real-life situations: mixed topics such as Doctor, Shopping, Transport, Work
+
+No images or audio need to be uploaded again. Your original 1,300 cards, image assignments, MP3 lessons and local progress keys are untouched.
+
+Important: Existing MP3 recordings are for fixed unfiltered lessons. When you select a filter that excludes cards, or a situation playlist, the app uses device voices. Device speech may stop if your phone locks. To use the previously generated MP3s for screen-locked listening, select All levels + All words (including known) and a standard (not situation) collection.

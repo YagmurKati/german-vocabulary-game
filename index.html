@@ -222,7 +222,10 @@ html[data-theme="dark"] #listen-toggle{background:#2f2950;color:#e8dcff;border-c
 .listen-hint{margin:4px 0 20px;color:var(--sub);font-size:14px}
 .listen-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 18px}
 .listen-grid label{display:flex;flex-direction:column;gap:6px;color:var(--ink);font-size:13px;font-weight:750}
-.listen-grid select{min-width:0;width:100%;border:1px solid var(--border);border-radius:10px;background:var(--white);color:var(--ink);padding:11px 9px;font-size:14px}
+ .listen-grid select,.listen-filter-row select{min-width:0;width:100%;border:1px solid var(--border);border-radius:10px;background:var(--white);color:var(--ink);padding:11px 9px;font-size:14px}
+.listen-filter-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:12px;margin:0 0 7px}
+.listen-filter-row label{display:flex;flex-direction:column;gap:6px;color:var(--ink);font-size:13px;font-weight:750}
+.listen-selection-summary{font-size:12px;color:var(--sub);margin:7px 0 15px;line-height:1.55}
 .listen-stage{border:1px solid var(--border);border-radius:15px;background:var(--bg);padding:18px;min-height:145px;margin-bottom:12px}
 .listen-label{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--sub);font-weight:750}
 .listen-title{font-size:clamp(20px,3vw,28px);margin:7px 0 9px;overflow-wrap:anywhere;font-weight:800}
@@ -237,21 +240,26 @@ html[data-theme="dark"] #listen-toggle{background:#2f2950;color:#e8dcff;border-c
 #listen-status{min-height:23px;font-size:13px;color:var(--sub)}
 .listen-download{display:inline-block;margin:7px 0 2px;color:#6251c2;font-weight:750}
 .listen-notice{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--border);color:var(--sub);font-size:12px}
-@media(max-width:680px){.listening-screen{padding:13px;margin-top:8px}.listen-grid{grid-template-columns:1fr;gap:9px}.listen-stage{padding:13px;min-height:135px}.listen-controls button{flex:1 1 43%}}
+@media(max-width:680px){.listening-screen{padding:13px;margin-top:8px}.listen-grid{grid-template-columns:1fr;gap:9px}.listen-filter-row{grid-template-columns:1fr;gap:9px}.listen-stage{padding:13px;min-height:135px}.listen-controls button{flex:1 1 43%}}
 </style></head>
 <body>
 <header><div class="shell hero-row"><div class="hero-copy"><div class="eyebrow">Deutsch lernen · Free &amp; offline</div><h1>WortFlip <span aria-hidden="true">✦</span></h1><p>German Flashcards · Words, Sentences &amp; Listening</p></div><div class="header-actions"><button type="button" id="theme-toggle" aria-pressed="false" aria-label="Switch to dark mode" title="Toggle light and dark mode"><span id="theme-icon" aria-hidden="true">☾</span> <span id="theme-label">Dark mode</span></button><button type="button" id="pwa-install-button" aria-label="Install app">Install app</button><button type="button" id="listen-toggle" aria-label="Open hands-free listening lessons">🎧 Listen</button></div></div></header>
 <main>
 <section id="listening-screen" class="listening-screen" hidden aria-label="Hands-free listening lessons">
 <div class="listen-head"><div><h2>🎧 Hands-free listening</h2><p class="listen-hint">English word → recall pause → German word → English example → recall pause → German sentence. All words and sentences come from your existing cards.</p></div><button id="listen-back" type="button" class="listen-back">← Flashcards</button></div>
-<div class="listen-grid"><label>Collection<select id="listen-group"></select></label><label>Topic<select id="listen-topic"></select></label><label>Listening lesson (20 cards)<select id="listen-lesson"></select></label></div>
+<div class="listen-grid"><label>Collection<select id="listen-group" aria-label="Listening collection"></select></label><label>Topic / situation<select id="listen-topic" aria-label="Listening topic or situation"></select></label><label>Lesson<select id="listen-lesson" aria-label="Listening lesson"></select></label></div>
+<div class="listen-filter-row" role="group" aria-label="Choose what you need to hear">
+<label>German level<select id="listen-cefr" aria-label="Listening CEFR level"><option value="all">All levels</option><option value="A1–A2">A1–A2</option><option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option></select></label>
+<label>Review status<select id="listen-progress" aria-label="Listening review status"><option value="need" selected>Not reviewed + difficult (skip known)</option><option value="new">Not reviewed only</option><option value="again">Difficult only</option><option value="all">All words (including known)</option><option value="known">Known only</option></select></label>
+</div>
+<p id="listen-selection-summary" class="listen-selection-summary" role="status" aria-live="polite"></p>
 <div class="listen-stage" aria-live="polite"><div class="listen-label" id="listen-step">Ready to listen</div><div class="listen-title" id="listen-word">Choose a lesson and press Play</div><div class="listen-line" id="listen-detail">Learn by ear—no tapping through cards.</div></div>
 <div class="listen-controls"><button id="listen-play" class="listen-primary" type="button">▶ Play recording</button><button id="listen-device" type="button">🔊 Device voices</button><button id="listen-pause" type="button" disabled>⏸ Pause</button><button id="listen-stop" type="button" disabled>■ Stop</button><button id="listen-next" type="button">Next lesson →</button></div>
 <audio id="listen-player" controls preload="none" aria-label="Bilingual recorded listening lesson"></audio>
 <div class="listen-options"><label>Speed <select id="listen-speed"><option value="0.8">Slow (0.8×)</option><option value="1" selected>Normal (1×)</option><option value="1.15">A little faster (1.15×)</option></select></label><label><input id="listen-continue" type="checkbox" checked> Continue to next lesson</label></div>
 <p id="listen-status" role="status" aria-live="polite">Recorded lessons will be available after the GitHub audio-generation workflow runs. You can use device voices immediately.</p>
 <a id="listen-download" class="listen-download" download hidden>⬇ Download this lesson as MP3</a>
-<p class="listen-notice">Recorded MP3 lessons can keep playing with your phone locked, and can be saved for offline listening. Device-voice playback depends on the browser and may stop when the screen locks. No flashcard ratings are changed by listening.</p>
+<p class="listen-notice">Unfiltered recorded MP3 lessons can play with the phone locked. Filtered lessons and mixed real-life situations use device voices for now; device speech may pause when the screen locks. Listening does not change your saved ratings.</p>
 </section>
 <nav class="library-picker" role="tablist" aria-label="Choose vocabulary library">
   <button class="library-tile" role="tab" type="button" id="tab-lookalikes" aria-selected="true" aria-controls="lookalikes-options" data-lib="lookalikes"><span class="library-icon" aria-hidden="true">✦</span><span><b>English lookalikes</b><small>500 similar German–English words</small></span></button>
@@ -775,41 +783,108 @@ window.addEventListener('appinstalled', () => {
  const L=document.getElementById.bind(document);
  const lessons=[{"id":"l001","group":"lookalikes","topic":"Most familiar · 1–100","label":"Most familiar · 1–100 · part 1/5","indices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"file":"listening/audio/l001.mp3"},{"id":"l002","group":"lookalikes","topic":"Most familiar · 1–100","label":"Most familiar · 1–100 · part 2/5","indices":[20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],"file":"listening/audio/l002.mp3"},{"id":"l003","group":"lookalikes","topic":"Most familiar · 1–100","label":"Most familiar · 1–100 · part 3/5","indices":[40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59],"file":"listening/audio/l003.mp3"},{"id":"l004","group":"lookalikes","topic":"Most familiar · 1–100","label":"Most familiar · 1–100 · part 4/5","indices":[60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79],"file":"listening/audio/l004.mp3"},{"id":"l005","group":"lookalikes","topic":"Most familiar · 1–100","label":"Most familiar · 1–100 · part 5/5","indices":[80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99],"file":"listening/audio/l005.mp3"},{"id":"l006","group":"lookalikes","topic":"Familiar & useful · 101–200","label":"Familiar & useful · 101–200 · part 1/5","indices":[100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119],"file":"listening/audio/l006.mp3"},{"id":"l007","group":"lookalikes","topic":"Familiar & useful · 101–200","label":"Familiar & useful · 101–200 · part 2/5","indices":[120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139],"file":"listening/audio/l007.mp3"},{"id":"l008","group":"lookalikes","topic":"Familiar & useful · 101–200","label":"Familiar & useful · 101–200 · part 3/5","indices":[140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159],"file":"listening/audio/l008.mp3"},{"id":"l009","group":"lookalikes","topic":"Familiar & useful · 101–200","label":"Familiar & useful · 101–200 · part 4/5","indices":[160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179],"file":"listening/audio/l009.mp3"},{"id":"l010","group":"lookalikes","topic":"Familiar & useful · 101–200","label":"Familiar & useful · 101–200 · part 5/5","indices":[180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199],"file":"listening/audio/l010.mp3"},{"id":"l011","group":"lookalikes","topic":"Less obvious · 201–300","label":"Less obvious · 201–300 · part 1/5","indices":[200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219],"file":"listening/audio/l011.mp3"},{"id":"l012","group":"lookalikes","topic":"Less obvious · 201–300","label":"Less obvious · 201–300 · part 2/5","indices":[220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239],"file":"listening/audio/l012.mp3"},{"id":"l013","group":"lookalikes","topic":"Less obvious · 201–300","label":"Less obvious · 201–300 · part 3/5","indices":[240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259],"file":"listening/audio/l013.mp3"},{"id":"l014","group":"lookalikes","topic":"Less obvious · 201–300","label":"Less obvious · 201–300 · part 4/5","indices":[260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279],"file":"listening/audio/l014.mp3"},{"id":"l015","group":"lookalikes","topic":"Less obvious · 201–300","label":"Less obvious · 201–300 · part 5/5","indices":[280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299],"file":"listening/audio/l015.mp3"},{"id":"l016","group":"lookalikes","topic":"Broader vocabulary · 301–400","label":"Broader vocabulary · 301–400 · part 1/5","indices":[300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319],"file":"listening/audio/l016.mp3"},{"id":"l017","group":"lookalikes","topic":"Broader vocabulary · 301–400","label":"Broader vocabulary · 301–400 · part 2/5","indices":[320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339],"file":"listening/audio/l017.mp3"},{"id":"l018","group":"lookalikes","topic":"Broader vocabulary · 301–400","label":"Broader vocabulary · 301–400 · part 3/5","indices":[340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359],"file":"listening/audio/l018.mp3"},{"id":"l019","group":"lookalikes","topic":"Broader vocabulary · 301–400","label":"Broader vocabulary · 301–400 · part 4/5","indices":[360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379],"file":"listening/audio/l019.mp3"},{"id":"l020","group":"lookalikes","topic":"Broader vocabulary · 301–400","label":"Broader vocabulary · 301–400 · part 5/5","indices":[380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399],"file":"listening/audio/l020.mp3"},{"id":"l021","group":"lookalikes","topic":"Everyday & frequent · 401–500","label":"Everyday & frequent · 401–500 · part 1/5","indices":[400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419],"file":"listening/audio/l021.mp3"},{"id":"l022","group":"lookalikes","topic":"Everyday & frequent · 401–500","label":"Everyday & frequent · 401–500 · part 2/5","indices":[420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439],"file":"listening/audio/l022.mp3"},{"id":"l023","group":"lookalikes","topic":"Everyday & frequent · 401–500","label":"Everyday & frequent · 401–500 · part 3/5","indices":[440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459],"file":"listening/audio/l023.mp3"},{"id":"l024","group":"lookalikes","topic":"Everyday & frequent · 401–500","label":"Everyday & frequent · 401–500 · part 4/5","indices":[460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479],"file":"listening/audio/l024.mp3"},{"id":"l025","group":"lookalikes","topic":"Everyday & frequent · 401–500","label":"Everyday & frequent · 401–500 · part 5/5","indices":[480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499],"file":"listening/audio/l025.mp3"},{"id":"l026","group":"everyday","topic":"Transport & travel","label":"Transport & travel · part 1/2","indices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"file":"listening/audio/l026.mp3"},{"id":"l027","group":"everyday","topic":"Transport & travel","label":"Transport & travel · part 2/2","indices":[20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],"file":"listening/audio/l027.mp3"},{"id":"l028","group":"everyday","topic":"Appointments & official matters","label":"Appointments & official matters · part 1/2","indices":[40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59],"file":"listening/audio/l028.mp3"},{"id":"l029","group":"everyday","topic":"Appointments & official matters","label":"Appointments & official matters · part 2/2","indices":[60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79],"file":"listening/audio/l029.mp3"},{"id":"l030","group":"everyday","topic":"Home & cleaning","label":"Home & cleaning · part 1/2","indices":[80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99],"file":"listening/audio/l030.mp3"},{"id":"l031","group":"everyday","topic":"Home & cleaning","label":"Home & cleaning · part 2/2","indices":[100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119],"file":"listening/audio/l031.mp3"},{"id":"l032","group":"everyday","topic":"Shopping & money","label":"Shopping & money · part 1/2","indices":[120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139],"file":"listening/audio/l032.mp3"},{"id":"l033","group":"everyday","topic":"Shopping & money","label":"Shopping & money · part 2/2","indices":[140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159],"file":"listening/audio/l033.mp3"},{"id":"l034","group":"everyday","topic":"Conversation & relationships","label":"Conversation & relationships · part 1/2","indices":[160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179],"file":"listening/audio/l034.mp3"},{"id":"l035","group":"everyday","topic":"Conversation & relationships","label":"Conversation & relationships · part 2/2","indices":[180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199],"file":"listening/audio/l035.mp3"},{"id":"l036","group":"everyday","topic":"Work, studying & digital life","label":"Work, studying & digital life · part 1/2","indices":[200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219],"file":"listening/audio/l036.mp3"},{"id":"l037","group":"everyday","topic":"Work, studying & digital life","label":"Work, studying & digital life · part 2/2","indices":[220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239],"file":"listening/audio/l037.mp3"},{"id":"l038","group":"everyday","topic":"Health & body","label":"Health & body · part 1/2","indices":[240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259],"file":"listening/audio/l038.mp3"},{"id":"l039","group":"everyday","topic":"Health & body","label":"Health & body · part 2/2","indices":[260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279],"file":"listening/audio/l039.mp3"},{"id":"l040","group":"everyday","topic":"Food & cooking","label":"Food & cooking · part 1/2","indices":[280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299],"file":"listening/audio/l040.mp3"},{"id":"l041","group":"everyday","topic":"Food & cooking","label":"Food & cooking · part 2/2","indices":[300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319],"file":"listening/audio/l041.mp3"},{"id":"l042","group":"everyday","topic":"Feelings & useful descriptions","label":"Feelings & useful descriptions · part 1/2","indices":[320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339],"file":"listening/audio/l042.mp3"},{"id":"l043","group":"everyday","topic":"Feelings & useful descriptions","label":"Feelings & useful descriptions · part 2/2","indices":[340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359],"file":"listening/audio/l043.mp3"},{"id":"l044","group":"everyday","topic":"Everyday nouns & essential places","label":"Everyday nouns & essential places · part 1/2","indices":[360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379],"file":"listening/audio/l044.mp3"},{"id":"l045","group":"everyday","topic":"Everyday nouns & essential places","label":"Everyday nouns & essential places · part 2/2","indices":[380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399],"file":"listening/audio/l045.mp3"},{"id":"l046","group":"nouns","topic":"Home & repairs","label":"Home & repairs","indices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"file":"listening/audio/l046.mp3"},{"id":"l047","group":"nouns","topic":"Transport & city","label":"Transport & city","indices":[20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],"file":"listening/audio/l047.mp3"},{"id":"l048","group":"nouns","topic":"Shopping & services","label":"Shopping & services","indices":[40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59],"file":"listening/audio/l048.mp3"},{"id":"l049","group":"nouns","topic":"Official matters & paperwork","label":"Official matters & paperwork","indices":[60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79],"file":"listening/audio/l049.mp3"},{"id":"l050","group":"nouns","topic":"Health & pharmacy","label":"Health & pharmacy","indices":[80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99],"file":"listening/audio/l050.mp3"},{"id":"l051","group":"nouns","topic":"Work & study","label":"Work & study","indices":[100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119],"file":"listening/audio/l051.mp3"},{"id":"l052","group":"nouns","topic":"Communication & relationships","label":"Communication & relationships","indices":[120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139],"file":"listening/audio/l052.mp3"},{"id":"l053","group":"nouns","topic":"Money & contracts","label":"Money & contracts","indices":[140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159],"file":"listening/audio/l053.mp3"},{"id":"l054","group":"nouns","topic":"Food & household","label":"Food & household","indices":[160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179],"file":"listening/audio/l054.mp3"},{"id":"l055","group":"nouns","topic":"Digital life & environment","label":"Digital life & environment","indices":[180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199],"file":"listening/audio/l055.mp3"},{"id":"l056","group":"speaking","topic":"Daily life & plans","label":"Daily life & plans","indices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"file":"listening/audio/l056.mp3"},{"id":"l057","group":"speaking","topic":"Explaining & understanding","label":"Explaining & understanding","indices":[20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],"file":"listening/audio/l057.mp3"},{"id":"l058","group":"speaking","topic":"People & feelings","label":"People & feelings","indices":[40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59],"file":"listening/audio/l058.mp3"},{"id":"l059","group":"speaking","topic":"Conversation & communication","label":"Conversation & communication","indices":[60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79],"file":"listening/audio/l059.mp3"},{"id":"l060","group":"speaking","topic":"Everyday errands & situations","label":"Everyday errands & situations","indices":[80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99],"file":"listening/audio/l060.mp3"},{"id":"l061","group":"verbs","topic":"Directions & movement","label":"Directions & movement","indices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"file":"listening/audio/l061.mp3"},{"id":"l062","group":"verbs","topic":"Home & daily routines","label":"Home & daily routines","indices":[20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],"file":"listening/audio/l062.mp3"},{"id":"l063","group":"verbs","topic":"Conversation & relationships","label":"Conversation & relationships","indices":[40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59],"file":"listening/audio/l063.mp3"},{"id":"l064","group":"verbs","topic":"Plans & thinking","label":"Plans & thinking","indices":[60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79],"file":"listening/audio/l064.mp3"},{"id":"l065","group":"verbs","topic":"Work & everyday errands","label":"Work & everyday errands","indices":[80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99],"file":"listening/audio/l065.mp3"}];
  const cards={lookalikes:LOOKALIKE_CARDS,everyday:EVERYDAY_CARDS,nouns:NOUN_CARDS,speaking:SPEAKING_CARDS,verbs:VERB_CARDS};
- const names={lookalikes:'English Lookalikes · 500',everyday:'Everyday expressions · 400',nouns:'Practical nouns · 200',speaking:'Conversational nouns · 100',verbs:'Everyday verbs · 100'};
+ const names={lookalikes:'English Lookalikes · 500',everyday:'Everyday expressions · 400',nouns:'Practical nouns · 200',speaking:'Conversational nouns · 100',verbs:'Everyday verbs · 100',situations:'Real-life situations · mixed cards'};
+ // Situations are curated playlists of EXISTING cards, never new or re-numbered vocabulary.
+ // Interleave items from different source decks to practice a real-life context rather than
+ // memorizing a single pre-existing topic in its original order.
+ const situationSpecs=[
+  {name:'Doctor & pharmacy',sources:[['everyday','Health & body'],['nouns','Health & pharmacy']]},
+  {name:'Transport & directions',sources:[['everyday','Transport & travel'],['nouns','Transport & city'],['verbs','Directions & movement']]},
+  {name:'Shopping & returns',sources:[['everyday','Shopping & money'],['nouns','Shopping & services'],['speaking','Everyday errands & situations']]},
+  {name:'Home & repairs',sources:[['everyday','Home & cleaning'],['nouns','Home & repairs'],['verbs','Home & daily routines']]},
+  {name:'Appointments & paperwork',sources:[['everyday','Appointments & official matters'],['nouns','Official matters & paperwork'],['speaking','Daily life & plans']]},
+  {name:'Work & meetings',sources:[['everyday','Work, studying & digital life'],['nouns','Work & study'],['verbs','Work & everyday errands']]},
+  {name:'Talking & making plans',sources:[['everyday','Conversation & relationships'],['speaking','Conversation & communication'],['verbs','Plans & thinking']]},
+  {name:'Feelings & explanations',sources:[['everyday','Feelings & useful descriptions'],['speaking','Explaining & understanding'],['speaking','People & feelings']]},
+  {name:'Food & household',sources:[['everyday','Food & cooking'],['nouns','Food & household']]}
+ ];
+ function buildSituationLessons(){
+  const out=[];
+  for(const [specIndex,spec] of situationSpecs.entries()){
+    const sources=spec.sources.map(([group,topic])=>cards[group].map((c,index)=>({group,index,topic:c.topic})).filter(c=>c.topic===topic));
+    const combined=[];
+    for(let i=0;i<Math.max(...sources.map(x=>x.length));i++)for(const src of sources)if(src[i])combined.push({group:src[i].group,index:src[i].index});
+    const count=Math.ceil(combined.length/20);
+    for(let p=0;p<count;p++)out.push({id:`sit${String(specIndex+1).padStart(2,'0')}-${p+1}`,group:'situations',topic:spec.name,
+      label:spec.name+(count>1?` · part ${p+1}/${count}`:''),items:combined.slice(p*20,(p+1)*20),file:null});
+  }
+  return out;
+ }
+ const allLessons=[...lessons,...buildSituationLessons()];
  const screen=L('listening-screen'),player=L('listen-player');
- const state={session:0,device:false,paused:false,playing:false,card:0,step:0,pending:null,timer:null,wait:null,recorded:false};
+ const state={session:0,device:false,paused:false,playing:false,card:0,step:0,pending:null,timer:null,wait:null,recorded:false,activeItems:[]};
  const setStatus=msg=>{L('listen-status').textContent=msg;};
- const one=(id,value)=>{const node=L(id);node.value=value;};
- const current=()=>lessons.find(x=>x.id===L('listen-lesson').value);
- function setOptions(element,items,selected){element.replaceChildren(...items.map(([value,label])=>new Option(label,value)));if(selected&&items.some(([v])=>v===selected))element.value=selected;}
+ const current=()=>allLessons.find(x=>x.id===L('listen-lesson').value);
+ function itemsOf(lesson){
+   if(!lesson)return [];
+   const src=lesson.items||lesson.indices.map(index=>({group:lesson.group,index}));
+   const level=L('listen-cefr').value,status=L('listen-progress').value;
+   return src.filter(({group,index})=>{
+     const c=cards[group]?.[index];if(!c)return false;
+     if(level==='A1–A2'){if(!['A1','A2','A1–A2'].includes(c.cefr))return false;}else if(level!=='all'&&c.cefr!==level)return false;
+     const key=group==='lookalikes'?String(index):group==='everyday'?'d'+index:group==='nouns'?'n'+index:group==='speaking'?'s'+index:'v'+index;
+     const rating=records[key];
+     return status==='all'||(status==='new'&&!rating)||(status==='again'&&rating==='again')||(status==='known'&&rating==='known')||(status==='need'&&rating!=='known');
+   });
+ }
+ function canPlayRecording(lesson){
+   // Existing MP3s contain all 20 cards. Never play one when the user has asked
+   // to exclude words, or when the source is a mixed situation playlist.
+   if(!lesson||!lesson.file||!lesson.indices)return false;
+   const selected=itemsOf(lesson);
+   return selected.length===lesson.indices.length&&selected.every((x,i)=>x.group===lesson.group&&x.index===lesson.indices[i]);
+ }
+ function setOptions(element,items,selected){
+   element.replaceChildren(...items.map(([value,label])=>new Option(label,value)));
+   if(selected&&items.some(([v])=>v===selected))element.value=selected;
+ }
+ function matchingLessons(){
+   const group=L('listen-group').value,topic=L('listen-topic').value;
+   return allLessons.filter(x=>(group==='all'?x.group!=='situations':x.group===group)&&(topic==='all'||x.topic===topic));
+ }
  function buildGroups(){
    setOptions(L('listen-group'),[['all','All 1,300 cards'],...Object.keys(names).map(k=>[k,names[k]])]);
    buildTopics();
  }
- function matchingLessons(){const g=L('listen-group').value,t=L('listen-topic').value;return lessons.filter(x=>(g==='all'||x.group===g)&&(t==='all'||x.topic===t));}
  function buildTopics(){
    const group=L('listen-group').value,old=L('listen-topic').value;
-   const topics=[...new Set(lessons.filter(x=>group==='all'||x.group===group).map(x=>x.topic))];
+   const topics=[...new Set(allLessons.filter(x=>group==='all'?x.group!=='situations':x.group===group).map(x=>x.topic))];
    setOptions(L('listen-topic'),[['all','All topics'],...topics.map(t=>[t,t])],old);
    buildLessons();
  }
  function buildLessons(){
    const old=L('listen-lesson').value;
-   const items=matchingLessons().map((x,i)=>[x.id,`${String(i+1).padStart(2,'0')} · ${names[x.group].split(' · ')[0]} · ${x.label}`]);
-   setOptions(L('listen-lesson'),items,old);
+   const options=matchingLessons().map(x=>({lesson:x,n:itemsOf(x).length})).filter(x=>x.n>0);
+   setOptions(L('listen-lesson'),options.map(({lesson,n},i)=>[lesson.id,`${String(i+1).padStart(2,'0')} · ${lesson.label} (${n})`]),old);
+   const total=options.reduce((n,x)=>n+x.n,0);
+   const filterName=L('listen-progress').selectedOptions[0]?.textContent||'All';
+   const level=L('listen-cefr').selectedOptions[0]?.textContent||'All levels';
+   L('listen-selection-summary').textContent=`${total} listening entries · ${options.length} lessons · ${level} · ${filterName}. Your flashcard ratings are read, never changed.`;
    lessonReady();
  }
  function lessonReady(){
-   const lesson=current(); if(!lesson)return;
-   L('listen-step').textContent='Ready · '+lesson.indices.length+' words / expressions';
-   L('listen-word').textContent=lesson.label;
-   L('listen-detail').textContent=names[lesson.group]+' — English → German, with example sentences';
+   const lesson=current();const selected=itemsOf(lesson);
+   const available=!!lesson&&selected.length>0;
+   L('listen-play').disabled=!available;L('listen-device').disabled=!available;L('listen-next').disabled=!available;
    L('listen-download').hidden=true;
-   player.removeAttribute('src');player.load();
-   setStatus('Press Play recording (if generated) or Device voices for immediate listening.');
+   player.pause();player.removeAttribute('src');player.load();
+   const mp3=available&&canPlayRecording(lesson);
+   L('listen-player').hidden=!mp3;
+   L('listen-play').textContent=mp3?'▶ Play recording':'▶ Play selected words';
+   if(!available){
+     L('listen-step').textContent='No matching words';
+     L('listen-word').textContent='Nothing to review in this selection';
+     L('listen-detail').textContent='Try a different CEFR level or choose Not reviewed + difficult.';
+     setStatus('No matching cards. Words marked “I know it” are excluded by default.');return;
+   }
+   L('listen-step').textContent='Ready · '+selected.length+' selected cards';
+   L('listen-word').textContent=lesson.label;
+   L('listen-detail').textContent=(lesson.group==='situations'?'Mixed existing cards from related topics':names[lesson.group])+' — English → German, with example sentences';
+   setStatus(mp3?'Full lesson selected: recorded MP3 is available if generated. Device voices are also available.':
+     'Filtered or situation playlist: device voices will read only these selected cards. For screen-locked listening, use an unfiltered recorded MP3 lesson.');
  }
  function stop(){
-   state.session++;state.playing=false;state.paused=false;state.device=false;state.recorded=false;
+   state.session++;state.playing=false;state.paused=false;state.device=false;state.recorded=false;state.activeItems=[];
    if(state.timer){clearTimeout(state.timer);state.timer=null;}
    if(state.wait){const resolve=state.wait;state.wait=null;resolve();}
    if(state.pending){const finish=state.pending;state.pending=null;finish();}
@@ -819,14 +894,19 @@ window.addEventListener('appinstalled', () => {
    L('listen-pause').textContent='⏸ Pause';
  }
  function setPlayState(){L('listen-pause').disabled=false;L('listen-stop').disabled=false;}
- function nextLesson(auto){const id=L('listen-lesson').value;const filtered=matchingLessons(),i=filtered.findIndex(x=>x.id===id);
+ function nextLesson(auto){
+   const id=L('listen-lesson').value;
+   const filtered=matchingLessons().filter(x=>itemsOf(x).length>0);
+   const i=filtered.findIndex(x=>x.id===id);
+   const usedDevice=state.device;
    if(i<0||i+1>=filtered.length){stop();setStatus('Reached the end of the selected lessons.');return;}
-   stop();L('listen-lesson').value=filtered[i+1].id;lessonReady();if(auto)playRecording();
+   stop();L('listen-lesson').value=filtered[i+1].id;lessonReady();
+   if(auto){if(usedDevice||!canPlayRecording(current()))playDevice();else playRecording();}
  }
  function showStep(card,step){
-   L('listen-step').textContent=`Card ${state.card+1} of ${current().indices.length} · ${['English prompt','German answer','English example','German example'][step]}`;
+   L('listen-step').textContent=`Card ${state.card+1} of ${state.activeItems.length} · ${['English prompt','German answer','English example','German example'][step]}`;
    L('listen-word').textContent=[card.en,card.de,card.exampleEn,card.example][step];
-   L('listen-detail').textContent=names[current().group]+' · '+current().label;
+   L('listen-detail').textContent=current()?.label||'';
  }
  function chooseVoice(lang){
    if(!('speechSynthesis' in window))return null;
@@ -838,7 +918,7 @@ window.addEventListener('appinstalled', () => {
  function speak(text,lang,session){return new Promise(resolve=>{
    if(session!==state.session){resolve();return;}
    if(!('speechSynthesis' in window)){resolve();return;}
-   let settled=false; const finish=()=>{if(settled)return;settled=true;if(state.pending===finish)state.pending=null;resolve();};
+   let settled=false;const finish=()=>{if(settled)return;settled=true;if(state.pending===finish)state.pending=null;resolve();};
    state.pending=finish;
    try{
      const utterance=new SpeechSynthesisUtterance(text);utterance.lang=lang==='de'?'de-DE':'en-US';
@@ -854,16 +934,17 @@ window.addEventListener('appinstalled', () => {
    state.timer=setTimeout(()=>{state.timer=null;if(state.wait){const done=state.wait;state.wait=null;done();}},ms);
  });}
  async function playDevice(fromFallback=false){
-   const lesson=current();if(!lesson)return;
+   const lesson=current(),selected=itemsOf(lesson);if(!lesson||!selected.length){lessonReady();return;}
    if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window)){setStatus('Speech playback is unavailable in this browser.');return;}
-   stop();state.device=true;state.playing=true;
-   setPlayState(); const session=state.session;
+   stop();state.device=true;state.playing=true;state.activeItems=selected;
+   setPlayState();const session=state.session;
    player.removeAttribute('src');player.load();
-   setStatus(fromFallback?'MP3 not generated yet; using device speech instead. Keep the screen awake.':'Using device voices. Keep the screen awake for uninterrupted playback.');
-   for(let j=0;j<lesson.indices.length;j++){
+   setStatus(fromFallback?'Recording unavailable; using device speech for the selected cards.':
+     `Playing ${selected.length} selected cards with device voices. Keep the screen awake for uninterrupted playback.`);
+   for(let j=0;j<selected.length;j++){
      if(session!==state.session)break;
      state.card=j;
-     const card=cards[lesson.group][lesson.indices[j]];
+     const {group,index}=selected[j];const card=cards[group][index];
      const segments=[[card.en,'en',2500],[card.de,'de',650],[card.exampleEn,'en',2500],[card.example,'de',1000]];
      for(let k=0;k<segments.length;k++){
        if(session!==state.session)break;
@@ -875,39 +956,31 @@ window.addEventListener('appinstalled', () => {
      }
    }
    if(session!==state.session)return;
-   state.playing=false;state.device=false;L('listen-pause').disabled=true;L('listen-stop').disabled=true;
-   setStatus('Lesson complete.');
-   if(L('listen-continue').checked)nextLesson(true);
+   state.playing=false;L('listen-pause').disabled=true;L('listen-stop').disabled=true;
+   setStatus('Selected cards complete.');
+   if(L('listen-continue').checked)nextLesson(true);else state.device=false;
  }
  function playRecording(){
-   const lesson=current();if(!lesson)return;
+   const lesson=current();if(!lesson||!itemsOf(lesson).length){lessonReady();return;}
+   if(!canPlayRecording(lesson)){playDevice();return;}
    stop();state.recorded=true;state.playing=true;setPlayState();
    const session=state.session;
    const url='./'+lesson.file;
-   player.onerror=()=>{
-      if(session!==state.session)return;
-      player.onerror=null;
-      playDevice(true);
-   };
-   player.onloadedmetadata=()=>{
-      if(session!==state.session)return;
-      L('listen-download').href=url;L('listen-download').hidden=false;
-   };
+   player.onerror=()=>{if(session!==state.session)return;player.onerror=null;playDevice(true);};
+   player.onloadedmetadata=()=>{if(session!==state.session)return;L('listen-download').href=url;L('listen-download').hidden=false;};
    player.src=url;player.playbackRate=Number(L('listen-speed').value)||1;
    L('listen-step').textContent='Recorded lesson · '+lesson.indices.length+' cards';
    L('listen-word').textContent=lesson.label;
-   L('listen-detail').textContent='Play audio with screen locked · pause and resume from your phone’s media controls';
-   setStatus('Loading your recorded MP3 lesson…');
+   L('listen-detail').textContent='Original MP3 lesson · play with screen locked';
+   setStatus('Loading recorded MP3 lesson…');
    const promise=player.play();
-   if(promise&&promise.then)promise.then(()=>{
-      if(session===state.session)setStatus('Playing recorded bilingual lesson.');
-   }).catch(()=>{
-      if(session!==state.session)return;
-      // A file that does not exist triggers the error event and voice fallback.
-      if(player.error){playDevice(true);return;}
-      setStatus('Tap the audio player’s play button to start, or choose Device voices.');
+   if(promise&&promise.then)promise.then(()=>{if(session===state.session)setStatus('Playing recorded bilingual lesson.');}).catch(()=>{
+     if(session!==state.session)return;
+     if(player.error){playDevice(true);return;}
+     setStatus('Tap the audio player to start, or choose Device voices.');
    });
  }
+ function playSelected(){if(canPlayRecording(current()))playRecording();else playDevice();}
  function pause(){
    if(!state.playing)return;
    if(state.recorded){if(player.paused){player.play().catch(()=>{});state.paused=false;}else{player.pause();state.paused=true;}}
@@ -928,14 +1001,16 @@ window.addEventListener('appinstalled', () => {
  L('listen-group').addEventListener('change',()=>{stop();buildTopics();});
  L('listen-topic').addEventListener('change',()=>{stop();buildLessons();});
  L('listen-lesson').addEventListener('change',()=>{stop();lessonReady();});
- L('listen-play').addEventListener('click',playRecording);
+ L('listen-cefr').addEventListener('change',()=>{stop();buildLessons();});
+ L('listen-progress').addEventListener('change',()=>{stop();buildLessons();});
+ L('listen-play').addEventListener('click',playSelected);
  L('listen-device').addEventListener('click',()=>playDevice());
  L('listen-pause').addEventListener('click',pause);
  L('listen-stop').addEventListener('click',()=>{stop();lessonReady();});
  L('listen-next').addEventListener('click',()=>nextLesson(false));
  L('listen-speed').addEventListener('change',()=>{if(state.recorded)player.playbackRate=Number(L('listen-speed').value)||1;});
  player.addEventListener('ended',()=>{if(state.recorded){state.playing=false;L('listen-pause').disabled=true;L('listen-stop').disabled=true;
-  if(L('listen-continue').checked)nextLesson(true);else setStatus('Lesson complete.');}});
+   if(L('listen-continue').checked)nextLesson(true);else setStatus('Lesson complete.');}});
  buildGroups();
 })();
 </script>
