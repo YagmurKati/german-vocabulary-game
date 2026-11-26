@@ -53,11 +53,11 @@ After uploading the package, open the GitHub repo's **Actions** tab, select **Ge
 
 Open the game online, choose **Recorded German voice** and click **Save all German audio for offline use** while connected to Wi-Fi. Keep the app open until all tracks are cached. This can take several minutes and uses additional local storage. Your browser may erase cached files if storage is low. Audio tracks you've already played are usually cached individually.
 
-## Word illustrations (first batch)
+## Word illustrations (Phase 2)
 
-A small set of **21** illustrated cards is included in this initial release (17 Everyday German and 4 English Lookalikes). Pictures appear **only after revealing** the German answer, beside the German example sentence and its English translation. Use the **Pictures** checkbox above the flashcard to turn them on or off; the preference is saved locally.
+This Phase 2 package includes **53** illustrated cards in total (**37 Everyday German** and **16 English Lookalikes**). It adds **32 new illustrations** to the original first batch. Pictures appear **only after revealing** the German answer, beside the German example sentence and its English translation. Use the **Pictures** checkbox above the flashcard to turn them on or off; the preference is saved locally.
 
-Cards without a matching illustration behave exactly as before. More pictures can be added in subsequent batches. Images are lightweight WebP files in `images/`; this first batch is pre-cached with the app for offline use.
+Cards without a matching illustration behave exactly as before. More pictures can be added in subsequent batches. Images are lightweight WebP files in `images/`; Images are lightweight WebP files in `images/`; cards without a matching picture still behave exactly as before.
 
 ## Learning progress and privacy
 
