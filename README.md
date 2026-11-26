@@ -53,11 +53,11 @@ After uploading the package, open the GitHub repo's **Actions** tab, select **Ge
 
 Open the game online, choose **Recorded German voice** and click **Save all German audio for offline use** while connected to Wi-Fi. Keep the app open until all tracks are cached. This can take several minutes and uses additional local storage. Your browser may erase cached files if storage is low. Audio tracks you've already played are usually cached individually.
 
-## Word illustrations (Phase 4)
+## Word illustrations — Everyday German complete
 
-WortFlip Phase 4 contains **113 individual WebP illustrations** and shows pictures on **133 vocabulary cards** across Everyday German and English Lookalikes. Some related cards share the same picture. This release adds **27 new images** to Phase 3; it does not replace existing pictures.
+**All 400 Everyday German cards now show a picture after you reveal the German answer.** Original, detailed situation illustrations are retained for 105 cards, and another 295 illustrated memory cues have been added. Among the new cues are 16 detailed scenes illustrating feelings and emotions; the other 279 are concise, colorful symbolic pictures for everyday expressions and less concrete concepts. Seven closely related cards share an appropriate previously existing image. English Lookalikes retains its existing selected illustrations.
 
-Pictures appear **only after revealing** a German answer. The **Pictures** checkbox lets you show/hide them and remembers your preference. Cards without a relevant illustration remain text-only. Images are bundled locally in `images/` and the app's offline cache is updated; your audio, CEFR filters, and saved learning progress are unchanged.
+Pictures remain **optional**: uncheck **Pictures** to hide them. The updated offline service worker does **not** pre-download all pictures automatically. New pictures are fetched when revealed and then cached for offline use on that device, subject to available browser storage. Flashcards, audio, CEFR filtering, and local learning progress are unchanged. See [Illustration update notes](README-ILLUSTRATIONS.md) for details.
 
 ## Learning progress and privacy
 

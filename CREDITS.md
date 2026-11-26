@@ -30,4 +30,8 @@ For permission requests, contact the project maintainer through the [official re
 
 ## Illustrations
 
-The vocabulary illustrations in `images/` were generated for WortFlip with AI image generation and curated for their corresponding cards. Phase 4 includes 113 individual illustration files. Some scenes were carefully cropped from composite artwork; all source files are included in the repository as optimized WebP images.
+The full-scene vocabulary illustrations in `images/` were created for WortFlip with AI image generation and curated for their corresponding cards.
+
+The complete Everyday German picture expansion additionally contains compact, colorful symbolic image compositions. These use **Google Noto Color Emoji** glyphs rendered as raster images, combined with original layout, typography-free stickers, and color backgrounds. The Noto Color Emoji font is © Google Inc. and is distributed under the **SIL Open Font License 1.1** (the emoji artwork source has its own upstream notices). Source and license documentation: https://github.com/googlefonts/noto-emoji . The font files are **not bundled** with WortFlip.
+
+Third-party names and licenses are listed for acknowledgment; those projects do not endorse WortFlip. All other original WortFlip material remains subject to [RIGHTS.md](RIGHTS.md).
