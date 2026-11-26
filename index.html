@@ -263,6 +263,14 @@ html[data-theme="dark"] #listen-toggle{background:#2f2950;color:#e8dcff;border-c
 #speak-replay[hidden]{display:none!important}
 @media(max-width:680px){#speak-translate-mic{height:42px;width:42px;min-width:42px;border-radius:10px;font-size:21px}.speak-translate-panel{margin:8px 10px 12px;padding:14px}.speak-translation-grid{grid-template-columns:1fr;gap:9px;margin:12px 0 10px}.speak-language{min-height:66px}}
 @media(max-width:360px){#speak-translate-mic{height:40px;width:40px;min-width:40px;font-size:20px;border-radius:9px}}
+
+/* Optional voice-quality settings for the one-press translator. */
+.speak-voice-settings{display:flex;align-items:end;gap:10px;flex-wrap:wrap;margin:13px 0 3px}
+.speak-voice-settings label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;color:var(--sub);flex:1 1 190px;min-width:0}
+.speak-voice-settings select{min-width:0;width:100%;padding:9px 10px;border:1px solid var(--border);border-radius:9px;color:var(--ink);background:var(--white);font:inherit;font-size:13px}
+#speak-voice-preview{border:1px solid #c5b7f4;color:#49329e;background:#f0edff;border-radius:9px;padding:9px 12px;font-size:12px;font-weight:750;cursor:pointer;min-height:38px}
+#speak-voice-status{color:var(--sub);font-size:11px;line-height:1.45;margin:4px 0 6px}
+@media(max-width:680px){.speak-voice-settings{gap:8px}.speak-voice-settings label{flex:1 1 130px}#speak-voice-preview{flex:1 1 100%}}
 </style></head>
 <body>
 <header><div class="shell hero-row"><div class="hero-copy"><div class="eyebrow">Deutsch lernen · Free &amp; offline</div><h1>WortFlip <span aria-hidden="true">✦</span></h1><p>German Flashcards · Words, Sentences &amp; Listening</p></div><div class="header-actions"><button type="button" id="theme-toggle" aria-pressed="false" aria-label="Switch to dark mode" title="Toggle light and dark mode"><span id="theme-icon" aria-hidden="true">☾</span> <span id="theme-label">Dark mode</span></button><button type="button" id="pwa-install-button" aria-label="Install app">Install app</button><button type="button" id="listen-toggle" aria-label="Open hands-free listening lessons">🎧 Listen</button><button type="button" id="speak-translate-mic" aria-label="Hold microphone and speak English; release to hear the German translation" aria-pressed="false" title="Hold 🎤, say English, release to hear German">🎤</button></div></div></header>
@@ -270,7 +278,13 @@ html[data-theme="dark"] #listen-toggle{background:#2f2950;color:#e8dcff;border-c
 <section id="speak-translate-panel" class="speak-translate-panel" hidden aria-label="Speak English to hear the German translation">
  <div class="speak-panel-head"><div><h2>🎤 Speak English → Hear German</h2><p>Press and hold the microphone above, say one English sentence, and release. German will be spoken automatically—no second tap.</p></div><button id="speak-panel-close" class="speak-close" type="button" aria-label="Close translation panel">×</button></div>
  <div class="speak-translation-grid"><div class="speak-language"><span>English · what I heard</span><strong id="speak-english">Listening for your sentence…</strong></div><div class="speak-language"><span>German · automatic translation</span><strong id="speak-german">—</strong></div></div>
- <div class="speak-tools"><p id="speak-status" role="status" aria-live="polite">Hold 🎤 and speak English.</p><button id="speak-replay" type="button" hidden>🔊 Hear German again</button></div>
+ <div class="speak-voice-settings" aria-label="German translation voice settings">
+  <label for="speak-voice">German voice<select id="speak-voice"><option value="auto">Best available German voice</option></select></label>
+  <label for="speak-rate">Speaking speed<select id="speak-rate"><option value="0.75">Very slow · 0.75×</option><option value="0.85">Clear &amp; slow · 0.85×</option><option value="0.9">A little slow · 0.9×</option><option value="1">Normal · 1×</option></select></label>
+  <button type="button" id="speak-voice-preview">▶ Preview voice</button>
+</div>
+<p id="speak-voice-status" role="status">Checking German voices on this device…</p>
+<div class="speak-tools"><p id="speak-status" role="status" aria-live="polite">Hold 🎤 and speak English.</p><button id="speak-replay" type="button" hidden>🔊 Hear German again</button></div>
  <p class="speak-privacy">The browser may process microphone audio using its speech service. Sentences already in WortFlip are translated locally; otherwise the browser's built-in translator is tried, then the English text may be sent to MyMemory for online translation. Free online translation has usage limits and may be imperfect. WortFlip does not save your dictated sentences or recordings.</p>
 </section>
 <main>
@@ -1056,6 +1070,10 @@ window.addEventListener('appinstalled', () => {
  const german=document.getElementById('speak-german');
  const status=document.getElementById('speak-status');
  const replay=document.getElementById('speak-replay');
+ const voiceSelect=document.getElementById('speak-voice');
+ const rateSelect=document.getElementById('speak-rate');
+ const voicePreview=document.getElementById('speak-voice-preview');
+ const voiceStatus=document.getElementById('speak-voice-status');
  const close=document.getElementById('speak-panel-close');
  if(!mic||!panel)return;
  let held=false,released=false,session=0,recognizer=null,currentText='',savedText='',translating=false,lastGerman='',errorCode='',restartCount=0,stopFallback=null,translatorPromise=null;
@@ -1123,20 +1141,85 @@ window.addEventListener('appinstalled', () => {
    }catch(err){if(err?.name==='AbortError')throw new Error('The online translator timed out. Check your connection.');throw err;}
    finally{clearTimeout(timeout);}
  }
+ // The website is static: use only voices this browser exposes, with a preference
+ // for enhanced / natural / neural quality rather than the first German voice.
+ const MIC_VOICE_KEY='wortflip-microphone-german-voice-v1';
+ const MIC_RATE_KEY='wortflip-microphone-german-rate-v1';
+ let germanMicVoices=[];
+ const voiceId=v=>(v.voiceURI||v.name)+'|'+v.lang;
+ const isGerman=v=>/^de([-_]|$)/i.test(String(v.lang||''));
+ function quality(v){
+   const n=(v.name+' '+v.voiceURI).toLowerCase();
+   let q=/^de[-_]de$/i.test(v.lang)?20:0;
+   if(/neural|natural|premium|enhanced|hochwertig|high quality/.test(n))q+=110;
+   if(/microsoft.*online|online.*natural/.test(n))q+=65;
+   if(/google deutsch|google german/.test(n))q+=55;
+   if(/compact|basic|low quality/.test(n))q-=80;
+   if(v.localService)q+=3;
+   return q;
+ }
+ function restoreVoiceSettings(){
+   let savedRate='0.85';let savedVoice='auto';
+   try{savedRate=localStorage.getItem(MIC_RATE_KEY)||savedRate;savedVoice=localStorage.getItem(MIC_VOICE_KEY)||savedVoice;}catch(_){}
+   rateSelect.value=['0.75','0.85','0.9','1'].includes(savedRate)?savedRate:'0.85';
+   voiceSelect.dataset.savedVoice=savedVoice;
+ }
+ function refreshMicVoices(){
+   if(!('speechSynthesis' in window)){
+     voiceSelect.replaceChildren(new Option('German speech unavailable','auto'));
+     voiceSelect.disabled=true;voiceStatus.textContent='This browser cannot speak German automatically.';return;
+   }
+   try{germanMicVoices=(speechSynthesis.getVoices()||[]).filter(isGerman).sort((a,b)=>quality(b)-quality(a)||a.name.localeCompare(b.name));}
+   catch(_){germanMicVoices=[];}
+   const current=voiceSelect.value!=='auto'?voiceSelect.value:(voiceSelect.dataset.savedVoice||'auto');
+   voiceSelect.replaceChildren(new Option('Best available German voice (recommended)','auto'));
+   germanMicVoices.forEach(v=>voiceSelect.add(new Option(v.name+' · '+v.lang+(quality(v)>=90?' · high quality':''),voiceId(v))));
+   const chosen=Array.from(voiceSelect.options).some(o=>o.value===current)?current:'auto';
+   voiceSelect.value=chosen;
+   if(germanMicVoices.length){
+     const top=germanMicVoices[0];
+     voiceStatus.textContent='Automatic choice: '+top.name+'. Change the voice if another sounds more natural. Available voices depend on your device.';
+   }else{
+     voiceStatus.textContent='German voices are still loading, or none is installed. Add an enhanced German system voice for better quality.';
+   }
+ }
+ function getMicVoice(){
+   const chosen=voiceSelect.value;
+   if(chosen!=='auto')return germanMicVoices.find(v=>voiceId(v)===chosen)||germanMicVoices[0];
+   return germanMicVoices[0];
+ }
  function speakGerman(text){
    if(!('speechSynthesis' in window)||typeof window.SpeechSynthesisUtterance!=='function'){
      setStatus('German text is ready, but spoken playback is not supported in this browser.');return;
    }
    try{
      speechSynthesis.cancel();
-     const utterance=new SpeechSynthesisUtterance(text);utterance.lang='de-DE';utterance.rate=.9;
-     const voices=speechSynthesis.getVoices();
-     const de=voices.find(v=>String(v.lang).toLowerCase()==='de-de')||voices.find(v=>String(v.lang).toLowerCase().startsWith('de'));
-     if(de)utterance.voice=de;
+     if(!germanMicVoices.length)refreshMicVoices();
+     const utterance=new SpeechSynthesisUtterance(text);
+     utterance.lang='de-DE';utterance.rate=Number(rateSelect.value)||0.85;
+     const selected=getMicVoice();
+     if(selected)utterance.voice=selected;
      utterance.onerror=()=>setStatus('German text is ready, but speech could not play on this device.');
      speechSynthesis.speak(utterance);
    }catch(_){setStatus('German text is ready, but speech could not start automatically.');}
  }
+ restoreVoiceSettings();
+ refreshMicVoices();
+ if('speechSynthesis' in window){
+   if(speechSynthesis.addEventListener)speechSynthesis.addEventListener('voiceschanged',refreshMicVoices);
+   else {
+     const previous=speechSynthesis.onvoiceschanged;
+     speechSynthesis.onvoiceschanged=e=>{if(typeof previous==='function')previous.call(speechSynthesis,e);refreshMicVoices();};
+   }
+   setTimeout(refreshMicVoices,450);
+   setTimeout(refreshMicVoices,1800);
+ }
+ voiceSelect.addEventListener('change',()=>{
+   voiceSelect.dataset.savedVoice=voiceSelect.value;
+   try{localStorage.setItem(MIC_VOICE_KEY,voiceSelect.value);}catch(_){}
+ });
+ rateSelect.addEventListener('change',()=>{try{localStorage.setItem(MIC_RATE_KEY,rateSelect.value);}catch(_){}});
+ voicePreview.addEventListener('click',()=>speakGerman('Guten Morgen! Ich spreche jetzt etwas langsamer und deutlicher.'));
  async function finish(id){
    if(id!==session||translating)return;
    clearStopFallback();translating=true;mic.classList.remove('is-holding');mic.setAttribute('aria-pressed','false');
