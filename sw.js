@@ -1,6 +1,6 @@
 'use strict';
 // Bump cache version so clients receive the Android audio fix.
-const CACHE_NAME = 'wortspiel-pwa-v3-audio-range';
+const CACHE_NAME = 'wortspiel-pwa-v5-sentence-audio';
 const CACHE_PREFIX = 'wortspiel-pwa-';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './audio/tracks.json',
@@ -72,6 +72,23 @@ self.addEventListener('fetch', event => {
 
   if (/\.mp3$/i.test(url.pathname)) {
     event.respondWith(serveAudio(request));
+    return;
+  }
+
+  // The audio track manifest changes after the workflow publishes 400 new tracks.
+  // Fetch it online first; offline, fall back to the saved copy.
+  if (url.pathname.endsWith('/audio/tracks.json')) {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      try {
+        const response = await fetch(request);
+        if (response.ok) {
+          await cache.put(request, response.clone());
+          return response;
+        }
+      } catch (_) { /* Offline: use cached manifest */ }
+      return (await cache.match(request)) || Response.error();
+    })());
     return;
   }
 

@@ -304,8 +304,8 @@ function render(){syncMobileControls();stats();el('mode-label').textContent=mode
  if(showExample){
   el('example-de').textContent=c.example;
   el('example-en').textContent=c.exampleEn;
-  // Only Everyday German has pre-recorded example-sentence audio tracks.
-  el('example-audio-btn').hidden=library!=='everyday';
+  // Both libraries have matching pre-recorded example-sentence audio.
+  el('example-audio-btn').hidden=false;
  }
  const note=flipped?(library==='lookalikes'?USAGE_NOTES[c.de]:c.note):null;el('usage-note').style.display=note?'block':'none';el('usage-note').textContent=note?'Usage: '+note:'';
 }
@@ -367,7 +367,7 @@ async function getRecordedManifest(){
  if(!manifestRequest)manifestRequest=fetch('./audio/tracks.json',{cache:'no-store'}).then(async r=>{
    if(!r.ok)throw Error('German recordings have not been published yet');
    const d=await r.json();
-   if(d.version!==1||d.collections.lookalikes.length!==400||d.collections.everyday.length!==400||d.collections.examples.length!==400)throw Error('The audio track list is incomplete');
+   if(d.version!==1||d.collections.lookalikes.length!==400||d.collections.everyday.length!==400||d.collections.examples.length!==400||!Array.isArray(d.collections.lookalike_examples)||d.collections.lookalike_examples.length!==400)throw Error('The audio track list is incomplete');
    recordedManifest=d;
    return d;
  }).finally(()=>{manifestRequest=null;});
@@ -379,7 +379,7 @@ const DIRECT_AUDIO_ROOT='https://raw.githubusercontent.com/YagmurKati/german-voc
 function playRecorded(example=false){
  if(!queue.length||cursor>=queue.length)return;
  const idx=queue[cursor];
- const prefix=example?'x':library==='lookalikes'?'l':'e';
+ const prefix=example?(library==='lookalikes'?'y':'x'):(library==='lookalikes'?'l':'e');
  const file='audio/'+prefix+String(idx).padStart(3,'0')+'.mp3';
  if(recordingPlayer){recordingPlayer.pause();recordingPlayer.removeAttribute('src');recordingPlayer.load();}
  const player=new Audio();
@@ -426,7 +426,7 @@ function sayGerman(){
  playDeviceGerman(activeLibrary()[queue[cursor]].de);
 }
 function sayGermanExample(){
- if(library!=='everyday'||!queue.length||cursor>=queue.length)return;
+ if(!queue.length||cursor>=queue.length)return;
  if(audioMode==='recorded')return playRecorded(true);
  playDeviceGerman(activeLibrary()[queue[cursor]].example);
 }
