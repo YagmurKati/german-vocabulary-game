@@ -241,9 +241,38 @@ html[data-theme="dark"] #listen-toggle{background:#2f2950;color:#e8dcff;border-c
 .listen-download{display:inline-block;margin:7px 0 2px;color:#6251c2;font-weight:750}
 .listen-notice{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--border);color:var(--sub);font-size:12px}
 @media(max-width:680px){.listening-screen{padding:13px;margin-top:8px}.listen-grid{grid-template-columns:1fr;gap:9px}.listen-filter-row{grid-template-columns:1fr;gap:9px}.listen-stage{padding:13px;min-height:135px}.listen-controls button{flex:1 1 43%}}
+
+/* Press-and-hold English-to-German microphone translator. */
+#speak-translate-mic{background:#fdf8e8;color:#523d99;border:2px solid #efd89c;border-radius:13px;width:47px;min-width:47px;height:43px;font-size:23px;display:inline-flex;align-items:center;justify-content:center;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:pointer;line-height:1;box-shadow:0 2px 6px #0001;flex:0 0 auto}
+#speak-translate-mic.is-holding{background:#e2536b;color:white;border-color:#ffc1ca;box-shadow:0 0 0 5px #f1617b3b;transform:scale(1.05)}
+#speak-translate-mic.is-working{background:#e2f2ff;color:#174e94;border-color:#95bde5}
+.speak-translate-panel{max-width:950px;margin:12px auto 16px;padding:17px 19px;border-radius:16px;border:1px solid var(--border);background:var(--white);box-shadow:0 10px 24px #17294b13;color:var(--ink)}
+.speak-translate-panel[hidden]{display:none!important}
+.speak-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.speak-panel-head h2{margin:0 0 4px;font-size:19px}
+.speak-panel-head p{margin:0;color:var(--sub);font-size:13px;line-height:1.55}
+.speak-close{border:1px solid var(--border);color:var(--ink);background:var(--white);font-size:17px;min-width:34px;min-height:34px;border-radius:9px;cursor:pointer}
+.speak-translation-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0 10px}
+.speak-language{background:var(--bg);border-radius:11px;padding:12px;min-height:80px}
+.speak-language span{display:block;color:var(--sub);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;margin-bottom:8px}
+.speak-language strong{display:block;font-size:17px;line-height:1.45;overflow-wrap:anywhere;white-space:pre-wrap}
+#speak-status{font-size:13px;color:var(--sub);margin:7px 0 3px;min-height:20px}
+.speak-privacy{color:var(--sub);font-size:11px;line-height:1.5;margin:8px 0 0}
+.speak-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:7px 0 0}
+#speak-replay{border:1px solid #c5b7f4;color:#49329e;background:#f0edff;border-radius:9px;padding:7px 10px;font-weight:750;font-size:12px;cursor:pointer}
+#speak-replay[hidden]{display:none!important}
+@media(max-width:680px){#speak-translate-mic{height:42px;width:42px;min-width:42px;border-radius:10px;font-size:21px}.speak-translate-panel{margin:8px 10px 12px;padding:14px}.speak-translation-grid{grid-template-columns:1fr;gap:9px;margin:12px 0 10px}.speak-language{min-height:66px}}
+@media(max-width:360px){#speak-translate-mic{height:40px;width:40px;min-width:40px;font-size:20px;border-radius:9px}}
 </style></head>
 <body>
-<header><div class="shell hero-row"><div class="hero-copy"><div class="eyebrow">Deutsch lernen · Free &amp; offline</div><h1>WortFlip <span aria-hidden="true">✦</span></h1><p>German Flashcards · Words, Sentences &amp; Listening</p></div><div class="header-actions"><button type="button" id="theme-toggle" aria-pressed="false" aria-label="Switch to dark mode" title="Toggle light and dark mode"><span id="theme-icon" aria-hidden="true">☾</span> <span id="theme-label">Dark mode</span></button><button type="button" id="pwa-install-button" aria-label="Install app">Install app</button><button type="button" id="listen-toggle" aria-label="Open hands-free listening lessons">🎧 Listen</button></div></div></header>
+<header><div class="shell hero-row"><div class="hero-copy"><div class="eyebrow">Deutsch lernen · Free &amp; offline</div><h1>WortFlip <span aria-hidden="true">✦</span></h1><p>German Flashcards · Words, Sentences &amp; Listening</p></div><div class="header-actions"><button type="button" id="theme-toggle" aria-pressed="false" aria-label="Switch to dark mode" title="Toggle light and dark mode"><span id="theme-icon" aria-hidden="true">☾</span> <span id="theme-label">Dark mode</span></button><button type="button" id="pwa-install-button" aria-label="Install app">Install app</button><button type="button" id="listen-toggle" aria-label="Open hands-free listening lessons">🎧 Listen</button><button type="button" id="speak-translate-mic" aria-label="Hold microphone and speak English; release to hear the German translation" aria-pressed="false" title="Hold 🎤, say English, release to hear German">🎤</button></div></div></header>
+
+<section id="speak-translate-panel" class="speak-translate-panel" hidden aria-label="Speak English to hear the German translation">
+ <div class="speak-panel-head"><div><h2>🎤 Speak English → Hear German</h2><p>Press and hold the microphone above, say one English sentence, and release. German will be spoken automatically—no second tap.</p></div><button id="speak-panel-close" class="speak-close" type="button" aria-label="Close translation panel">×</button></div>
+ <div class="speak-translation-grid"><div class="speak-language"><span>English · what I heard</span><strong id="speak-english">Listening for your sentence…</strong></div><div class="speak-language"><span>German · automatic translation</span><strong id="speak-german">—</strong></div></div>
+ <div class="speak-tools"><p id="speak-status" role="status" aria-live="polite">Hold 🎤 and speak English.</p><button id="speak-replay" type="button" hidden>🔊 Hear German again</button></div>
+ <p class="speak-privacy">The browser may process microphone audio using its speech service. Sentences already in WortFlip are translated locally; otherwise the browser's built-in translator is tried, then the English text may be sent to MyMemory for online translation. Free online translation has usage limits and may be imperfect. WortFlip does not save your dictated sentences or recordings.</p>
+</section>
 <main>
 <section id="listening-screen" class="listening-screen" hidden aria-label="Hands-free listening lessons">
 <div class="listen-head"><div><h2>🎧 Hands-free listening</h2><p class="listen-hint">English word → recall pause → German word → English example → recall pause → German sentence. All words and sentences come from your existing cards.</p></div><button id="listen-back" type="button" class="listen-back">← Flashcards</button></div>
@@ -1012,6 +1041,200 @@ window.addEventListener('appinstalled', () => {
  player.addEventListener('ended',()=>{if(state.recorded){state.playing=false;L('listen-pause').disabled=true;L('listen-stop').disabled=true;
    if(L('listen-continue').checked)nextLesson(true);else setStatus('Lesson complete.');}});
  buildGroups();
+})();
+</script>
+
+<script>
+/* Push-to-talk translator: one continuous hold, automatic transcription, translation and TTS on release.
+   No API key; exact app-card matches are local, supported Chrome desktops can translate
+   on device, and a public MyMemory en|de service is used as the online fallback. */
+(()=>{
+ 'use strict';
+ const mic=document.getElementById('speak-translate-mic');
+ const panel=document.getElementById('speak-translate-panel');
+ const english=document.getElementById('speak-english');
+ const german=document.getElementById('speak-german');
+ const status=document.getElementById('speak-status');
+ const replay=document.getElementById('speak-replay');
+ const close=document.getElementById('speak-panel-close');
+ if(!mic||!panel)return;
+ let held=false,released=false,session=0,recognizer=null,currentText='',savedText='',translating=false,lastGerman='',errorCode='',restartCount=0,stopFallback=null,translatorPromise=null;
+ let activePointer=null;
+ const normalize=t=>String(t||'').trim().toLowerCase().replace(/[.!?;,]+$/g,'').replace(/\s+/g,' ');
+ const setStatus=t=>{status.textContent=t;};
+ const clearStopFallback=()=>{if(stopFallback!==null){clearTimeout(stopFallback);stopFallback=null;}};
+ const display=()=>{panel.hidden=false;};
+ const currentTranscript=()=>[savedText,currentText].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
+ function stopOtherAudio(){
+   const lessonStop=document.getElementById('listen-stop');
+   if(lessonStop&&!lessonStop.disabled)lessonStop.click();
+   const player=document.getElementById('listen-player');
+   if(player&&!player.paused)player.pause();
+   if('speechSynthesis' in window)try{speechSynthesis.cancel();}catch(_){ }
+ }
+ function createLocalTranslator(){
+   if(translatorPromise||!window.Translator||typeof window.Translator.create!=='function')return;
+   // Create while the actual microphone press provides a user gesture. Some browsers
+   // require that gesture to download a language pack on first use.
+   try{translatorPromise=Promise.resolve(window.Translator.create({sourceLanguage:'en',targetLanguage:'de'}));translatorPromise.catch(()=>{});}catch(_){translatorPromise=null;}
+ }
+ function lookupExistingSentence(t){
+   const key=normalize(t);if(!key)return '';
+   const decks=[
+     typeof LOOKALIKE_CARDS!=='undefined'?LOOKALIKE_CARDS:[],
+     typeof EVERYDAY_CARDS!=='undefined'?EVERYDAY_CARDS:[],
+     typeof NOUN_CARDS!=='undefined'?NOUN_CARDS:[],
+     typeof SPEAKING_CARDS!=='undefined'?SPEAKING_CARDS:[],
+     typeof VERB_CARDS!=='undefined'?VERB_CARDS:[]
+   ];
+   for(const cards of decks){for(const c of cards){if(c.exampleEn&&normalize(c.exampleEn)===key&&c.example)return c.example;}}
+   for(const cards of decks){for(const c of cards){if(c.en&&normalize(c.en)===key&&c.de)return c.de;}}
+   return '';
+ }
+ const decodeHtml=t=>{const el=document.createElement('textarea');el.innerHTML=String(t);return el.value.trim();};
+ async function translateSentence(text,id){
+   const known=lookupExistingSentence(text);
+   if(known)return {translation:known,source:'WortFlip example'};
+   if(translatorPromise){
+     try{
+       const ready=await Promise.race([translatorPromise,new Promise(resolve=>setTimeout(()=>resolve(null),1600))]);
+       if(id!==session)return null;
+       if(ready&&typeof ready.translate==='function'){
+         const result=await ready.translate(text);
+         if(result&&String(result).trim())return {translation:String(result).trim(),source:'on-device translator'};
+       }
+     }catch(_){ /* Fallback to web service */ }
+   }
+   // This no-key fallback requires a network connection. Do not send audio, only
+   // the English transcript; URLSearchParams safely encodes user text.
+   if(new TextEncoder().encode(text).length>495)throw new Error('Try a shorter sentence (under 495 UTF-8 bytes).');
+   const url=new URL('https://api.mymemory.translated.net/get');
+   url.searchParams.set('q',text);url.searchParams.set('langpair','en|de');
+   const ctrl=new AbortController();const timeout=setTimeout(()=>ctrl.abort(),11000);
+   try{
+     const response=await fetch(url.href,{method:'GET',mode:'cors',signal:ctrl.signal,cache:'no-store'});
+     if(!response.ok)throw new Error('The translation service is temporarily unavailable.');
+     const data=await response.json();
+     if(Number(data?.responseStatus)!==200)throw new Error(data?.responseDetails||'The translation service returned an error.');
+     const translated=decodeHtml(data?.responseData?.translatedText||'');
+     if(!translated||normalize(translated)===normalize(text)||/^(query length limit|invalid language pair|daily quota|you have exceeded)/i.test(translated))
+       throw new Error('No reliable German translation was returned. Try again later.');
+     return {translation:translated,source:'online translation'};
+   }catch(err){if(err?.name==='AbortError')throw new Error('The online translator timed out. Check your connection.');throw err;}
+   finally{clearTimeout(timeout);}
+ }
+ function speakGerman(text){
+   if(!('speechSynthesis' in window)||typeof window.SpeechSynthesisUtterance!=='function'){
+     setStatus('German text is ready, but spoken playback is not supported in this browser.');return;
+   }
+   try{
+     speechSynthesis.cancel();
+     const utterance=new SpeechSynthesisUtterance(text);utterance.lang='de-DE';utterance.rate=.9;
+     const voices=speechSynthesis.getVoices();
+     const de=voices.find(v=>String(v.lang).toLowerCase()==='de-de')||voices.find(v=>String(v.lang).toLowerCase().startsWith('de'));
+     if(de)utterance.voice=de;
+     utterance.onerror=()=>setStatus('German text is ready, but speech could not play on this device.');
+     speechSynthesis.speak(utterance);
+   }catch(_){setStatus('German text is ready, but speech could not start automatically.');}
+ }
+ async function finish(id){
+   if(id!==session||translating)return;
+   clearStopFallback();translating=true;mic.classList.remove('is-holding');mic.setAttribute('aria-pressed','false');
+   const recognized=currentTranscript();
+   if(!recognized){
+     setStatus(errorCode==='not-allowed'||errorCode==='service-not-allowed'?'Microphone permission was denied. Allow microphone access in browser settings.':
+       errorCode==='network'?'Speech recognition needs a connection in this browser.':
+       'I could not hear a sentence. Hold the microphone and speak English, then release.');
+     mic.classList.remove('is-working');return;
+   }
+   english.textContent=recognized;mic.classList.add('is-working');setStatus('Translating…');
+   try{
+     const translated=await translateSentence(recognized,id);
+     if(id!==session||!translated)return;
+     german.textContent=translated.translation;
+     lastGerman=translated.translation;replay.hidden=false;
+     mic.classList.remove('is-working');
+     setStatus(`German translation ready (${translated.source}). Speaking now…`);
+     speakGerman(lastGerman); // Automatically; no second tap
+   }catch(err){
+     if(id!==session)return;
+     mic.classList.remove('is-working');
+     setStatus(err?.message||'Translation was unsuccessful. Please try again.');
+     german.textContent='Translation unavailable';
+   }
+ }
+ function beginRecognition(id){
+   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+   if(!SR){held=false;released=false;mic.classList.remove('is-holding');mic.setAttribute('aria-pressed','false');setStatus('Speech recognition is not available in this browser. Try a current version of Chrome or Safari.');return;}
+   const recognition=new SR();recognizer=recognition;
+   recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;recognition.maxAlternatives=1;
+   recognition.onresult=event=>{
+     if(id!==session)return;
+     const bits=[];
+     for(let i=0;i<event.results.length;i++){
+       const word=event.results[i]?.[0]?.transcript||'';if(word.trim())bits.push(word.trim());
+     }
+     currentText=bits.join(' ').trim();
+     english.textContent=currentTranscript()||'Listening…';
+   };
+   recognition.onerror=event=>{
+     if(id!==session)return;
+     errorCode=event.error||'unknown';
+     if(['not-allowed','service-not-allowed','audio-capture'].includes(errorCode)){
+       held=false;released=true;
+       mic.classList.remove('is-holding');mic.setAttribute('aria-pressed','false');
+       setStatus(errorCode==='audio-capture'?'The microphone is unavailable.': 'Microphone access was denied. Please allow it in browser settings.');
+     }
+   };
+   recognition.onend=()=>{
+     if(id!==session)return;
+     if(held&&!released&&restartCount<3&&!['not-allowed','service-not-allowed','audio-capture'].includes(errorCode)){
+       // Browsers sometimes end recognition on a short silence even while held.
+       // Preserve that segment and continue the same microphone hold.
+       if(currentText){savedText=[savedText,currentText].filter(Boolean).join(' ');currentText='';}
+       restartCount++;
+       try{beginRecognition(id);return;}catch(_){/* Finalize on release */}
+     }
+     if(released)finish(id);
+     else{held=false;mic.classList.remove('is-holding');mic.setAttribute('aria-pressed','false');setStatus('Microphone stopped. Press and hold to try again.');}
+   };
+   try{recognition.start();}catch(err){held=false;released=true;mic.classList.remove('is-holding');mic.setAttribute('aria-pressed','false');setStatus('The browser could not start the microphone. Check microphone permissions.');}
+ }
+ function startHold(event){
+   if(event?.button!==undefined&&event.button!==0)return;
+   if(held)return;
+   if(event?.preventDefault)event.preventDefault();
+   if(event?.pointerId!==undefined){activePointer=event.pointerId;try{mic.setPointerCapture(event.pointerId);}catch(_){}}
+   session++;const id=session;
+   held=true;released=false;translating=false;currentText='';savedText='';lastGerman='';errorCode='';restartCount=0;clearStopFallback();
+   display();english.textContent='Listening…';german.textContent='—';replay.hidden=true;
+   mic.classList.remove('is-working');mic.classList.add('is-holding');mic.setAttribute('aria-pressed','true');setStatus('🎙 Listening to English… release the button to translate.');
+   stopOtherAudio();
+   createLocalTranslator();
+   beginRecognition(id);
+ }
+ function releaseHold(event){
+   if(!held)return;
+   if(event?.preventDefault)event.preventDefault();
+   held=false;released=true;
+   mic.classList.remove('is-holding');mic.classList.add('is-working');mic.setAttribute('aria-pressed','false');
+   if(activePointer!==null){try{mic.releasePointerCapture(activePointer);}catch(_){ }activePointer=null;}
+   setStatus('Processing your English sentence…');
+   try{recognizer?.stop();}catch(_){finish(session);return;}
+   const id=session;
+   clearStopFallback();stopFallback=setTimeout(()=>{if(id===session)finish(id);},2800);
+ }
+ mic.addEventListener('pointerdown',startHold);
+ mic.addEventListener('pointerup',releaseHold);
+ mic.addEventListener('pointercancel',releaseHold);
+ window.addEventListener('pointerup',e=>{if(held&&activePointer!==null&&e.pointerId===activePointer)releaseHold(e);});
+ mic.addEventListener('keydown',e=>{if(!e.repeat&&(e.key===' '||e.key==='Enter'))startHold(e);});
+ mic.addEventListener('keyup',e=>{if(e.key===' '||e.key==='Enter')releaseHold(e);});
+ // Suppress touch-generated click; interaction only occurs on press and release.
+ mic.addEventListener('click',e=>e.preventDefault());
+ window.addEventListener('blur',()=>{if(held)releaseHold();});
+ replay.addEventListener('click',()=>{if(lastGerman)speakGerman(lastGerman);});
+ close.addEventListener('click',()=>{if(held)releaseHold();panel.hidden=true;});
 })();
 </script>
 </body></html>
