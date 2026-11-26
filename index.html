@@ -183,6 +183,7 @@ html[data-theme="dark"] .action:disabled{opacity:.42}
  .audio-switch{margin-top:12px;padding:10px}
  .study .hint{display:none}
 }
+
 </style></head>
 <body>
 <header><div class="shell hero-row"><div class="hero-copy"><div class="eyebrow">Deutsch lernen · B1–B2 · Free &amp; offline</div><h1>Wortspiel <span aria-hidden="true">✦</span></h1><p>Two different learning libraries. Practice English-like German vocabulary or real-life phrases for travel, shopping, appointments, work and everyday conversations.</p></div><div class="header-actions"><button type="button" id="theme-toggle" aria-pressed="false" aria-label="Switch to dark mode" title="Toggle light and dark mode"><span id="theme-icon" aria-hidden="true">☾</span> <span id="theme-label">Dark mode</span></button><button type="button" id="pwa-install-button" aria-label="Install app">Install app</button></div></div></header>
@@ -280,7 +281,7 @@ function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify({version:1,rec
 function counts(){const ids=selectedIds();const known=ids.filter(i=>records[cardKey(i)]==='known').length;const again=ids.filter(i=>records[cardKey(i)]==='again').length;return{total:ids.length,known,again,unseen:ids.length-known-again};}
 function stats(){const x=counts(),pct=x.total?Math.round(100*x.known/x.total):0;el('known').textContent=x.known;el('hard').textContent=x.again;el('unseen').textContent=x.unseen;el('reviewed').textContent=x.total-x.unseen;el('known-summary').textContent=x.known;el('total-count').textContent=x.total;el('mastery').textContent=pct+'%';el('barfill').style.width=pct+'%';el('bar').setAttribute('aria-valuenow',pct);el('hard-btn').textContent='('+x.again+')';el('new-btn').textContent='('+x.unseen+')';}
 function buildQueue(){queue=selectedIds().filter(i=>mode==='all'||(mode==='new'&&!records[cardKey(i)])||(mode==='again'&&records[cardKey(i)]==='again'));cursor=0;flipped=false;render();}
-function changeLibrary(next){if(!['lookalikes','everyday'].includes(next))return;library=next;document.querySelectorAll('[data-lib]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.lib===next)));el('lookalikes-options').hidden=next!=='lookalikes';el('everyday-options').hidden=next!=='everyday';el('section-info').textContent=next==='everyday'?'Everyday German · Learn natural phrases in real situations':'English lookalikes · 400 familiar-looking German words';mode='all';document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));buildQueue();}
+function changeLibrary(next){if(!['lookalikes','everyday'].includes(next))return;library=next;document.querySelectorAll('[data-lib]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.lib===next)));el('lookalikes-options').hidden=next!=='lookalikes';el('everyday-options').hidden=next!=='everyday';el('section-info').textContent=next==='everyday'?'Everyday German · Learn natural phrases in real situations':'English lookalikes · 400 words with German example sentences';mode='all';document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));buildQueue();}
 function changeMode(next){mode=next;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===next));buildQueue();}
 function syncMobileControls(){
  const setSource=el(library==='lookalikes'?'deck':'everyday-topic');
@@ -295,7 +296,17 @@ function syncMobileControls(){
 function render(){syncMobileControls();stats();el('mode-label').textContent=mode==='all'?'All selected words':mode==='again'?'Difficult words':'Not reviewed';const n=queue.length,empty=n===0||cursor>=n;el('cardstage').style.display=empty?'none':'block';el('emptystage').style.display=empty?'flex':'none';el('session-count').textContent=empty?`${n} in session`:`${cursor+1} / ${n}`;
  if(empty){const x=counts();el('empty-title').textContent=n===0?'Nothing in this selection':'Session complete!';el('empty-copy').textContent=n===0?(mode==='again'?'Mark cards “Practice again” to collect difficult words here.':mode==='new'?'All selected words have been reviewed.':'Try choosing a different topic or word type.'):`You now know ${x.known} of ${x.total} selected words. Select a new topic or review difficult words.`;el('type-label').textContent='Ready';return;}
  const c=activeLibrary()[queue[cursor]];el('type-label').textContent=c.type;el('lang').textContent=flipped?'DEUTSCH · ANSWER':'ENGLISH · PROMPT';el('word').textContent=flipped?c.de:c.en;el('tap-hint').textContent=flipped?'Tap to see the English prompt':'Tap or press Space to reveal German';el('flashcard').classList.toggle('flipped',flipped);el('again-btn').disabled=!flipped;el('known-btn').disabled=!flipped;el('prev').disabled=cursor===0;el('next').disabled=cursor===n-1;
- const showExample=flipped&&Boolean(c.example&&c.exampleEn);el('example').style.display=showExample?'block':'none';if(showExample){el('example-de').textContent=c.example;el('example-en').textContent=c.exampleEn;el('example-audio-btn').hidden=library!=='everyday';}
+ // Both libraries use the same example panel after the German answer is revealed.
+ // Never reveal the example on the front, to preserve active recall.
+ const showExample=flipped&&Boolean(c.example&&c.exampleEn);
+ const examplePanel=el('example');
+ examplePanel.style.display=showExample?'block':'none';
+ if(showExample){
+  el('example-de').textContent=c.example;
+  el('example-en').textContent=c.exampleEn;
+  // Only Everyday German has pre-recorded example-sentence audio tracks.
+  el('example-audio-btn').hidden=library!=='everyday';
+ }
  const note=flipped?(library==='lookalikes'?USAGE_NOTES[c.de]:c.note):null;el('usage-note').style.display=note?'block':'none';el('usage-note').textContent=note?'Usage: '+note:'';
 }
 function flip(){if(queue.length===0||cursor>=queue.length)return;flipped=!flipped;render();}
