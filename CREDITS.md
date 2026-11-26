@@ -27,3 +27,7 @@ WortFlip is free to **play** at the public website. That does not itself grant p
 Citation metadata for publications and teaching materials is in [CITATION.cff](CITATION.cff). Citation is acknowledgment, not a software license.
 
 For permission requests, contact the project maintainer through the [official repository](https://github.com/YagmurKati/german-vocabulary-game).
+
+## Illustrations
+
+The vocabulary illustrations in `images/` were created for WortFlip with AI image generation and curated for the corresponding cards.

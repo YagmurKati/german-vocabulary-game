@@ -1,11 +1,17 @@
 'use strict';
 // Refresh cached app shell and PWA manifest for the WortFlip name change.
-const CACHE_NAME = 'wortspiel-pwa-v7-cefr-filters';
+const CACHE_NAME = 'wortspiel-pwa-v6-word-pictures';
 const CACHE_PREFIX = 'wortspiel-pwa-';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './audio/tracks.json',
   './icon-192.png', './icon-512.png',
-  './icon-maskable-512.png', './apple-touch-icon.png'
+  './icon-maskable-512.png', './apple-touch-icon.png',
+  './images/e000.webp', './images/e001.webp', './images/e002.webp', './images/e004.webp',
+  './images/e009.webp', './images/e016.webp', './images/e024.webp', './images/e029.webp',
+  './images/e040.webp', './images/e041.webp', './images/e048.webp', './images/e050.webp',
+  './images/e120.webp', './images/e210.webp', './images/e364.webp', './images/e367.webp',
+  './images/e377.webp', './images/l000.webp', './images/l035.webp', './images/l088.webp',
+  './images/l099.webp'
 ];
 const APP_ROOT = new URL('./', self.registration.scope);
 

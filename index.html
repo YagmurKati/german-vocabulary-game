@@ -188,6 +188,25 @@ html[data-theme="dark"] .action:disabled{opacity:.42}
 
 /* Discreet rights and credits links; compatible with light and dark themes. */
 .wortflip-rights{margin-top:5px;font-size:12px;opacity:.85}.wortflip-rights a{color:inherit;text-decoration:underline;text-underline-offset:2px}.wortflip-rights a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+
+/* WortFlip illustrations: memory aid only after the answer, compact on phones. */
+.studyhead-tools{display:flex;align-items:center;gap:12px;min-width:0}
+.picture-toggle{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;white-space:nowrap;user-select:none}
+.picture-toggle input{width:15px;height:15px;margin:0;accent-color:#7959dc;cursor:pointer}
+.example-area.with-picture{grid-template-columns:minmax(0,1fr) 146px;column-gap:13px;row-gap:3px;align-items:start}
+.example-area.with-picture>b,.example-area.with-picture>.ex-de,.example-area.with-picture>.ex-en,.example-area.with-picture>.example-audio-btn{grid-column:1;min-width:0}
+.example-area.with-picture>.example-audio-btn{justify-self:start}
+.word-picture{grid-column:2;grid-row:1 / 5;align-self:center;justify-self:center;margin:0;max-width:146px;width:100%;border-radius:11px;overflow:hidden;border:1px solid #d5deed;background:#fafbff}
+.word-picture img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+html[data-theme="dark"] .word-picture{border-color:#43556d;background:#243047}
+@media(max-width:680px){
+ .studyhead-tools{gap:7px}
+ .picture-toggle{font-size:10px;gap:4px}
+ .picture-toggle input{width:14px;height:14px}
+ .example-area.with-picture{grid-template-columns:minmax(0,1fr) min(30%,105px);column-gap:9px;row-gap:2px}
+ .word-picture{max-width:105px;border-radius:9px}
+}
+@media(max-width:360px){.studyhead .pill-soft{display:none}.picture-toggle{font-size:10px}}
 </style></head>
 <body>
 <header><div class="shell hero-row"><div class="hero-copy"><div class="eyebrow">Deutsch lernen · Free &amp; offline</div><h1>WortFlip <span aria-hidden="true">✦</span></h1><p>German Flashcards · Words, Sentences &amp; Listening</p></div><div class="header-actions"><button type="button" id="theme-toggle" aria-pressed="false" aria-label="Switch to dark mode" title="Toggle light and dark mode"><span id="theme-icon" aria-hidden="true">☾</span> <span id="theme-label">Dark mode</span></button><button type="button" id="pwa-install-button" aria-label="Install app">Install app</button></div></div></header>
@@ -239,7 +258,7 @@ html[data-theme="dark"] .action:disabled{opacity:.42}
   <div class="buttons-inline spaced"><button id="reset" type="button" class="mini-btn">Reset all progress</button></div>
 </section>
 <section class="panel study" aria-label="Flashcard game">
-  <div class="studyhead"><div><span class="pill" id="mode-label">All selected words</span> <span class="pill pill-soft" id="type-label">Verb</span></div><div class="count" id="session-count">1 / 200</div></div>
+  <div class="studyhead"><div><span class="pill" id="mode-label">All selected words</span> <span class="pill pill-soft" id="type-label">Verb</span></div><div class="studyhead-tools"><label class="picture-toggle" title="Show illustrations after revealing a German answer"><input id="picture-toggle" type="checkbox" checked> <span>Pictures</span></label><div class="count" id="session-count">1 / 200</div></div></div>
   <p class="section-info" id="section-info">English lookalikes · English first, German on the back</p>
   <div id="cardstage">
     <div id="flashcard" class="flashcard" tabindex="0" role="button" aria-label="Flip flashcard" aria-live="polite">
@@ -247,7 +266,7 @@ html[data-theme="dark"] .action:disabled{opacity:.42}
       <div id="word" class="word">organize</div>
       <div id="tap-hint" class="help">Tap or press Space to reveal German</div>
     </div>
-    <div id="example" class="example-area"><b>German in context · Beispiel</b><div class="ex-de" id="example-de"></div><div class="ex-en" id="example-en"></div><button class="example-audio-btn" id="example-audio-btn" type="button">◖)) Hear example in German</button></div>
+    <div id="example" class="example-area"><b>German in context · Beispiel</b><div class="ex-de" id="example-de"></div><div class="ex-en" id="example-en"></div><button class="example-audio-btn" id="example-audio-btn" type="button">◖)) Hear example in German</button><figure id="word-picture-frame" class="word-picture" hidden><img id="word-picture" loading="lazy" decoding="async" alt=""></figure></div>
     <div id="usage-note" class="usage-note" style="display:none"></div>
     <div class="actions"><button type="button" id="again-btn" class="action again" disabled>↻ Practice again <span class="nowrap">[1]</span></button><button type="button" id="known-btn" class="action known" disabled>✓ I know it <span class="nowrap">[2]</span></button></div>
     <div class="subactions"><div class="buttons-inline"><button type="button" id="prev" class="mini-btn">← Previous</button><button type="button" id="next" class="mini-btn">Next →</button></div><div class="buttons-inline"><button type="button" id="sound" class="mini-btn" aria-label="Hear German pronunciation">◖)) Hear German</button></div></div>
@@ -301,6 +320,14 @@ function syncMobileControls(){
   el('mobile-level').value=cefrLevel;
  el('mobile-mode').value=mode;
 }
+
+// Generated first-batch illustrations; unlisted cards do not show a picture.
+const WORD_PICTURES={"everyday":{"0":"e000","1":"e001","2":"e002","4":"e004","9":"e009","16":"e016","24":"e024","29":"e029","40":"e040","41":"e041","48":"e048","50":"e050","120":"e120","210":"e210","364":"e364","367":"e367","377":"e377"},"lookalikes":{"0":"l000","35":"l035","88":"l088","99":"l099"}};
+const PICTURE_PREF_KEY='wortflip-show-pictures-v1';
+let showPictures=true;
+try{showPictures=localStorage.getItem(PICTURE_PREF_KEY)!=='false'}catch(e){}
+function syncPicturePreference(){el('picture-toggle').checked=showPictures;}
+
 function render(){syncMobileControls();stats();el('mode-label').textContent=mode==='all'?'All selected words':mode==='again'?'Difficult words':'Not reviewed';const n=queue.length,empty=n===0||cursor>=n;el('cardstage').style.display=empty?'none':'block';el('emptystage').style.display=empty?'flex':'none';el('session-count').textContent=empty?`${n} in session`:`${cursor+1} / ${n}`;
  if(empty){const x=counts();el('empty-title').textContent=n===0?'Nothing in this selection':'Session complete!';el('empty-copy').textContent=n===0?(mode==='again'?'Mark cards “Practice again” to collect difficult words here.':mode==='new'?'All selected words have been reviewed.':'Try choosing a different topic or word type.'):`You now know ${x.known} of ${x.total} selected words. Select a new topic or review difficult words.`;el('type-label').textContent='Ready';return;}
  const c=activeLibrary()[queue[cursor]];el('type-label').textContent=c.type;el('lang').textContent=flipped?'DEUTSCH · ANSWER':'ENGLISH · PROMPT';el('word').textContent=flipped?c.de:c.en;el('tap-hint').textContent=flipped?'Tap to see the English prompt':'Tap or press Space to reveal German';el('flashcard').classList.toggle('flipped',flipped);el('again-btn').disabled=!flipped;el('known-btn').disabled=!flipped;el('prev').disabled=cursor===0;el('next').disabled=cursor===n-1;
@@ -314,6 +341,22 @@ function render(){syncMobileControls();stats();el('mode-label').textContent=mode
   el('example-en').textContent=c.exampleEn;
   // Both libraries have matching pre-recorded example-sentence audio.
   el('example-audio-btn').hidden=false;
+ }
+ const pictureKey=WORD_PICTURES[library]&&WORD_PICTURES[library][queue[cursor]];
+ const displayPicture=showExample&&showPictures&&Boolean(pictureKey);
+ const pictureFrame=el('word-picture-frame');
+ pictureFrame.hidden=!displayPicture;
+ examplePanel.classList.toggle('with-picture',displayPicture);
+ // Existing example panel remains the same for cards without illustrations.
+ if(displayPicture){
+  const picture=el('word-picture');
+  const path='./images/'+pictureKey+'.webp';
+  if(picture.getAttribute('src')!==path)picture.setAttribute('src',path);
+  picture.alt='Illustration for '+c.de;
+  examplePanel.style.display='grid';
+ }else{
+  const picture=el('word-picture');
+  if(picture.hasAttribute('src'))picture.removeAttribute('src');
  }
  const note=flipped?(library==='lookalikes'?USAGE_NOTES[c.de]:c.note):null;el('usage-note').style.display=note?'block':'none';el('usage-note').textContent=note?'Usage: '+note:'';
 }
@@ -485,6 +528,12 @@ setTimeout(()=>refreshGermanVoices(true),2300);
 let toastTimer;function toast(msg){el('toast').textContent=msg;el('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el('toast').classList.remove('show'),2800);}
 function download(){const data=JSON.stringify({app:'WortFlip 800',version:1,exportedAt:new Date().toISOString(),records},null,2);const blob=new Blob([data],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='wortflip_800_progress_backup.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Backup saved.');}
 async function importData(e){const f=e.target.files?.[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!d||d.version!==1||!d.records||typeof d.records!=='object')throw Error('Not a valid WortFlip backup');const clean=cleanRatings(d.records);if(!confirm('Merge the ratings in this backup with your current progress?'))return;records={...records,...clean};save();buildQueue();toast('Progress merged from backup.');}catch(err){alert('Cannot restore: '+err.message);}finally{el('importFile').value='';}}
+syncPicturePreference();
+el('picture-toggle').addEventListener('change',event=>{
+ showPictures=Boolean(event.target.checked);
+ try{localStorage.setItem(PICTURE_PREF_KEY,String(showPictures))}catch(e){}
+ render();
+});
 document.querySelectorAll('[data-lib]').forEach(b=>b.addEventListener('click',()=>changeLibrary(b.dataset.lib)));
 document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>changeMode(b.dataset.mode)));
 el('deck').addEventListener('change',e=>{deck=e.target.value;buildQueue();});el('lookalike-type').addEventListener('change',e=>{lookalikeType=e.target.value;buildQueue();});el('everyday-topic').addEventListener('change',e=>{everydayTopic=e.target.value;buildQueue();});el('everyday-type').addEventListener('change',e=>{everydayType=e.target.value;buildQueue();});el('cefr-level').addEventListener('change',e=>{cefrLevel=e.target.value;buildQueue();});
