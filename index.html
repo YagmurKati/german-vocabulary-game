@@ -77,6 +77,7 @@ button,select{font:inherit}button{cursor:pointer;transition:transform .08s,backg
 .audio-switch label{display:block;font-size:12px;font-weight:800;color:#2c5b4c;margin-bottom:7px}
 .audio-switch select{width:100%;padding:9px;border-radius:8px;border:1px solid #c0dcd2;background:white;font-size:13px}
 .audio-switch .audio-explain{font-size:12px;color:#476a60;line-height:1.5;margin:8px 0 0}
+.audio-switch .audio-explain:empty{display:none}
 #audio-download-btn{margin-top:8px;font-size:12px}
 .german-voice-box[hidden]{display:none!important}
 .example-audio-btn{margin:10px 0 0;border:1px solid #b9d6e9;background:#fff;color:#244967;border-radius:9px;padding:8px 12px;font-weight:750;font-size:12px}
@@ -247,12 +248,11 @@ html[data-theme="dark"] .action:disabled{opacity:.42}
     <div class="audio-switch">
  <label for="audio-mode">German audio source</label>
  <select id="audio-mode" aria-label="German audio source">
-  <option value="recorded">Same recorded German voice on every device (recommended)</option>
-  <option value="device">My device’s German voice (may sound different)</option>
+  <option value="recorded">Recorded voice (same on every device)</option>
+  <option value="device">Device voice</option>
  </select>
- <p id="audio-info" class="audio-explain" role="status">Recorded pronunciation uses the same audio files on Mac, Windows, Android and iPhone. Recordings become available after running the GitHub audio-generation workflow.</p>
- <button type="button" id="audio-download-btn" class="mini-btn">Save all German audio for offline use</button>
- <p id="offline-audio-status" class="audio-explain">Offline audio is optional; it can use significant storage and Wi-Fi data.</p>
+ <button type="button" id="audio-download-btn" class="mini-btn">Save audio offline</button>
+ <p id="offline-audio-status" class="audio-explain" role="status" aria-live="polite"></p>
 </div>
 <div class="german-voice-box" id="device-voice-box" hidden><label for="german-voice">German pronunciation voice (de-DE preferred)</label><div class="voice-row"><select id="german-voice" aria-label="Choose a German pronunciation voice"><option>Checking German voices…</option></select><button id="refresh-voices" class="mini-btn" type="button" title="Reload available German speech voices">↻ Refresh</button></div><p id="german-voice-status" class="german-voice-status" role="status" aria-live="polite">Loading available German voices…</p></div>
     <p class="hint">Keyboard: <b>Space</b> reveal · <b>1</b> practice again · <b>2</b> I know it · <b>← / →</b> navigate · <b>S</b> hear German.</p>
@@ -431,6 +431,7 @@ function sayGermanExample(){
  playDeviceGerman(activeLibrary()[queue[cursor]].example);
 }
 async function downloadAudioForOffline(){
+ if(!window.confirm('Are you sure you want to save all German audio for offline use? This may use device storage and mobile data.'))return;
  const btn=el('audio-download-btn'), status=el('offline-audio-status');
  if(!('caches' in window)){status.textContent='Offline audio storage is not supported by this browser.';return;}
  btn.disabled=true;
