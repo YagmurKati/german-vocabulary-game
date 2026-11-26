@@ -9,6 +9,8 @@ WortFlip is a simple, installable web app with **800 English-to-German flashcard
 - **English Lookalikes (400 words):** German words that resemble English words, with German example sentences, English translations, pronunciation and usage notes where helpful.
 - **Everyday German (400 words and expressions):** Practical phrases for transportation, appointments, shopping, home, work, conversations, health and other everyday situations. Cards start in English, reveal the German answer, and include bilingual example sentences with pronunciation.
 
+English Lookalikes are grouped in four successive 100-word sets, from most recognizable to broader vocabulary. Both libraries have an optional estimated CEFR level filter (A1–A2, B1, B2, C1). The levels are practical approximations, not official certifications.
+
 Choose a category, reveal the German answer, and mark what you know or need to practice again. You can review difficult cards and listen to German pronunciation using voices available on your device.
 
 ## Install on your phone — free
