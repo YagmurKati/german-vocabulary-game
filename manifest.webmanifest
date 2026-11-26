@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Wortspiel — German Vocabulary",
-  "short_name": "Wortspiel",
-  "description": "800 English-to-German flashcards in English lookalikes and everyday vocabulary, with examples and pronunciation.",
+  "name": "WortFlip — German Flashcards",
+  "short_name": "WortFlip",
+  "description": "German Flashcards · Words, Sentences & Listening. 800 cards for German vocabulary, example sentences and pronunciation.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

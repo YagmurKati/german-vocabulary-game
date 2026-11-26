@@ -1,6 +1,6 @@
 'use strict';
-// Bump cache version so clients receive the Android audio fix.
-const CACHE_NAME = 'wortspiel-pwa-v5-sentence-audio';
+// Refresh cached app shell and PWA manifest for the WortFlip name change.
+const CACHE_NAME = 'wortspiel-pwa-v6-wortflip-brand';
 const CACHE_PREFIX = 'wortspiel-pwa-';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './audio/tracks.json',

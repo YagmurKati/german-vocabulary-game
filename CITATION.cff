@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use WortFlip in a publication, educational resource, or research project, please cite this software."
+type: software
+title: "WortFlip: German Flashcards — Words, Sentences & Listening"
+authors:
+  - given-names: Yagmur
+    family-names: Kati
+abstract: "A German flashcard web app with 800 vocabulary cards, English lookalikes, everyday expressions, example sentences, pronunciation and learning progress."
+repository-code: "https://github.com/YagmurKati/german-vocabulary-game"
+url: "https://yagmurkati.github.io/german-vocabulary-game/"
+keywords:
+  - German
+  - language learning
+  - vocabulary
+  - flashcards
+  - listening practice
