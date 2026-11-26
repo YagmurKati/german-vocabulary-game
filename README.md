@@ -4,12 +4,13 @@
 
 ### ▶ [Open WortFlip — Play online](https://yagmurkati.github.io/german-vocabulary-game/)
 
-WortFlip is a simple, installable web app with **800 English-to-German flashcards** organized into two separate libraries:
+WortFlip is a simple, installable web app with **1,000 English-to-German flashcards** organized into three separate libraries:
 
 - **English Lookalikes (400 words):** German words that resemble English words, with German example sentences, English translations, pronunciation and usage notes where helpful.
 - **Everyday German (400 words and expressions):** Practical phrases for transportation, appointments, shopping, home, work, conversations, health and other everyday situations. Cards start in English, reveal the German answer, and include bilingual example sentences with pronunciation.
+- **Everyday Nouns (200 words):** Mainly B1–B2 nouns across 10 everyday topics, with definite articles, plural forms, German example sentences, and English translations. A few useful, more basic nouns are included.
 
-English Lookalikes are grouped in four successive 100-word sets, from most recognizable to broader vocabulary. Both libraries have an optional estimated CEFR level filter (A1–A2, B1, B2, C1). The levels are practical approximations, not official certifications.
+English Lookalikes are grouped in four successive 100-word sets, from most recognizable to broader vocabulary. All three libraries have an optional estimated CEFR level filter (A1–A2, B1, B2, C1). The levels are practical approximations, not official certifications.
 
 Choose a category, reveal the German answer, and mark what you know or need to practice again. You can review difficult cards and listen to German pronunciation using voices available on your device.
 
@@ -43,6 +44,8 @@ Open WortFlip online once to cache the app. Flashcards then work offline subject
 
 WortFlip offers a **Recorded German voice** option. Once the audio generation is finished, the **same MP3 recordings** play on macOS, Windows, Android and iPhone. The recording source does not change depending on your device. You can also choose your device's German voice manually, if you prefer.
 
+The original 800 cards have prerecorded German audio. The new 200 noun cards currently use a German device voice for word and example playback; matching prerecorded audio is not yet available.
+
 The recordings use the German **Piper `de_DE-thorsten-medium`** neural TTS model. They are synthetic, not reviewed native-speaker recordings. A few loanwords or names may still sound unusual. For important words, check a reliable dictionary with native-speaker audio; a corrected recording can replace an individual MP3 in `audio/`.
 
 ### Generate the recordings once (repository maintainer)
@@ -55,7 +58,7 @@ Open the game online, choose **Recorded German voice** and click **Save all Germ
 
 ## Word illustrations — Everyday German complete
 
-**All 400 Everyday German cards now show a picture after you reveal the German answer.** Original, detailed situation illustrations are retained for 105 cards, and another 295 illustrated memory cues have been added. Among the new cues are 16 detailed scenes illustrating feelings and emotions; the other 279 are concise, colorful symbolic pictures for everyday expressions and less concrete concepts. Seven closely related cards share an appropriate previously existing image. English Lookalikes retains its existing selected illustrations.
+**All 400 Everyday German cards now show a picture after you reveal the German answer.** Original, detailed situation illustrations are retained for 105 cards, and another 295 illustrated memory cues have been added. Among the new cues are 16 detailed scenes illustrating feelings and emotions; the other 279 are concise, colorful symbolic pictures for everyday expressions and less concrete concepts. Seven closely related cards share an appropriate previously existing image. English Lookalikes retains its existing selected illustrations. The new 200 Everyday Nouns currently have no pictures, to avoid inaccurate image-to-word assignments.
 
 Pictures remain **optional**: uncheck **Pictures** to hide them. The updated offline service worker does **not** pre-download all pictures automatically. New pictures are fetched when revealed and then cached for offline use on that device, subject to available browser storage. Flashcards, audio, CEFR filtering, and local learning progress are unchanged. See [Illustration update notes](README-ILLUSTRATIONS.md) for details.
 
