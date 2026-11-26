@@ -30,4 +30,4 @@ For permission requests, contact the project maintainer through the [official re
 
 ## Illustrations
 
-The vocabulary illustrations in `images/` were created for WortFlip with AI image generation and curated for the corresponding cards. The Phase 3 package contains 86 distinct images, with selected images reused only for closely related flashcard concepts.
+The vocabulary illustrations in `images/` were generated for WortFlip with AI image generation and curated for their corresponding cards. Phase 4 includes 113 individual illustration files. Some scenes were carefully cropped from composite artwork; all source files are included in the repository as optimized WebP images.

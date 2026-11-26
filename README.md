@@ -53,11 +53,11 @@ After uploading the package, open the GitHub repo's **Actions** tab, select **Ge
 
 Open the game online, choose **Recorded German voice** and click **Save all German audio for offline use** while connected to Wi-Fi. Keep the app open until all tracks are cached. This can take several minutes and uses additional local storage. Your browser may erase cached files if storage is low. Audio tracks you've already played are usually cached individually.
 
-## Word illustrations (Phase 3)
+## Word illustrations (Phase 4)
 
-Phase 3 expands the picture collection to **86 distinct WebP illustrations** covering **106 flashcards** (75 Everyday German, 31 English Lookalikes). This update adds **33 new illustrated scenes**, plus close-concept matches that reuse an existing relevant illustration.
+WortFlip Phase 4 contains **113 individual WebP illustrations** and shows pictures on **133 vocabulary cards** across Everyday German and English Lookalikes. Some related cards share the same picture. This release adds **27 new images** to Phase 3; it does not replace existing pictures.
 
-Pictures appear **only after revealing** a German answer, beside its example sentence and English translation. Use the **Pictures** checkbox above the flashcard to turn them on or off; your choice is saved locally. Cards without a relevant picture continue to show no image. All artwork is bundled in `images/` and added to the offline PWA cache.
+Pictures appear **only after revealing** a German answer. The **Pictures** checkbox lets you show/hide them and remembers your preference. Cards without a relevant illustration remain text-only. Images are bundled locally in `images/` and the app's offline cache is updated; your audio, CEFR filters, and saved learning progress are unchanged.
 
 ## Learning progress and privacy
 
