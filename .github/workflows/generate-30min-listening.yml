@@ -1,0 +1,92 @@
+name: Generate 30-minute WortFlip listening sessions
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  make_listening:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Check out WortFlip
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audio tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install piper-tts==1.8.0
+      - name: Download English and German Piper voice models
+        run: |
+          python -m piper.download_voices en_US-lessac-medium
+          python -m piper.download_voices de_DE-thorsten-medium
+      - name: Generate the continuous 30+ minute MP3 recordings
+        run: python scripts/generate_30min_listening.py
+      - name: Add a listening link into existing WortFlip page and refresh PWA cache
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          page = Path('index.html')
+          html = page.read_text(encoding='utf-8')
+          key = '<div class="listen-grid">'
+          link = '''<div id="listen-long-session-link" style="margin:16px 0;padding:15px 17px;border-radius:13px;border:1px solid #6f5caa;background:#d8cfff18;line-height:1.55">
+          <a href="./listening/30-minute.html" style="font-weight:750;color:inherit;text-decoration:underline;text-underline-offset:3px">🎧 Play continuous 30+ minute recordings →</a>
+          <div style="font-size:13px;margin-top:3px;opacity:.85">Best for listening with the phone locked. Each recording contains the English prompt, recall pauses, and German answer in one MP3.</div>
+          </div>'''
+          if 'id="listen-long-session-link"' not in html:
+              if html.count(key) != 1:
+                  raise SystemExit('Could not find unique WortFlip listening controls; no HTML changes made')
+              html = html.replace(key, link + '\n' + key, 1)
+              page.write_text(html, encoding='utf-8')
+          sw = Path('sw.js')
+          source = sw.read_text(encoding='utf-8')
+          old = "const CACHE_NAME = 'wortspiel-pwa-v22-natural-german-voice';"
+          new = "const CACHE_NAME = 'wortspiel-pwa-v23-30min-listening';"
+          if old in source:
+              sw.write_text(source.replace(old, new, 1), encoding='utf-8')
+          elif new not in source:
+              print('Note: cache version has changed; retaining existing version')
+          PY
+      - name: Confirm recordings are continuous and longer than 30 minutes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,subprocess
+          sessions=json.loads(Path('listening/30min-sessions.json').read_text())['sessions']
+          assert sessions, 'No sessions generated'
+          for session in sessions:
+              path=Path(session['file'])
+              duration=float(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',str(path)],text=True).strip())
+              assert duration >= 1799.5, (path, duration)
+              print(f'{path}: {duration/60:.1f} minutes')
+          PY
+      - name: Save finished audio and page to GitHub repository
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html sw.js listening/30-minute.html listening/30min-sessions.json listening/audio30/*.mp3
+          if ! git diff --cached --quiet; then
+            git commit -m 'Add uninterrupted 30-minute bilingual listening sessions'
+            git push
+          fi
+      - name: Ask GitHub Pages to refresh the published site
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # GITHUB_TOKEN commits do not automatically start branch-based Pages builds.
+          curl --fail-with-body --silent --show-error --location \
+            -X POST -H 'Accept: application/vnd.github+json' \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/pages/builds"
