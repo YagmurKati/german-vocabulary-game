@@ -309,27 +309,32 @@ html[data-theme="dark"] #listen-toggle{background:#2f2950;color:#e8dcff;border-c
   <p>Choose recorded or phone/computer German, select a voice, and set German to 100%, 80%, 60%, or 40%. English stays at 100%.</p>
   <iframe id="listen-long-iframe" class="listen-unified-frame" src="./listening/30-minute.html?embedded=1" title="WortFlip 30-minute listening with German voices and independent speed controls" loading="eager" allow="autoplay"></iframe>
 </div>
+<style id="wortflip-shared-filtered-german-v1">
+.listen-shared-control-hidden,#listen-device,#listen-player,#listen-download{display:none!important}
+#listen-shared-settings-note{margin:8px 0 14px;font-weight:650}
+</style>
 <details id="listen-by-level-details" class="listen-by-level-details">
 <summary>🎯 Listen by level (A1–C1), topic or review status</summary>
-<p class="listen-unified-explain">Choose words by difficulty or learning progress. German-only speed adjustment uses your selected device voice here. The continuous recorded sessions above have all four German speed versions for locked-screen listening.</p>
+<p class="listen-unified-explain">Choose words by level, topic, or learning progress. The German voice and speed selected above also apply here. In Recorded mode, German words and examples use the existing Thorsten/Victoria MP3 clips; English is spoken by your device at normal speed. Filtered lessons may pause when the phone locks.</p>
 <div class="listen-grid"><label>Collection<select id="listen-group" aria-label="Listening collection"></select></label><label>Topic / situation<select id="listen-topic" aria-label="Listening topic or situation"></select></label><label>Lesson<select id="listen-lesson" aria-label="Listening lesson"></select></label></div>
 <div class="listen-filter-row" role="group" aria-label="Choose what you need to hear">
 <label>German level<select id="listen-cefr" aria-label="Listening CEFR level"><option value="all">All levels</option><option value="A1–A2">A1–A2</option><option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option></select></label>
 <label>Review status<select id="listen-progress" aria-label="Listening review status"><option value="need" selected>Not reviewed + difficult (skip known)</option><option value="new">Not reviewed only</option><option value="again">Difficult only</option><option value="all">All words (including known)</option><option value="known">Known only</option></select></label>
 </div>
 <p id="listen-selection-summary" class="listen-selection-summary" role="status" aria-live="polite"></p>
+<p id="listen-shared-settings-note" class="listen-unified-explain" role="status">Uses the German voice and speed selected above.</p>
 <div class="listen-stage" aria-live="polite"><div class="listen-label" id="listen-step">Ready to listen</div><div class="listen-title" id="listen-word">Choose a lesson and press Play</div><div class="listen-line" id="listen-detail">Learn by ear—no tapping through cards.</div></div>
-<div class="listen-controls"><button id="listen-play" class="listen-primary" type="button">▶ Play recording</button><button id="listen-device" type="button">🔊 Device voices</button><button id="listen-pause" type="button" disabled>⏸ Pause</button><button id="listen-stop" type="button" disabled>■ Stop</button><button id="listen-next" type="button">Next lesson →</button></div>
+<div class="listen-controls"><button id="listen-play" class="listen-primary" type="button">▶ Play recording</button><button id="listen-device" type="button" hidden>🔊 Device voices</button><button id="listen-pause" type="button" disabled>⏸ Pause</button><button id="listen-stop" type="button" disabled>■ Stop</button><button id="listen-next" type="button">Next lesson →</button></div>
 <audio id="listen-player" controls preload="none" aria-label="Bilingual recorded listening lesson"></audio>
 <div class="listen-options">
-<label>German voice source <select id="listen-voice-source"><option value="device" selected>Phone / computer's German voice</option><option value="recorded">Existing short-lesson MP3 (fixed speed)</option></select></label>
-<label>German speaking speed (English 100%) <select id="listen-speed"><option value="1" selected>100% · Natural</option><option value="0.8">80% · Slightly slower</option><option value="0.6">60% · Slower</option><option value="0.4">40% · Very slow</option></select></label>
-<label>Choose German device voice <select id="listen-german-device-voice" aria-label="Choose German device voice for level-filtered lessons"><option value="">Checking voices…</option></select></label>
+<label class="listen-shared-control-hidden">German voice source <select id="listen-voice-source"><option value="device" selected>Phone / computer's German voice</option><option value="recorded">Existing short-lesson MP3 (fixed speed)</option></select></label>
+<label class="listen-shared-control-hidden">German speaking speed (English 100%) <select id="listen-speed"><option value="1" selected>100% · Natural</option><option value="0.8">80% · Slightly slower</option><option value="0.6">60% · Slower</option><option value="0.4">40% · Very slow</option></select></label>
+<label class="listen-shared-control-hidden">Choose German device voice <select id="listen-german-device-voice" aria-label="Choose German device voice for level-filtered lessons"><option value="">Checking voices…</option></select></label>
 <label><input id="listen-continue" type="checkbox" checked> Continue to next lesson</label>
 </div>
 <p id="listen-status" role="status" aria-live="polite">Recorded lessons will be available after the GitHub audio-generation workflow runs. You can use device voices immediately.</p>
 <a id="listen-download" class="listen-download" download hidden>⬇ Download this lesson as MP3</a>
-<p class="listen-notice">Original recorded short lessons can play with the phone locked at their fixed speed. Filtered lessons and mixed real-life situations use device voices for now; device speech may pause when the screen locks. Listening does not change your saved ratings.</p>
+<p class="listen-notice">Filtered lessons play only the selected words. In Recorded mode, the German words and sentences use your recorded MP3 clips at the speed chosen above; English uses your device voice at normal speed. Because this switches between clips and device speech, it may stop with the screen locked. For uninterrupted locked-screen listening, use the continuous MP3 sessions above. Your ratings are unchanged.</p>
 </details>
 </section>
 <nav class="library-picker" role="tablist" aria-label="Choose vocabulary library">
@@ -908,6 +913,22 @@ window.addEventListener('appinstalled', () => {
  }
  const allLessons=[...lessons,...buildSituationLessons()];
  const screen=L('listening-screen'),player=L('listen-player');
+ // The controls in the continuous player are the ONLY visible voice/speed controls.
+ function sharedGermanPrefs(){
+   let d=null;
+   try{d=L('listen-long-iframe')?.contentDocument;}catch(e){}
+   const fromStore=(key)=>{try{return localStorage.getItem(key)||'';}catch(e){return '';}};
+   const source=d?.getElementById('voice-source')?.value || fromStore('wortspiel-audio-mode-v1') || 'recorded';
+   const rawRate=d?.getElementById('german-speed')?.value || fromStore('wortflip-german-speed-v1') || '100';
+   const voice=d?.getElementById('german-device-voice')?.value || fromStore('wortspiel-german-voice-v1') || '';
+   const rate=['100','80','60','40'].includes(String(rawRate)) ? Number(rawRate)/100 : 1;
+   return {source:source==='device'?'device':'recorded',rate,voice};
+ }
+ function updateSharedVoiceSummary(){
+   const p=sharedGermanPrefs();
+   const label=p.source==='recorded'?'Thorsten/Victoria recorded German MP3 clips':'your phone/computer German voice';
+   L('listen-shared-settings-note').textContent=`German: ${label} · ${Math.round(p.rate*100)}% · English: device speech 100%. Settings are shared with the 30-minute player above.`;
+ }
  const state={session:0,device:false,paused:false,playing:false,card:0,step:0,pending:null,timer:null,wait:null,recorded:false,activeItems:[]};
  const setStatus=msg=>{L('listen-status').textContent=msg;};
  const current=()=>allLessons.find(x=>x.id===L('listen-lesson').value);
@@ -964,9 +985,9 @@ window.addEventListener('appinstalled', () => {
    L('listen-play').disabled=!available;L('listen-device').disabled=!available;L('listen-next').disabled=!available;
    L('listen-download').hidden=true;
    player.pause();player.removeAttribute('src');player.load();
-   const mp3=available&&canPlayRecording(lesson);
-   L('listen-player').hidden=!mp3;
-   L('listen-play').textContent=mp3?'▶ Play recording':'▶ Play selected words';
+   L('listen-player').hidden=true;
+   L('listen-play').textContent='▶ Play selected words';
+   updateSharedVoiceSummary();
    if(!available){
      L('listen-step').textContent='No matching words';
      L('listen-word').textContent='Nothing to review in this selection';
@@ -976,13 +997,13 @@ window.addEventListener('appinstalled', () => {
    L('listen-step').textContent='Ready · '+selected.length+' selected cards';
    L('listen-word').textContent=lesson.label;
    L('listen-detail').textContent=(lesson.group==='situations'?'Mixed existing cards from related topics':names[lesson.group])+' — English → German, with example sentences';
-   setStatus(mp3?'Full lesson selected: recorded MP3 is available if generated. Device voices are also available.':
-     'Filtered or situation playlist: device voices will read only these selected cards. For screen-locked listening, use an unfiltered recorded MP3 lesson.');
+   setStatus('Ready: English 100%; German recording or device voice and speed follow the settings above. Keep the screen awake for filtered playback.');
  }
  function stop(){
    state.session++;state.playing=false;state.paused=false;state.device=false;state.recorded=false;state.activeItems=[];
    if(state.timer){clearTimeout(state.timer);state.timer=null;}
    if(state.wait){const resolve=state.wait;state.wait=null;resolve();}
+   if(state.germanClip){try{state.germanClip.pause();state.germanClip.removeAttribute('src');state.germanClip.load();}catch(e){}state.germanClip=null;}
    if(state.pending){const finish=state.pending;state.pending=null;finish();}
    if('speechSynthesis' in window)try{speechSynthesis.cancel();}catch(e){}
    player.pause();
@@ -997,7 +1018,7 @@ window.addEventListener('appinstalled', () => {
    const usedDevice=state.device;
    if(i<0||i+1>=filtered.length){stop();setStatus('Reached the end of the selected lessons.');return;}
    stop();L('listen-lesson').value=filtered[i+1].id;lessonReady();
-   if(auto){if(usedDevice||!canPlayRecording(current())||Number(L('listen-speed').value)!==1||L('listen-voice-source').value==='device')playDevice();else playRecording();}
+   if(auto)playSelected();
  }
  function showStep(card,step){
    L('listen-step').textContent=`Card ${state.card+1} of ${state.activeItems.length} · ${['English prompt','German answer','English example','German example'][step]}`;
@@ -1009,7 +1030,7 @@ window.addEventListener('appinstalled', () => {
    const voices=speechSynthesis.getVoices()||[];
    const prefix=lang==='de'?'de':'en';
    const matched=voices.filter(v=>String(v.lang||'').toLowerCase().startsWith(prefix));
-   const preferred=lang==='de' ? L('listen-german-device-voice')?.value : null;
+   const preferred=lang==='de' ? (sharedGermanPrefs().voice || L('listen-german-device-voice')?.value) : null;
     return matched.find(v=>lang==='de'&&((v.voiceURI||v.name)+'|'+v.lang)===preferred)
        ||matched.find(v=>v.localService&&String(v.lang||'').toLowerCase()===(lang==='de'?'de-de':'en-us'))||matched[0]||null;
  }
@@ -1021,7 +1042,7 @@ window.addEventListener('appinstalled', () => {
    try{
      const utterance=new SpeechSynthesisUtterance(text);utterance.lang=lang==='de'?'de-DE':'en-US';
      const v=chooseVoice(lang);if(v)utterance.voice=v;
-     const speed=Number(L('listen-speed').value)||1;utterance.rate=lang==='de'?speed:1;
+     utterance.rate=lang==='de'?sharedGermanPrefs().rate:1;
      utterance.onend=finish;utterance.onerror=finish;
      speechSynthesis.speak(utterance);
    }catch(e){finish();}
@@ -1031,14 +1052,44 @@ window.addEventListener('appinstalled', () => {
    state.wait=()=>{if(state.wait)state.wait=null;resolve();};
    state.timer=setTimeout(()=>{state.timer=null;if(state.wait){const done=state.wait;state.wait=null;done();}},ms);
  });}
- async function playDevice(fromFallback=false){
+ function recordedGermanFile(group,index,isExample){
+   const prefixes={lookalikes:['l','y'],everyday:['e','x'],nouns:['n','z'],speaking:['s','t'],verbs:['v','w']};
+   const two=prefixes[group];if(!two)return null;
+   return './audio/'+two[isExample?1:0]+String(index).padStart(3,'0')+'.mp3';
+ }
+ function speakRecordedGerman(group,index,isExample,session){
+   return new Promise(resolve=>{
+     if(session!==state.session){resolve(false);return;}
+     const path=recordedGermanFile(group,index,isExample);
+     if(!path){resolve(false);return;}
+     const clip=new Audio(path);
+     state.germanClip=clip;
+     clip.playbackRate=sharedGermanPrefs().rate;
+     clip.preservesPitch=true;
+     let finished=false;
+     const finish=ok=>{
+       if(finished)return;
+       finished=true;clip.onended=null;clip.onerror=null;
+       try{clip.pause();}catch(e){}
+       if(state.germanClip===clip)state.germanClip=null;
+       if(state.pending===cancel)state.pending=null;
+       resolve(ok);
+     };
+     const cancel=()=>finish(false);
+     state.pending=cancel;
+     clip.onended=()=>finish(true);
+     clip.onerror=()=>finish(false);
+     try{const playing=clip.play();if(playing&&playing.catch)playing.catch(()=>finish(false));}catch(e){finish(false);}
+   });
+ }
+ async function playDevice(fromFallback=false,useGermanRecordings=false){
    const lesson=current(),selected=itemsOf(lesson);if(!lesson||!selected.length){lessonReady();return;}
    if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window)){setStatus('Speech playback is unavailable in this browser.');return;}
    stop();state.device=true;state.playing=true;state.activeItems=selected;
    setPlayState();const session=state.session;
    player.removeAttribute('src');player.load();
-   setStatus(fromFallback?'Recording unavailable; using device speech for the selected cards.':
-     `Playing ${selected.length} selected cards with device voices. Keep the screen awake for uninterrupted playback.`);
+   setStatus(fromFallback?'Recording unavailable; using device speech.':
+     `Playing ${selected.length} selected cards: German ${useGermanRecordings?'Thorsten/Victoria recordings':'device voice'} ${Math.round(sharedGermanPrefs().rate*100)}%, English device voice 100%. Keep the screen awake.`);
    for(let j=0;j<selected.length;j++){
      if(session!==state.session)break;
      state.card=j;
@@ -1047,7 +1098,10 @@ window.addEventListener('appinstalled', () => {
      for(let k=0;k<segments.length;k++){
        if(session!==state.session)break;
        state.step=k;showStep(card,k);
-       await speak(segments[k][0],segments[k][1],session);
+       if(useGermanRecordings&&segments[k][1]==='de'){
+         const ok=await speakRecordedGerman(group,index,k===3,session);
+         if(!ok&&session===state.session)await speak(segments[k][0],'de',session);
+       }else await speak(segments[k][0],segments[k][1],session);
        if(session!==state.session)break;
        await gap(segments[k][2],session);
        while(state.paused&&session===state.session)await gap(200,session);
@@ -1079,13 +1133,20 @@ window.addEventListener('appinstalled', () => {
    });
  }
  function playSelected(){
-   if(L('listen-voice-source').value==='recorded'&&Number(L('listen-speed').value)===1&&canPlayRecording(current()))playRecording();
-   else playDevice();
+   const p=sharedGermanPrefs();
+   playDevice(false,p.source==='recorded');
  }
  function pause(){
    if(!state.playing)return;
    if(state.recorded){if(player.paused){player.play().catch(()=>{});state.paused=false;}else{player.pause();state.paused=true;}}
-   else if(state.device){state.paused=!state.paused;try{state.paused?speechSynthesis.pause():speechSynthesis.resume();}catch(e){}}
+   else if(state.device){
+     state.paused=!state.paused;
+     if(state.germanClip){
+       if(state.paused)state.germanClip.pause();
+       else state.germanClip.play().catch(()=>{});
+     }
+     try{state.paused?speechSynthesis.pause():speechSynthesis.resume();}catch(e){}
+   }
    L('listen-pause').textContent=state.paused?'▶ Resume':'⏸ Pause';
  }
  function toggleScreen(on){
@@ -1123,7 +1184,27 @@ window.addEventListener('appinstalled', () => {
      L('listen-by-level-details').scrollIntoView({behavior:'smooth',block:'start'});
    }
  });
- L('listen-by-level-details').addEventListener('toggle',()=>{if(L('listen-by-level-details').open)sendLongStop();});
+ L('listen-by-level-details').addEventListener('toggle',()=>{
+   if(L('listen-by-level-details').open){sendLongStop();updateSharedVoiceSummary();}
+ });
+ function bindSharedChoices(){
+   try{
+     const d=unifiedFrame.contentDocument;
+     for(const id of ['voice-source','german-speed','german-device-voice']){
+       const input=d.getElementById(id);
+       if(input&&!input.dataset.wortflipSharedBound){
+         input.dataset.wortflipSharedBound='1';
+         input.addEventListener('change',()=>{
+           updateSharedVoiceSummary();
+           if(state.playing)stop();
+         });
+       }
+     }
+   }catch(e){}
+   updateSharedVoiceSummary();
+ }
+ unifiedFrame.addEventListener('load',bindSharedChoices);
+ try{if(unifiedFrame.contentDocument?.readyState==='complete')bindSharedChoices();}catch(e){}
  L('listen-back').addEventListener('click',()=>toggleScreen(false));
  L('listen-group').addEventListener('change',()=>{stop();buildTopics();});
  L('listen-topic').addEventListener('change',()=>{stop();buildLessons();});
@@ -1131,7 +1212,7 @@ window.addEventListener('appinstalled', () => {
  L('listen-cefr').addEventListener('change',()=>{stop();buildLessons();});
  L('listen-progress').addEventListener('change',()=>{stop();buildLessons();});
  L('listen-play').addEventListener('click',playSelected);
- L('listen-device').addEventListener('click',()=>playDevice());
+ L('listen-device').addEventListener('click',playSelected);
  L('listen-pause').addEventListener('click',pause);
  L('listen-stop').addEventListener('click',()=>{stop();lessonReady();});
  L('listen-next').addEventListener('click',()=>nextLesson(false));
