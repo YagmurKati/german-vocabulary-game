@@ -1,0 +1,261 @@
+name: Fix shared German voice and speed for all listening
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unify_voice_controls:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out WortFlip
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Apply safe one-time listening update
+        run: |
+          python3 - <<'PY'
+          #!/usr/bin/env python3
+          """One visible German voice/speed choice for both listening sections.
+          Filtered lessons use existing recorded German word and example MP3s when the
+          user selects Recorded, but the English prompts remain device TTS at 100%.
+          No saved progress, vocabulary, TTS generation, or published MP3 is altered.
+          """
+          from pathlib import Path
+          import re
+          
+          index_path = Path('index.html')
+          worker_path = Path('sw.js')
+          html = index_path.read_text(encoding='utf-8')
+          worker = worker_path.read_text(encoding='utf-8')
+          marker = 'wortflip-shared-filtered-german-v1'
+          if marker in html:
+              print('Already installed. Nothing to change.')
+              raise SystemExit(0)
+          
+          required = ['id="listen-long-iframe"', 'id="listen-by-level-details"', 'id="listen-cefr"',
+                      'id="listen-voice-source"', 'id="listen-speed"', 'id="listen-german-device-voice"',
+                      'id="listen-player"', "function playSelected(){", "function playDevice(fromFallback=false){",
+                      "function toggleScreen(on){", "function chooseVoice(lang){"]
+          not_found = [s for s in required if s not in html]
+          if not_found:
+              raise SystemExit('Not the expected unified WortFlip app; refusing to alter it: '+str(not_found))
+          
+          def replace_one(old, new, description):
+              global html
+              occurrences = html.count(old)
+              if occurrences != 1:
+                  raise SystemExit(f'Expected one {description}, found {occurrences}. No files were edited.')
+              html = html.replace(old, new, 1)
+          
+          replace_one(
+           'Choose words by difficulty or learning progress. German-only speed adjustment uses your selected device voice here. The continuous recorded sessions above have all four German speed versions for locked-screen listening.',
+           'Choose words by level, topic, or learning progress. The German voice and speed selected above also apply here. In Recorded mode, German words and examples use the existing Thorsten/Victoria MP3 clips; English is spoken by your device at normal speed. Filtered lessons may pause when the phone locks.',
+           'filtered-lesson description')
+          replace_one(
+           '<label>German voice source <select id="listen-voice-source">',
+           '<label class="listen-shared-control-hidden">German voice source <select id="listen-voice-source">',
+           'duplicate voice-source label')
+          replace_one(
+           '<label>German speaking speed (English 100%) <select id="listen-speed">',
+           '<label class="listen-shared-control-hidden">German speaking speed (English 100%) <select id="listen-speed">',
+           'duplicate speed label')
+          replace_one(
+           '<label>Choose German device voice <select id="listen-german-device-voice"',
+           '<label class="listen-shared-control-hidden">Choose German device voice <select id="listen-german-device-voice"',
+           'duplicate device-voice label')
+          replace_one(
+           '<button id="listen-device" type="button">🔊 Device voices</button>',
+           '<button id="listen-device" type="button" hidden>🔊 Device voices</button>',
+           'duplicate device-play button')
+          replace_one(
+           '<p id="listen-selection-summary" class="listen-selection-summary" role="status" aria-live="polite"></p>',
+           '<p id="listen-selection-summary" class="listen-selection-summary" role="status" aria-live="polite"></p>\n<p id="listen-shared-settings-note" class="listen-unified-explain" role="status">Uses the German voice and speed selected above.</p>',
+           'shared-settings explanation')
+          replace_one(
+           'Original recorded short lessons can play with the phone locked at their fixed speed. Filtered lessons and mixed real-life situations use device voices for now; device speech may pause when the screen locks. Listening does not change your saved ratings.',
+           'Filtered lessons play only the selected words. In Recorded mode, the German words and sentences use your recorded MP3 clips at the speed chosen above; English uses your device voice at normal speed. Because this switches between clips and device speech, it may stop with the screen locked. For uninterrupted locked-screen listening, use the continuous MP3 sessions above. Your ratings are unchanged.',
+           'old fixed-MP3 notice')
+          replace_one(
+           '<details id="listen-by-level-details" class="listen-by-level-details">',
+           '''<style id="wortflip-shared-filtered-german-v1">
+          .listen-shared-control-hidden,#listen-device,#listen-player,#listen-download{display:none!important}
+          #listen-shared-settings-note{margin:8px 0 14px;font-weight:650}
+          </style>
+          <details id="listen-by-level-details" class="listen-by-level-details">''',
+           'shared controls CSS insertion')
+          
+          # Read the actual settings from the 30-minute iframe, including before its
+          # asynchronously loaded system-voice menu finishes populating. Both are same origin.
+          replace_one(
+           " const screen=L('listening-screen'),player=L('listen-player');",
+           ''' const screen=L('listening-screen'),player=L('listen-player');
+           // The controls in the continuous player are the ONLY visible voice/speed controls.
+           function sharedGermanPrefs(){
+             let d=null;
+             try{d=L('listen-long-iframe')?.contentDocument;}catch(e){}
+             const fromStore=(key)=>{try{return localStorage.getItem(key)||'';}catch(e){return '';}};
+             const source=d?.getElementById('voice-source')?.value || fromStore('wortspiel-audio-mode-v1') || 'recorded';
+             const rawRate=d?.getElementById('german-speed')?.value || fromStore('wortflip-german-speed-v1') || '100';
+             const voice=d?.getElementById('german-device-voice')?.value || fromStore('wortspiel-german-voice-v1') || '';
+             const rate=['100','80','60','40'].includes(String(rawRate)) ? Number(rawRate)/100 : 1;
+             return {source:source==='device'?'device':'recorded',rate,voice};
+           }
+           function updateSharedVoiceSummary(){
+             const p=sharedGermanPrefs();
+             const label=p.source==='recorded'?'Thorsten/Victoria recorded German MP3 clips':'your phone/computer German voice';
+             L('listen-shared-settings-note').textContent=`German: ${label} · ${Math.round(p.rate*100)}% · English: device speech 100%. Settings are shared with the 30-minute player above.`;
+           }''',
+           'main listening state declaration')
+          replace_one(
+           "   const mp3=available&&canPlayRecording(lesson);\n   L('listen-player').hidden=!mp3;\n   L('listen-play').textContent=mp3?'▶ Play recording':'▶ Play selected words';",
+           "   L('listen-player').hidden=true;\n   L('listen-play').textContent='▶ Play selected words';\n   updateSharedVoiceSummary();",
+           'filtered play button appearance')
+          replace_one(
+           "   setStatus(mp3?'Full lesson selected: recorded MP3 is available if generated. Device voices are also available.':\n     'Filtered or situation playlist: device voices will read only these selected cards. For screen-locked listening, use an unfiltered recorded MP3 lesson.');",
+           "   setStatus('Ready: English 100%; German recording or device voice and speed follow the settings above. Keep the screen awake for filtered playback.');",
+           'filtered-play status')
+          replace_one(
+           "   if(state.pending){const finish=state.pending;state.pending=null;finish();}",
+           "   if(state.germanClip){try{state.germanClip.pause();state.germanClip.removeAttribute('src');state.germanClip.load();}catch(e){}state.germanClip=null;}\n   if(state.pending){const finish=state.pending;state.pending=null;finish();}",
+           'stop active German recording')
+          replace_one(
+           "   if(auto){if(usedDevice||!canPlayRecording(current())||Number(L('listen-speed').value)!==1||L('listen-voice-source').value==='device')playDevice();else playRecording();}",
+           "   if(auto)playSelected();",
+           'continue next filtered lesson')
+          replace_one(
+           "   const preferred=lang==='de' ? L('listen-german-device-voice')?.value : null;",
+           "   const preferred=lang==='de' ? (sharedGermanPrefs().voice || L('listen-german-device-voice')?.value) : null;",
+           'system voice selection')
+          replace_one(
+           "     const speed=Number(L('listen-speed').value)||1;utterance.rate=lang==='de'?speed:1;",
+           "     utterance.rate=lang==='de'?sharedGermanPrefs().rate:1;",
+           'German-only device speaking rate')
+          
+          # HTMLAudioElement uses already-uploaded German MP3s for both word and example.
+          # Indexing matches original recording prefix convention and preserves the voices.
+          replace_one(
+           ' async function playDevice(fromFallback=false){',
+           ''' function recordedGermanFile(group,index,isExample){
+             const prefixes={lookalikes:['l','y'],everyday:['e','x'],nouns:['n','z'],speaking:['s','t'],verbs:['v','w']};
+             const two=prefixes[group];if(!two)return null;
+             return './audio/'+two[isExample?1:0]+String(index).padStart(3,'0')+'.mp3';
+           }
+           function speakRecordedGerman(group,index,isExample,session){
+             return new Promise(resolve=>{
+               if(session!==state.session){resolve(false);return;}
+               const path=recordedGermanFile(group,index,isExample);
+               if(!path){resolve(false);return;}
+               const clip=new Audio(path);
+               state.germanClip=clip;
+               clip.playbackRate=sharedGermanPrefs().rate;
+               clip.preservesPitch=true;
+               let finished=false;
+               const finish=ok=>{
+                 if(finished)return;
+                 finished=true;clip.onended=null;clip.onerror=null;
+                 try{clip.pause();}catch(e){}
+                 if(state.germanClip===clip)state.germanClip=null;
+                 if(state.pending===cancel)state.pending=null;
+                 resolve(ok);
+               };
+               const cancel=()=>finish(false);
+               state.pending=cancel;
+               clip.onended=()=>finish(true);
+               clip.onerror=()=>finish(false);
+               try{const playing=clip.play();if(playing&&playing.catch)playing.catch(()=>finish(false));}catch(e){finish(false);}
+             });
+           }
+           async function playDevice(fromFallback=false,useGermanRecordings=false){''',
+           'reusing German MP3 clips')
+          replace_one(
+           "   setStatus(fromFallback?'Recording unavailable; using device speech for the selected cards.':\n     `Playing ${selected.length} selected cards with device voices. Keep the screen awake for uninterrupted playback.`);",
+           "   setStatus(fromFallback?'Recording unavailable; using device speech.':\n     `Playing ${selected.length} selected cards: German ${useGermanRecordings?'Thorsten/Victoria recordings':'device voice'} ${Math.round(sharedGermanPrefs().rate*100)}%, English device voice 100%. Keep the screen awake.`);",
+           'filtered-play status message')
+          replace_one(
+           "       await speak(segments[k][0],segments[k][1],session);",
+           '''       if(useGermanRecordings&&segments[k][1]==='de'){
+                   const ok=await speakRecordedGerman(group,index,k===3,session);
+                   if(!ok&&session===state.session)await speak(segments[k][0],'de',session);
+                 }else await speak(segments[k][0],segments[k][1],session);''',
+           'filtered-play MP3 German playback')
+          replace_one(
+           " function playSelected(){\n   if(L('listen-voice-source').value==='recorded'&&Number(L('listen-speed').value)===1&&canPlayRecording(current()))playRecording();\n   else playDevice();\n }",
+           " function playSelected(){\n   const p=sharedGermanPrefs();\n   playDevice(false,p.source==='recorded');\n }",
+           'single-source filtered-play action')
+          replace_one(
+           "   else if(state.device){state.paused=!state.paused;try{state.paused?speechSynthesis.pause():speechSynthesis.resume();}catch(e){}}",
+           '''   else if(state.device){
+               state.paused=!state.paused;
+               if(state.germanClip){
+                 if(state.paused)state.germanClip.pause();
+                 else state.germanClip.play().catch(()=>{});
+               }
+               try{state.paused?speechSynthesis.pause():speechSynthesis.resume();}catch(e){}
+             }''',
+           'pause/resume recorded German clips')
+          replace_one(
+           " L('listen-device').addEventListener('click',()=>playDevice());",
+           " L('listen-device').addEventListener('click',playSelected);",
+           'hidden duplicate device button')
+          replace_one(
+           " L('listen-by-level-details').addEventListener('toggle',()=>{if(L('listen-by-level-details').open)sendLongStop();});",
+           ''' L('listen-by-level-details').addEventListener('toggle',()=>{
+             if(L('listen-by-level-details').open){sendLongStop();updateSharedVoiceSummary();}
+           });
+           function bindSharedChoices(){
+             try{
+               const d=unifiedFrame.contentDocument;
+               for(const id of ['voice-source','german-speed','german-device-voice']){
+                 const input=d.getElementById(id);
+                 if(input&&!input.dataset.wortflipSharedBound){
+                   input.dataset.wortflipSharedBound='1';
+                   input.addEventListener('change',()=>{
+                     updateSharedVoiceSummary();
+                     if(state.playing)stop();
+                   });
+                 }
+               }
+             }catch(e){}
+             updateSharedVoiceSummary();
+           }
+           unifiedFrame.addEventListener('load',bindSharedChoices);
+           try{if(unifiedFrame.contentDocument?.readyState==='complete')bindSharedChoices();}catch(e){}''',
+           'cross-listener selected voice/speed sync')
+          
+          # PWA refresh on installed phones: do not touch stored word ratings or audio.
+          worker, n = re.subn(r"const CACHE_NAME = 'wortspiel-pwa-[^']+';",
+                              "const CACHE_NAME = 'wortspiel-pwa-v33-shared-german-settings';", worker, count=1)
+          if n != 1:
+              raise SystemExit('Cannot version the service-worker cache; no files edited.')
+          index_path.write_text(html, encoding='utf-8')
+          worker_path.write_text(worker, encoding='utf-8')
+          print('Applied one German voice/speed selection to both listening sections.')
+          print('Filtered lessons now use existing German recordings at 100/80/60/40%, English device voice at 100%.')
+          print('Unchanged: all saved progress, 1,300 cards, German MP3 recordings, 30-minute sessions.')
+          PY
+      - name: Validate listening page and preserve vocabulary
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          a=Path('index.html').read_text(encoding='utf-8')
+          for x in ('wortflip-shared-filtered-german-v1','id="listen-cefr"','id="cefr-level"',
+                    'id="listen-long-iframe"','function speakRecordedGerman(',
+                    'function sharedGermanPrefs()','id="listen-shared-settings-note"'):
+              assert x in a, 'Missing: '+x
+          assert a.count('id="listen-voice-source"')==1
+          print('Shared controls and CEFR filters intact.')
+          PY
+      - name: Publish only player navigation and offline cache changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html sw.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'Use single German voice and speed setting for both listening modes'
+            git push
+          else
+            echo 'Already up to date.'
+          fi
