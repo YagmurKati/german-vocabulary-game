@@ -1068,7 +1068,15 @@ window.addEventListener('appinstalled', () => {
    if(on){L('listen-toggle').setAttribute('aria-expanded','true');screen.scrollIntoView({behavior:'smooth',block:'start'});}
    else{L('listen-toggle').setAttribute('aria-expanded','false');}
  }
- L('listen-toggle').addEventListener('click',()=>toggleScreen(screen.hidden));
+ // wortflip-four-speed-listening-entry-v1
+ // The top Listen button opens the new four-speed 30+ minute player.
+ // The original in-app CEFR/progress-filtered lessons remain available
+ // via the #listen-by-level link from that player.
+ L('listen-toggle').addEventListener('click',()=>{
+   if(!screen.hidden){toggleScreen(false);return;}
+   window.location.assign(new URL('./listening/30-minute.html',location.href).href);
+ });
+ if(location.hash==='#listen-by-level')toggleScreen(true);
  L('listen-back').addEventListener('click',()=>toggleScreen(false));
  L('listen-group').addEventListener('change',()=>{stop();buildTopics();});
  L('listen-topic').addEventListener('change',()=>{stop();buildLessons();});
