@@ -1,0 +1,85 @@
+name: Connect WortFlip Listen button to four-speed player
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  connect_listening:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out WortFlip
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Update Listen navigation while preserving CEFR-filtered practice
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          main = Path('index.html')
+          player = Path('listening/30-minute.html')
+          sw = Path('sw.js')
+
+          html = main.read_text(encoding='utf-8')
+          old_click = "L('listen-toggle').addEventListener('click',()=>toggleScreen(screen.hidden));"
+          marker = '// wortflip-four-speed-listening-entry-v1'
+          new_click = '''// wortflip-four-speed-listening-entry-v1
+           // The top Listen button opens the new four-speed 30+ minute player.
+           // The original in-app CEFR/progress-filtered lessons remain available
+           // via the #listen-by-level link from that player.
+           L('listen-toggle').addEventListener('click',()=>{
+             if(!screen.hidden){toggleScreen(false);return;}
+             window.location.assign(new URL('./listening/30-minute.html',location.href).href);
+           });
+           if(location.hash==='#listen-by-level')toggleScreen(true);'''
+          if marker not in html:
+              if html.count(old_click) != 1:
+                  raise SystemExit('Cannot find the expected top Listen button handler; no files changed.')
+              html = html.replace(old_click,new_click,1)
+          if 'id="listen-cefr"' not in html or 'id="cefr-level"' not in html:
+              raise SystemExit('CEFR filters missing from home page; refusing to change navigation.')
+          main.write_text(html,encoding='utf-8')
+
+          listen = player.read_text(encoding='utf-8')
+          if not all(x in listen for x in ('id="voice-source"','id="german-device-voice"','id="german-speed"')):
+              raise SystemExit('Four-speed listening page is incomplete; refusing to update navigation.')
+          anchor = '<section class="panel">'
+          marker2 = 'id="listen-by-level-link"'
+          if marker2 not in listen:
+              if listen.count(anchor) != 1:
+                  raise SystemExit('Cannot place the CEFR-filtered listening link safely.')
+              extra = '''<p class="note" style="margin:0 0 18px"><a id="listen-by-level-link" href="../#listen-by-level" style="font-weight:750">🎯 Listen by German level (A1–C1), topic or review status</a><span style="display:block;margin-top:5px">Opens the original filtered practice screen. The long recorded sessions here have the four independent German speed choices.</span></p>
+          '''
+              listen = listen.replace(anchor,extra+anchor,1)
+          player.write_text(listen,encoding='utf-8')
+
+          sw_text = sw.read_text(encoding='utf-8')
+          name = "const CACHE_NAME = 'wortspiel-pwa-v31-four-speed-listen-link';"
+          if name not in sw_text:
+              sw_text,n = re.subn(r"const CACHE_NAME = 'wortspiel-pwa-[^']+';",name,sw_text,count=1)
+              if n != 1:
+                  raise SystemExit('Cannot update service worker cache version.')
+          sw.write_text(sw_text,encoding='utf-8')
+
+          print('Updated Listen button -> four-speed page.')
+          print('Preserved all CEFR, progress and topic filters.')
+          print('Added return link to the original filtered listening screen.')
+          print('Invalidated the older offline app cache for a clean refresh.')
+          PY
+
+      - name: Commit only the navigation files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html listening/30-minute.html sw.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'Connect Listen button to four-speed player; preserve CEFR listening'
+            git push
+          else
+            echo 'Navigation already up to date.'
+          fi
