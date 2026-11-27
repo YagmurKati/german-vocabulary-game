@@ -1,187 +1,139 @@
 #!/usr/bin/env python3
-"""Create continuous 30+ minute MP3 sessions from existing WortFlip cards.
+"""Rebuild 30+ minute WortFlip sessions from existing German recordings.
 
-Uses the repository's existing Piper WAV synthesis and exact English/German
-sequence. One file plays without JavaScript scheduling between cards.
-Run in repository root (GitHub Actions workflow included).
+English is generated at its original speaking speed with the original Piper
+English voice. German: the already recorded Thorsten clips are slowed to 0.5x
+without lowering pitch, and new Victoria German clips are slowed to 0.5x as well. 1,600 existing German MP3s are read, never overwritten or regenerated.
 """
 from __future__ import annotations
 
 import json
 from pathlib import Path
-import re
 import subprocess
 
 from generate_listening_mp3 import ROOT, GROUP_SOURCES, SAMPLE_RATE, load_cards, get_pcm, silence
 
-MIN_SECONDS = 30 * 60  # Minimum length, including the final complete card
-# Piper phoneme timing: 1.25 means German is spoken at approximately 80% of
-# the original pace. English remains at its original 1.0 timing.
-GERMAN_LENGTH_SCALE = 1.25
-OUTPUT_DIR = ROOT / "listening" / "audio30"
-MANIFEST = ROOT / "listening" / "30min-sessions.json"
-GROUP_LABELS = {
-    "lookalikes": "English lookalikes",
-    "everyday": "Everyday expressions",
-    "nouns": "Practical nouns",
-    "speaking": "Conversational nouns",
-    "verbs": "Everyday verbs",
+MIN_SECONDS=1800
+OUTPUT_DIR=ROOT/'listening'/'audio30'
+MANIFEST=ROOT/'listening'/'30min-sessions.json'
+LABELS={'lookalikes':'English lookalikes','everyday':'Everyday expressions','nouns':'Practical nouns','speaking':'Conversational nouns','verbs':'Everyday verbs'}
+# First 800 cards use the *existing* recordings by the original German male.
+# Remaining 500 cards use the newly generated Victoria recordings.
+CLIPS={
+ 'lookalikes':('l','y'),
+ 'everyday':('e','x'),
+ 'nouns':('n','z'),
+ 'speaking':('s','t'),
+ 'verbs':('v','w'),
 }
 
+def original_male(group,index):
+    return group=='everyday' or (group=='lookalikes' and index<400)
 
-def append_card(pipe, card, voice_en, voice_de) -> float:
-    """Append four spoken parts and recall gaps to a single MP3 encoder."""
-    length = 0.0
-    for key, voice, pause in (
-        ("en", voice_en, 2.5),
-        ("de", voice_de, 0.7),
-        ("exampleEn", voice_en, 2.5),
-        ("example", voice_de, 1.15),
-    ):
-        phrase = card.get(key, "").strip()
-        if not phrase:
-            raise ValueError(f"Card field {key} missing: {card!r}")
-        pcm = get_pcm(voice, phrase)
-        pipe.write(pcm)
-        silence_pcm = silence(pause)
-        pipe.write(silence_pcm)
-        length += (len(pcm) + len(silence_pcm)) / (SAMPLE_RATE * 2)
+
+def pcm_for_german(group,index,example,cache):
+    prefix=CLIPS[group][1 if example else 0]
+    path=ROOT/'audio'/f'{prefix}{index:03d}.mp3'
+    key=path
+    if key not in cache:
+        if not path.is_file() or path.stat().st_size<500:
+            raise FileNotFoundError(f'{path} is missing. Run the Seraphina workflow in all mode first.')
+        command=['ffmpeg','-nostdin','-v','error','-i',str(path)]
+        # Half-speed time stretching with preserved pitch, unlike naive
+        # 0.5x sample-rate playback. Works on already stored MP3s.
+        # All German clips play at 0.5x with pitch preserved.
+        command += ['-af','atempo=0.5']
+        command += ['-f','s16le','-acodec','pcm_s16le','-ar',str(SAMPLE_RATE),'-ac','1','pipe:1']
+        data=subprocess.check_output(command)
+        if len(data)<500:
+            raise ValueError(f'Cannot decode {path}')
+        cache[key]=data
+    return cache[key]
+
+
+def write_card(pipe, group, index, card, english_voice, cache):
+    length=0
+    parts=[
+        (get_pcm(english_voice, card['en'].strip()), 2.5),
+        (pcm_for_german(group,index,False,cache), .7),
+        (get_pcm(english_voice, card['exampleEn'].strip()), 2.5),
+        (pcm_for_german(group,index,True,cache), 1.15),
+    ]
+    for spoken,gap in parts:
+        pipe.write(spoken)
+        pause=silence(gap)
+        pipe.write(pause)
+        length+=(len(spoken)+len(pause))/(SAMPLE_RATE*2)
     return length
 
 
-def render_session(group: str, cards: list, start: int, sequence: int, voices: dict):
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    file_name = f"{group}-{sequence:02d}.mp3"
-    dest = OUTPUT_DIR / file_name
-    # Always render from the current card content when the workflow is run.
-    command = [
-        "ffmpeg", "-nostdin", "-hide_banner", "-loglevel", "error", "-y",
-        "-f", "s16le", "-ar", str(SAMPLE_RATE), "-ac", "1", "-i", "pipe:0",
-        "-vn", "-codec:a", "libmp3lame", "-b:a", "48k", str(dest),
-    ]
-    proc = subprocess.Popen(command, stdin=subprocess.PIPE)
-    length = 0.0
-    original_index = start
-    played = 0
-    replayed = 0
+def render(group,cards,start,n,english_voice,cache):
+    OUTPUT_DIR.mkdir(exist_ok=True,parents=True)
+    dest=OUTPUT_DIR/f'{group}-{n:02d}.mp3'
+    p=subprocess.Popen(['ffmpeg','-nostdin','-hide_banner','-loglevel','error','-y',
+                        '-f','s16le','-ar',str(SAMPLE_RATE),'-ac','1','-i','pipe:0',
+                        '-vn','-codec:a','libmp3lame','-b:a','48k',str(dest)],stdin=subprocess.PIPE)
+    duration=.5
+    next_index=start
+    played=0
+    repeated=0
     try:
-        assert proc.stdin is not None
-        proc.stdin.write(silence(0.5))
-        length += 0.5
-        while length < MIN_SECONDS:
-            # Fill the last session by revisiting the beginning of that collection.
-            # Do NOT skip its final cards and do NOT start the next category.
-            index = original_index if original_index < len(cards) else (replayed % len(cards))
-            if original_index < len(cards):
-                original_index += 1
-            else:
-                replayed += 1
-            length += append_card(proc.stdin, cards[index], voices["en"], voices["de"])
-            played += 1
-            if played % 25 == 0:
-                print(f"  {group} session {sequence}: {length / 60:.1f} minutes ({played} cards)", flush=True)
-        proc.stdin.close()
-        code = proc.wait()
-        if code:
-            raise RuntimeError(f"ffmpeg exited {code} while writing {dest}")
+        assert p.stdin is not None
+        p.stdin.write(silence(.5))
+        while duration<MIN_SECONDS:
+            # Repeat some cards at the end of the last session to reach >=30 min.
+            idx=next_index if next_index<len(cards) else repeated%len(cards)
+            if next_index<len(cards):next_index+=1
+            else:repeated+=1
+            duration+=write_card(p.stdin,group,idx,cards[idx],english_voice,cache)
+            played+=1
+            if played%25==0:print(f'  {group} #{n}: {duration/60:.1f} min ({played} cards)',flush=True)
+        p.stdin.close()
+        code=p.wait()
+        if code:raise RuntimeError(f'ffmpeg exited {code} writing {dest}')
     except BaseException:
-        if proc.stdin and not proc.stdin.closed:
-            proc.stdin.close()
-        proc.kill()
-        proc.wait()
-        dest.unlink(missing_ok=True)
+        if p.stdin and not p.stdin.closed:p.stdin.close()
+        p.kill();p.wait();dest.unlink(missing_ok=True)
         raise
     if not dest.is_file() or dest.stat().st_size < 200_000:
-        raise RuntimeError(f"Output MP3 is missing or unexpectedly small: {dest}")
-    result = {
-        "id": f"{group}-{sequence:02d}",
-        "group": group,
-        "label": f"{GROUP_LABELS[group]} · session {sequence}",
-        "file": f"listening/audio30/{file_name}",
-        "seconds": round(length),
-        "minutes": round(length / 60, 1),
-        "cards": played,
-        "first_card": start + 1,
-        "last_new_card": original_index,
-        "repeated_cards": replayed,
-    }
-    return result, original_index
-
-
-def update_listening_player_and_cache():
-    """Clarify the mixed-language speed and invalidate cached old MP3s."""
-    player = ROOT / "listening" / "30-minute.html"
-    html = player.read_text(encoding="utf-8")
-    original_label = '<label for="speed">Playback speed</label>'
-    updated_label = '<label for="speed">Overall playback speed (both languages)</label>'
-    if updated_label not in html:
-        if original_label not in html:
-            raise ValueError("Could not find 30-minute player speed selector")
-        html = html.replace(original_label, updated_label, 1)
-    note = ('<p class="note" id="german-pace-note">'
-            '<strong>German is recorded about 20% slower.</strong> English stays at its original speed. '
-            'Leave overall playback at Normal (1×) to hear this balance; the speed menu changes both languages.'
-            '</p>')
-    if 'id="german-pace-note"' not in html:
-        marker = '<label class="check"><input type="checkbox" id="repeat">'
-        if marker not in html:
-            raise ValueError("Could not find 30-minute player repeat selector")
-        html = html.replace(marker, note + '\n' + marker, 1)
-    player.write_text(html, encoding="utf-8")
-
-    # The existing service worker caches audio and HTML. A version bump is
-    # required; otherwise phones may keep serving the previous-speed MP3s.
-    service_worker = ROOT / "sw.js"
-    sw = service_worker.read_text(encoding="utf-8")
-    pattern = r"const CACHE_NAME = 'wortspiel-pwa-[^']+';"
-    newer, count = re.subn(pattern,
-        "const CACHE_NAME = 'wortspiel-pwa-v24-30min-slow-german';", sw, count=1)
-    if count != 1:
-        raise ValueError("Could not find service-worker cache name")
-    service_worker.write_text(newer, encoding="utf-8")
+        raise RuntimeError(f'Bad output file: {dest}')
+    return dict(id=f'{group}-{n:02d}',group=group,
+                label=f'{LABELS[group]} · session {n}',file=f'listening/audio30/{dest.name}',
+                seconds=round(duration),minutes=round(duration/60,1),cards=played,
+                first_card=start+1,last_new_card=next_index,repeated_cards=repeated),next_index
 
 
 def main():
-    from piper import PiperVoice, SynthesisConfig
-
-    class SlowerGermanVoice:
-        """Use Piper phoneme-duration scaling only for German synthesis."""
-        def __init__(self, voice):
-            self.voice = voice
-            self.settings = SynthesisConfig(length_scale=GERMAN_LENGTH_SCALE)
-
-        def synthesize_wav(self, text, wav_file):
-            return self.voice.synthesize_wav(text, wav_file, syn_config=self.settings)
-
-    html = (ROOT / "index.html").read_text(encoding="utf-8")
-    source = {group: load_cards(html, name) for group, name in GROUP_SOURCES.items()}
-    if sum(map(len, source.values())) != 1300:
-        raise ValueError("Expected the published set of 1,300 WortFlip cards")
-    voices = {
-        "en": PiperVoice.load(str((ROOT / "en_US-lessac-medium.onnx").resolve())),
-        "de": SlowerGermanVoice(PiperVoice.load(str((ROOT / "de_DE-thorsten-medium.onnx").resolve()))),
-    }
-    sessions = []
-    for group, cards in source.items():
-        index = 0
-        number = 0
-        while index < len(cards):
-            number += 1
-            print(f"Rendering {GROUP_LABELS[group]} #{number}, starting card {index + 1}", flush=True)
-            result, next_index = render_session(group, cards, index, number, voices)
-            sessions.append(result)
-            index = next_index
-            print(f"Created {result['minutes']} minutes: {result['file']}", flush=True)
+    from piper import PiperVoice
+    html=(ROOT/'index.html').read_text(encoding='utf-8')
+    source={g:load_cards(html,name) for g,name in GROUP_SOURCES.items()}
+    if sum(map(len,source.values()))!=1300:
+        raise ValueError('Expected exactly 1300 cards; repository data has changed')
+    manifest=json.loads((ROOT/'audio'/'tracks.json').read_text(encoding='utf-8'))
+    if len(manifest['collections'].get('lookalikes',[]))!=500:
+        raise ValueError('Generate 1000 missing Victoria clips before rebuilding the full 30-minute sessions')
+    voice=PiperVoice.load(str((ROOT/'en_US-lessac-medium.onnx').resolve()))
+    sessions=[]
+    for group,cards in source.items():
+        cache={}
+        pos=0;number=0
+        while pos<len(cards):
+            number+=1
+            print(f'Building {group} #{number} from card {pos+1}',flush=True)
+            session,next_pos=render(group,cards,pos,number,voice,cache)
+            sessions.append(session)
+            pos=next_pos
+        cache.clear()
     MANIFEST.write_text(json.dumps({
-        "version": 1,
-        "description": "Continuous 30+ minute English–German lessons made from the existing 1,300 WortFlip cards",
-        "sequence": "English prompt, 2.5s pause, slower German answer, English example, 2.5s pause, slower German example",
-        "voice_timing": {"english_length_scale": 1.0, "german_length_scale": GERMAN_LENGTH_SCALE},
-        "sessions": sessions,
-    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    update_listening_player_and_cache()
-    print(f"Built {len(sessions)} 30+ minute sessions (German ~20% slower; English unchanged); saved {MANIFEST}", flush=True)
+        'version':2,
+        'description':'Bilingual 30+ minute sessions: original-speed English, both German voices at 0.5x (pitch preserved)',
+        'german_legacy_speed':0.5,
+        'german_new_voice':'df_victoria',
+        'german_new_speed':0.5,
+        'english_speed':1.0,
+        'sequence':'English prompt, 2.5s pause, German answer, English example, 2.5s pause, German example',
+        'sessions':sessions,
+    },ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print(f'Finished {len(sessions)} sessions, all >=30 minutes',flush=True)
 
-
-if __name__ == "__main__":
-    main()
+if __name__=='__main__':main()
