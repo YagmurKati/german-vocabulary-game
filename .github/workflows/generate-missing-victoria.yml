@@ -35,8 +35,8 @@ jobs:
           sudo apt-get install -y ffmpeg
       - name: Start free local KokoroTTS with the German Victoria model
         run: |
-          # Use the public GitHub Container Registry release by tag.
-          # No Azure, paid API, secret or login is required.
+          # An Apache-2.0 free/open model; NO paid APIs, keys or Azure involved.
+          # Versioned immutable tiny image downloads its language weights on first use.
           docker run -d --name wortflip-victoria \
             -e KOKOROTTS_DEVICE=cpu \
             -p 127.0.0.1:7860:7860 \
@@ -69,7 +69,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add audio/*.mp3 audio/tracks.json index.html listening/30-minute.html sw.js
+          git add audio/*.mp3 audio/tracks.json index.html listening/30-minute.html listening/30min-device-cards.json sw.js
           if ! git diff --cached --quiet; then
             git commit -m 'Add free Victoria German voice clips and half-speed German playback'
             git push
