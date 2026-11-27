@@ -6,340 +6,316 @@
 <meta name="theme-color" content="#162438">
 <title>30+ Minute Listening · WortFlip</title>
 <style>
-:root {color-scheme:dark; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:#101a2d; color:#f4f6ff;}
+:root{color-scheme:dark;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#101a2d;color:#f4f6ff}
 *{box-sizing:border-box}body{margin:0;padding:24px 16px 70px;background:radial-gradient(circle at 50% 0%,#293854 0%,#101a2d 430px);min-height:100vh}
-main{max-width:680px;margin:0 auto} a{color:#c6c1ff} a:focus-visible,select:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #d5c9ff;outline-offset:3px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:32px}.back{font-size:14px;text-decoration:none}
-h1{font-size:clamp(29px,6.6vw,41px);margin:0 0 8px;line-height:1.13}h1 span{color:#d5c4ff}.intro{line-height:1.55;color:#b8c5d9;margin-bottom:28px}
+main{max-width:680px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:32px}.back{font-size:14px;color:#c6c1ff}
+h1{font-size:clamp(29px,6.6vw,41px);margin:0 0 8px;line-height:1.13}h1 span{color:#d5c4ff}.intro{line-height:1.6;color:#b8c5d9;margin-bottom:27px}
 .panel{padding:24px;background:#1a2a42;border:1px solid #395170;border-radius:20px;box-shadow:0 15px 40px #060e204b}
-label{display:block;color:#e3e9f4;font-size:14px;font-weight:650;margin-bottom:9px}select,button{font:inherit}
-select{width:100%;padding:13px;border-radius:11px;color:#fff;background:#233752;border:1px solid #57718e;margin-bottom:20px}
-button{border:0;border-radius:11px;background:#ada3ff;color:#152039;font-weight:750;padding:13px 20px;cursor:pointer;width:100%;margin-bottom:16px}
-button:disabled{opacity:.5;cursor:default}audio{display:block;width:100%;margin:2px 0 14px}[hidden]{display:none!important}#device-actions{display:flex;gap:10px}#device-actions button{width:50%}#refresh-voices{font-size:13px;background:#516782;color:#fff;padding:7px 12px;width:auto}#voice-availability{font-size:12px;color:#b1c6df;margin:0 0 12px}
-.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 0 12px}.row label{margin:0}.row select{width:auto;margin:0;padding:7px}
+label{display:block;color:#e3e9f4;font-size:14px;font-weight:650;margin-bottom:8px}select,button{font:inherit}
+select{width:100%;padding:12px;border-radius:11px;color:#fff;background:#233752;border:1px solid #57718e;margin-bottom:19px}
+select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #d5c9ff;outline-offset:3px}
+button{border:0;border-radius:11px;background:#ada3ff;color:#152039;font-weight:750;padding:13px 20px;cursor:pointer;width:100%;margin-bottom:15px}
+button:disabled{opacity:.5;cursor:default}audio{display:block;width:100%;margin:2px 0 15px}[hidden]{display:none!important}
+#device-actions{display:flex;gap:10px}#device-actions button{width:50%}#refresh-voices{font-size:13px;background:#516782;color:#fff;padding:7px 12px;width:auto}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:8px 0 13px}.row label{margin:0}.row select{width:auto;margin:0;padding:8px}
 .check{display:flex;align-items:center;gap:10px;font-weight:500;cursor:pointer}.check input{width:19px;height:19px;accent-color:#ada3ff}
-#status{color:#c3d0e3;font-size:14px;min-height:25px;margin:8px 0}.note{font-size:14px;color:#aabed2;line-height:1.55}
-.download{display:inline-block;margin-top:8px;font-size:14px}.mini{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#bcaeff;font-weight:800;margin:0 0 9px}
+#status{color:#c3d0e3;font-size:14px;min-height:25px;margin:12px 0}.note{font-size:14px;color:#aabed2;line-height:1.6}.download{display:inline-block;margin-top:8px;font-size:14px;color:#c6c1ff}
+.mini{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#bcaeff;font-weight:800;margin:0 0 9px}.rate-info{font-size:13px;color:#bed3e9;margin:-9px 0 16px}
 </style>
 </head>
 <body><main>
 <div class="top"><a class="back" href="../">← Back to WortFlip</a><small>🎧 Hands-free listening</small></div>
 <p class="mini">WortFlip · Bilingual audio</p>
 <h1>Keep listening for <span>30+ minutes.</span></h1>
-<p class="intro">English word → 2.5-second recall pause → German word → English example → 2.5-second pause → German sentence. Each session is <strong>one continuous recorded MP3</strong>, so it does not depend on device speech or timers when your screen locks.</p>
+<p class="intro">English prompt → 2.5-second recall pause → German answer → English example → 2.5-second pause → German sentence. English always stays at <strong>100%</strong>. Choose your German speed independently.</p>
 <section class="panel">
 <label for="collection">Collection</label>
 <select id="collection"><option value="all">All available collections</option></select>
-<label for="session">30+ minute session</label>
-<select id="session" disabled><option>Loading recordings…</option></select>
+<label for="session">Listening session</label>
+<select id="session" disabled><option>Loading sessions…</option></select>
 <label for="voice-source">German voice source</label>
-<select id="voice-source"><option value="recorded">Recorded German · Thorsten / Victoria</option><option value="device">Phone / computer German voice</option></select>
+<select id="voice-source"><option value="recorded">Recorded MP3 · Thorsten / Victoria</option><option value="device">Phone / computer's German voice</option></select>
+<label for="german-speed">German speaking speed (English always 100%)</label>
+<select id="german-speed">
+ <option value="100" selected>100% · Natural speed</option>
+ <option value="80">80% · Slightly slower</option>
+ <option value="60">60% · Slower</option>
+ <option value="40">40% · Very slow</option>
+</select>
+<p class="rate-info" id="speed-note">The selected speed affects German speech only.</p>
 <div id="device-settings" hidden>
-<label for="german-device-voice">Choose your device's German voice</label>
-<select id="german-device-voice"><option>Checking installed voices…</option></select>
-<p id="voice-availability"></p><button id="refresh-voices" type="button">↻ Refresh device voices</button>
-<p class="note">Device voices use English at 1× and German at 0.5×, but may stop when the screen locks. For screen-locked listening, choose Recorded German.</p>
+<label for="german-device-voice">Choose your phone / computer German voice</label>
+<select id="german-device-voice"><option>Checking German voices…</option></select>
+<p class="note" id="voice-availability"></p><button id="refresh-voices" type="button">↻ Refresh device voices</button>
 </div>
-<button id="play" type="button" disabled>▶ Play recorded 30+ minutes</button>
+<button id="play" type="button" disabled>▶ Play recorded listening</button>
 <audio id="audio" controls preload="metadata" aria-label="WortFlip continuous listening"></audio>
 <div id="device-actions" hidden><button type="button" id="device-pause" disabled>⏸ Pause</button><button type="button" id="device-stop" disabled>■ Stop</button></div>
-<div class="row" id="speed-row"><label for="speed">Overall recorded playback speed (both languages)</label><select id="speed"><option value="0.85">Slow · 0.85×</option><option value="1" selected>Normal · 1×</option><option value="1.15">Faster · 1.15×</option></select></div>
 <label class="check"><input type="checkbox" id="repeat"> Repeat this session continuously</label>
 <p id="status" role="status" aria-live="polite">Preparing your audio list…</p>
-<a id="download" class="download" hidden download>⬇ Download this session as MP3</a>
+<a id="download" class="download" hidden download>⬇ Download this selected recording as MP3</a>
 </section>
-<p class="note" id="german-pace-note"><strong>English is at its original speed.</strong> In recorded mode, the existing German male voice and new Victoria voice are each 50% slower, with pitch preservation. Leave Overall recorded playback speed at Normal (1×). In device mode, English is 1× and the selected German device voice is 0.5×. Recordings are more reliable for background and locked-screen listening. Your progress is unchanged.</p>
+<p class="note">For reliable screen-locked listening, use <strong>Recorded MP3</strong>. Four separate complete recordings preserve the English speed while slowing German. They are generated after the Victoria clips. Phone/computer speech works without generated MP3s but may stop when the screen locks; its speed may vary slightly by device.</p>
 </main>
 <script>
 'use strict';
 (() => {
-  const $ = id => document.getElementById(id);
-  const audio = $('audio');
-  const base = new URL('../', location.href);
-  const labels = {
-    lookalikes: 'English lookalikes', everyday: 'Everyday expressions',
-    nouns: 'Practical nouns', speaking: 'Conversational nouns', verbs: 'Everyday verbs'
-  };
-  const SOURCE_PREF = 'wortspiel-audio-mode-v1'; // Shared with WortFlip flashcards.
-  const VOICE_PREF = 'wortspiel-german-voice-v1'; // Shared device-voice preference.
-  let sessions = [];
-  let deviceCards = null;
-  let deviceCardsPromise = null;
-  let availableGermanVoices = [];
-  let deviceRun = 0;
-  let devicePlaying = false;
-  let devicePaused = false;
-  const status = s => $('status').textContent = s;
-  const current = () => sessions.find(s => s.id === $('session').value);
-  const mode = () => $('voice-source').value;
-  const voiceKey = v => (v.voiceURI || v.name) + '|' + v.lang;
-  const speechAvailable = () => 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
-  function updateMediaSession(session) {
-    if (!('mediaSession' in navigator) || !('MediaMetadata' in window)) return;
-    try {
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: session.label, artist: 'WortFlip', album: '30+ Minute German Listening'
-      });
-      // Media controls work reliably for the uninterrupted recorded MP3.
-      navigator.mediaSession.setActionHandler('play', () => {
-        if (mode() === 'recorded') audio.play().catch(() => {});
-      });
-      navigator.mediaSession.setActionHandler('pause', () => {
-        if (mode() === 'recorded') audio.pause();
-      });
-      navigator.mediaSession.setActionHandler('seekbackward', () => {
-        if (mode() === 'recorded') audio.currentTime = Math.max(0, audio.currentTime - 15);
-      });
-      navigator.mediaSession.setActionHandler('seekforward', () => {
-        if (mode() === 'recorded') audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + 15);
-      });
-    } catch (e) { /* Native controls are still available. */ }
-  }
-  function refreshGermanVoices() {
-    const voiceSelect = $('german-device-voice');
-    let voices = [];
-    if (speechAvailable()) {
-      try { voices = speechSynthesis.getVoices() || []; } catch (e) {}
-    }
-    availableGermanVoices = voices.filter(v => /^de(?:[-_]|$)/i.test(v.lang || ''));
-    const preferred = (() => { try { return localStorage.getItem(VOICE_PREF) || ''; } catch (e) { return ''; } })();
-    const previous = voiceSelect.value || preferred;
-    voiceSelect.replaceChildren(...availableGermanVoices.map(v =>
-      new Option(`${v.name} · ${v.lang}${v.localService ? ' · installed' : ''}`, voiceKey(v))
-    ));
-    if (availableGermanVoices.length) {
-      const target = availableGermanVoices.find(v => voiceKey(v) === previous)
-        || availableGermanVoices.find(v => voiceKey(v) === preferred)
-        || availableGermanVoices[0];
-      voiceSelect.value = voiceKey(target);
-      voiceSelect.disabled = false;
-      $('voice-availability').textContent = 'German device voice available. English uses a normal-speed English device voice.';
-    } else {
-      voiceSelect.replaceChildren(new Option('No German device voice available', ''));
-      voiceSelect.disabled = true;
-      $('voice-availability').textContent = 'Your browser has no German speech voice. Install one in your system or use Recorded German.';
-    }
-    if (mode() === 'device') updateControls();
-  }
-  function stopDevice() {
-    deviceRun += 1;
-    devicePlaying = false;
-    devicePaused = false;
-    if (speechAvailable()) {
-      try { speechSynthesis.cancel(); } catch (e) {}
-    }
-    $('device-pause').textContent = '⏸ Pause';
-    updateControls();
-  }
-  function updateControls() {
-    const recorded = mode() === 'recorded';
-    $('audio').hidden = !recorded;
-    $('speed-row').hidden = !recorded;
-    $('download').hidden = !recorded || !current();
-    $('device-settings').hidden = recorded;
-    $('device-actions').hidden = recorded;
-    $('play').textContent = recorded ? '▶ Play recorded 30+ minutes' : '▶ Play using device voices';
-    $('play').disabled = !current() || (!recorded && (!speechAvailable() || !availableGermanVoices.length));
-    $('device-pause').disabled = !devicePlaying;
-    $('device-stop').disabled = !devicePlaying;
-  }
-  function chooseSession() {
-    stopDevice();
-    audio.pause();
-    const s = current();
-    if (!s) {
-      audio.removeAttribute('src');
-      updateControls();
-      return;
-    }
-    const url = new URL(s.file, base).href + '?voices=victoria-thorsten-50pct-v2';
-    audio.src = url;
-    audio.playbackRate = Number($('speed').value) || 1;
-    audio.preservesPitch = true;
-    $('download').href = url;
-    updateControls();
-    status(`${s.minutes} minutes · ${s.cards} card repetitions. ${mode() === 'recorded' ? 'Recorded audio ready.' : 'Device voices ready; keep the screen awake.'}`);
-    updateMediaSession(s);
-  }
-  function populate() {
-    const group = $('collection').value;
-    const choices = sessions.filter(s => group === 'all' || s.group === group);
-    const old = $('session').value;
-    $('session').replaceChildren(...choices.map(s => new Option(`${s.label} · ${s.minutes} min`, s.id)));
-    if (choices.some(s => s.id === old)) $('session').value = old;
-    $('session').disabled = !choices.length;
-    chooseSession();
-  }
-  async function loadDeviceCards() {
-    if (deviceCards) return deviceCards;
-    if (!deviceCardsPromise) {
-      deviceCardsPromise = fetch(new URL('30min-device-cards.json', location.href))
-        .then(r => { if (!r.ok) throw Error(`HTTP ${r.status}`); return r.json(); })
-        .then(data => {
-          if (!data || !data.cards) throw Error('Device voice cards are missing');
-          deviceCards = data.cards;
-          return deviceCards;
-        }).finally(() => { deviceCardsPromise = null; });
-    }
-    return deviceCardsPromise;
-  }
-  function entriesForSession(s, all) {
-    const cards = all[s.group] || [];
-    const begin = s.first_card - 1;
-    const end = s.last_new_card;
-    if (!cards.length || begin < 0 || end < begin || end > cards.length) throw Error('Invalid session card range');
-    const entries = cards.slice(begin, end);
-    for (let i = 0; i < s.repeated_cards; i++) entries.push(cards[i % cards.length]);
-    if (entries.length !== s.cards) throw Error('Session/card mismatch; rebuild the 30-minute recordings');
-    return entries;
-  }
-  function pickDeviceVoice(lang) {
-    const voices = speechSynthesis.getVoices() || [];
-    if (lang === 'de') return availableGermanVoices.find(v => voiceKey(v) === $('german-device-voice').value) || null;
-    const english = voices.filter(v => /^en(?:[-_]|$)/i.test(v.lang || ''));
-    return english.find(v => v.localService && /^en[-_]US$/i.test(v.lang || '')) || english[0] || null;
-  }
-  function waitFor(ms, run) {
-    return new Promise(resolve => {
-      let remaining = ms;
-      function tick() {
-        if (run !== deviceRun) { resolve(); return; }
-        if (devicePaused) { setTimeout(tick, 100); return; }
-        if (remaining <= 0) { resolve(); return; }
-        const step = Math.min(remaining, 100);
-        remaining -= step;
-        setTimeout(tick, step);
+ const $ = id => document.getElementById(id);
+ const audio = $('audio');
+ const root = new URL('../',location.href);
+ const sourceKey = 'wortspiel-audio-mode-v1';
+ const voiceKeyStorage = 'wortspiel-german-voice-v1';
+ const rateKey = 'wortflip-german-speed-v1';
+ const labels = {lookalikes:'English lookalikes',everyday:'Everyday expressions',nouns:'Practical nouns',speaking:'Conversational nouns',verbs:'Everyday verbs'};
+ const speedOptions = ['100','80','60','40'];
+ let sessions=[],deviceCards=null,deviceCardsPromise=null,availableGermanVoices=[];
+ let deviceRun=0,devicePlaying=false,devicePaused=false,currentAudioSession=null;
+ const status=s => $('status').textContent=s;
+ const mode=()=> $('voice-source').value;
+ const speed=()=> $('german-speed').value;
+ const current=()=> sessions.find(s=>s.id===$('session').value);
+ const deviceSupported=()=> 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+ const voiceKey=v=>(v.voiceURI||v.name)+'|'+v.lang;
+ const hasVariants=s=> Boolean(s&&s.speeds&&speedOptions.every(n=>s.speeds[n]?.file));
+ const currentAudioDetails=()=>{
+   const s=current();
+   if(hasVariants(s))return s.speeds[speed()];
+   return s&&s.file?{file:s.file,seconds:s.seconds,minutes:s.minutes,legacy:true}:null;
+ };
+ const urlFor=info=>new URL(info.file,root).href;
+ function savePreference(key,value){try{localStorage.setItem(key,value);}catch(e){}}
+ function setMediaSession(s){
+   if(!s||!('mediaSession' in navigator)||!('MediaMetadata' in window))return;
+   try{
+     navigator.mediaSession.metadata=new MediaMetadata({title:s.label,artist:'WortFlip',album:'30+ Minute German Listening'});
+     navigator.mediaSession.setActionHandler('play',()=>{if(mode()==='recorded')audio.play().catch(()=>{});});
+     navigator.mediaSession.setActionHandler('pause',()=>{if(mode()==='recorded')audio.pause();});
+     navigator.mediaSession.setActionHandler('seekbackward',()=>{if(mode()==='recorded')audio.currentTime=Math.max(0,audio.currentTime-15);});
+     navigator.mediaSession.setActionHandler('seekforward',()=>{if(mode()==='recorded')audio.currentTime=Math.min(audio.duration||Infinity,audio.currentTime+15);});
+   }catch(e){}
+ }
+ function refreshGermanVoices(){
+   let voices=[];
+   if(deviceSupported())try{voices=speechSynthesis.getVoices()||[];}catch(e){}
+   availableGermanVoices=voices.filter(v=>/^de(?:[-_]|$)/i.test(v.lang||''));
+   const sel=$('german-device-voice');
+   let pref='';try{pref=localStorage.getItem(voiceKeyStorage)||'';}catch(e){}
+   const prior=sel.value||pref;
+   sel.replaceChildren(...availableGermanVoices.map(v=>new Option(v.name+' · '+v.lang+(v.localService?' · installed':''),voiceKey(v))));
+   if(availableGermanVoices.length){
+      const target=availableGermanVoices.find(v=>voiceKey(v)===prior)||availableGermanVoices.find(v=>voiceKey(v)===pref)||availableGermanVoices[0];
+      sel.value=voiceKey(target);sel.disabled=false;
+      $('voice-availability').textContent='German device voice available. English uses an English device voice at normal speed.';
+   } else {
+      sel.replaceChildren(new Option('No German device voice available',''));
+      sel.disabled=true;$('voice-availability').textContent='No German system voice found. Install one on your device or choose Recorded MP3.';
+   }
+   controls();
+ }
+ function stopDevice(){
+   deviceRun++;devicePlaying=false;devicePaused=false;
+   if(deviceSupported())try{speechSynthesis.cancel();}catch(e){}
+   $('device-pause').textContent='⏸ Pause';controls();
+ }
+ function controls(){
+   const recorded=mode()==='recorded';
+   audio.hidden=!recorded;$('download').hidden=!recorded||!currentAudioDetails();
+   $('device-settings').hidden=recorded;$('device-actions').hidden=recorded;
+   const s=current();const info=currentAudioDetails();
+   $('play').textContent=recorded?(info?.legacy?'▶ Play existing recording (fixed speed)':'▶ Play recorded listening'):'▶ Play with device voices';
+   $('play').disabled=recorded? !info : (!s||!deviceSupported()||!availableGermanVoices.length);
+   $('device-pause').disabled=!devicePlaying;$('device-stop').disabled=!devicePlaying;
+   $('speed-note').textContent=recorded?
+      (info?.legacy?'Existing MP3: German speed is fixed until you generate the four recorded versions. You can still listen to this original recording.':
+       info?`German ${speed()}%; English 100% · ${info.minutes} min uninterrupted MP3`:
+       'Four-speed recorded MP3s are not published yet. Use Device voice now; generate Victoria and rebuild recordings later.'):
+      `German device voice ${speed()}%; English device voice 100%.`; 
+ }
+ function alignTime(oldDetails,newDetails,oldTime){
+   const a=oldDetails?.card_offsets,b=newDetails?.card_offsets;
+   if(!Array.isArray(a)||!Array.isArray(b)||a.length!==b.length||!a.length)return 0;
+   let low=0,high=a.length-1;
+   while(low<high){const mid=Math.ceil((low+high)/2);if(a[mid]<=oldTime)low=mid;else high=mid-1;}
+   const i=low;
+   const aEnd=i+1<a.length?a[i+1]:oldDetails.seconds;
+   const bEnd=i+1<b.length?b[i+1]:newDetails.seconds;
+   const ratio=Math.max(0,Math.min(1,(oldTime-a[i])/Math.max(0.01,aEnd-a[i])));
+   return Math.min(newDetails.seconds-0.1,b[i]+ratio*(bEnd-b[i]));
+ }
+ function loadRecording(keepPlace=false,oldDetails=null,previousTime=0,wasPlaying=false){
+   const info=currentAudioDetails();
+   audio.pause();
+   if(!info){audio.removeAttribute('src');audio.load();$('download').hidden=true;controls();return;}
+   const url=urlFor(info);
+   audio.src=url;audio.playbackRate=1;audio.preservesPitch=true;
+   $('download').href=url;$('download').hidden=false;
+   if(keepPlace&&oldDetails){
+     const target=alignTime(oldDetails,info,previousTime);
+     audio.addEventListener('loadedmetadata',()=>{
+       audio.currentTime=target;
+       if(wasPlaying)audio.play().catch(err=>status('Tap Play to resume: '+err.message));
+     },{once:true});
+   }
+   audio.load();controls();
+   status(info.legacy?'Playing the existing MP3 at its fixed original mix; run the 30-minute workflow after Victoria for selectable German speeds.':
+          `Ready: German ${speed()}%, English 100%. The recording is one continuous MP3.`);
+   setMediaSession(current());
+ }
+ function chooseSession(){
+   stopDevice();audio.pause();loadRecording();
+ }
+ function populate(){
+   const group=$('collection').value,old=$('session').value;
+   const subset=sessions.filter(s=>group==='all'||s.group===group);
+   $('session').replaceChildren(...subset.map(s=>new Option(s.label,s.id)));
+   if(subset.some(s=>s.id===old))$('session').value=old;
+   $('session').disabled=!subset.length;chooseSession();
+ }
+ async function loadDeviceCards(){
+   if(deviceCards)return deviceCards;
+   if(!deviceCardsPromise)deviceCardsPromise=fetch(new URL('30min-device-cards.json',location.href),{cache:'no-store'})
+     .then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json();})
+     .then(data=>{if(!data||!data.cards)throw Error('No card texts found');deviceCards=data.cards;return deviceCards;})
+     .finally(()=>{deviceCardsPromise=null;});
+   return deviceCardsPromise;
+ }
+ function entriesFor(s,all){
+   const group=all[s.group]||[],begin=s.first_card-1,end=s.last_new_card;
+   if(!group.length||begin<0||end>group.length||end<begin)throw Error('Invalid card range');
+   const entries=group.slice(begin,end);
+   for(let i=0;i<s.repeated_cards;i++)entries.push(group[i%group.length]);
+   if(entries.length!==s.cards)throw Error('Card count differs; rebuild recorded sessions');
+   return entries;
+ }
+ function voiceFor(lang){
+   const voices=speechSynthesis.getVoices()||[];
+   if(lang==='de')return availableGermanVoices.find(v=>voiceKey(v)===$('german-device-voice').value)||null;
+   const en=voices.filter(v=>/^en(?:[-_]|$)/i.test(v.lang||''));
+   return en.find(v=>v.localService&&/^en[-_]US$/i.test(v.lang||''))||en[0]||null;
+ }
+ function waitFor(ms,run){
+   return new Promise(resolve=>{
+     let remaining=ms;
+     function tick(){
+       if(run!==deviceRun){resolve();return;}
+       if(devicePaused){setTimeout(tick,100);return;}
+       if(remaining<=0){resolve();return;}
+       const slice=Math.min(100,remaining);remaining-=slice;setTimeout(tick,slice);
+     }
+     tick();
+   });
+ }
+ function speakPart(text,lang,run){
+   return new Promise(resolve=>{
+      if(run!==deviceRun||!deviceSupported()){resolve();return;}
+      let finished=false;
+      const finish=()=>{if(!finished){finished=true;resolve();}};
+      try{
+         const u=new SpeechSynthesisUtterance(String(text||''));
+         u.lang=lang==='de'?'de-DE':'en-US';
+         u.rate=lang==='de'?Number(speed())/100:1;
+         const v=voiceFor(lang);if(v)u.voice=v;
+         u.onend=finish;u.onerror=finish;
+         speechSynthesis.speak(u);
+      }catch(e){finish();}
+   });
+ }
+ async function playDevice(){
+   if(devicePlaying){if(devicePaused)togglePause();return;}
+   if(!deviceSupported()||!availableGermanVoices.length){status('No German device voice detected.');return;}
+   const s=current();if(!s)return;
+   audio.pause();const expectedRun=deviceRun;let cards;
+   try{cards=entriesFor(s,await loadDeviceCards());}
+   catch(e){status(`Device listening cards unavailable: ${e.message}. Run “Prepare WortFlip four-speed listening” in GitHub Actions first.`);return;}
+   if(expectedRun!==deviceRun||s!==current()||mode()!=='device')return;
+   stopDevice();const run=deviceRun;
+   devicePlaying=true;controls();
+   status(`Using device voices. German ${speed()}%, English 100%. Keep screen awake.`);
+   do{
+      for(let i=0;i<cards.length&&run===deviceRun;i++){
+         const c=cards[i];
+         for(const [field,lang,gap] of [['en','en',2500],['de','de',700],['exampleEn','en',2500],['example','de',1150]]){
+            if(run!==deviceRun)break;
+            while(devicePaused&&run===deviceRun)await waitFor(100,run);
+            if(run!==deviceRun)break;
+            status(`Card ${i+1}/${cards.length} · ${lang==='de'?'German '+speed()+'%':'English 100%'}`);
+            await speakPart(c[field],lang,run);
+            if(run!==deviceRun)break;
+            await waitFor(gap,run);
+         }
       }
-      tick();
-    });
-  }
-  function speakPart(text, lang, run) {
-    return new Promise(resolve => {
-      if (run !== deviceRun) { resolve(); return; }
-      let finished = false;
-      const finish = () => { if (!finished) { finished = true; resolve(); } };
-      try {
-        const utterance = new SpeechSynthesisUtterance(String(text || ''));
-        utterance.lang = lang === 'de' ? 'de-DE' : 'en-US';
-        utterance.rate = lang === 'de' ? 0.5 : 1;
-        const voice = pickDeviceVoice(lang);
-        if (voice) utterance.voice = voice;
-        utterance.onend = finish;
-        utterance.onerror = finish;
-        speechSynthesis.speak(utterance);
-      } catch (e) { finish(); }
-    });
-  }
-  async function playDevice() {
-    if (devicePlaying) {
-      if (devicePaused) toggleDevicePause();
-      return;
+   }while(run===deviceRun&&$('repeat').checked);
+   if(run===deviceRun){devicePlaying=false;controls();status('Device-voice session complete.');}
+ }
+ function togglePause(){
+   if(!devicePlaying)return;
+   devicePaused=!devicePaused;
+   try{devicePaused?speechSynthesis.pause():speechSynthesis.resume();}catch(e){}
+   $('device-pause').textContent=devicePaused?'▶ Resume':'⏸ Pause';
+   status(devicePaused?'Device speech paused.':'Device speech resumed.');
+ }
+ $('collection').addEventListener('change',populate);
+ $('session').addEventListener('change',chooseSession);
+ $('voice-source').addEventListener('change',()=>{
+    savePreference(sourceKey,mode());
+    if(mode()==='recorded')stopDevice();else audio.pause();
+    controls();
+    status(mode()==='device'?'Device speech ready. Press Play to begin.':
+           'Recorded audio ready if the four-speed files have been generated.');
+ });
+ $('german-device-voice').addEventListener('change',()=>{
+    savePreference(voiceKeyStorage,$('german-device-voice').value);
+    if(devicePlaying){stopDevice();status('Voice changed. Press Play to restart.');}
+ });
+ $('refresh-voices').addEventListener('click',refreshGermanVoices);
+ $('german-speed').addEventListener('change',()=>{
+    savePreference(rateKey,String(Number(speed())/100));
+    if(mode()==='recorded'){
+      const old=currentAudioSession;
+      const oldTime=audio.currentTime;
+      const wasPlaying=!audio.paused&&!audio.ended;
+      // currentAudioSession updated below; timeline metadata lets us keep the card and position.
+      loadRecording(true,old,oldTime,wasPlaying);
+      currentAudioSession=currentAudioDetails();
+    }else{
+      controls();status(`German speed ${speed()}% selected; English stays 100%. The new rate applies to the next German phrase.`);
     }
-    if (!speechAvailable() || !availableGermanVoices.length) {
-      status('No German device speech voice available. Choose Recorded German or install a German system voice.');
-      return;
-    }
-    const s = current();
-    if (!s) return;
-    audio.pause();
-    const requestedRun = deviceRun;
-    let cards;
-    try {
-      cards = entriesForSession(s, await loadDeviceCards());
-    } catch (e) {
-      status(`Device listening cards unavailable: ${e.message}. Run the Victoria generation workflow (all).`);
-      return;
-    }
-    // Stop/race guard: changing the session while cards load invalidates the run.
-    if (requestedRun !== deviceRun || s !== current() || mode() !== 'device') return;
-    stopDevice();
-    const run = deviceRun;
-    devicePlaying = true;
-    updateControls();
-    status('Playing with device voices: English 1.0×, German 0.5×. Keep the screen awake.');
-    do {
-      for (let i = 0; i < cards.length && run === deviceRun; i++) {
-        const c = cards[i];
-        for (const [field, lang, gap] of [
-          ['en', 'en', 2500], ['de', 'de', 700],
-          ['exampleEn', 'en', 2500], ['example', 'de', 1150]
-        ]) {
-          if (run !== deviceRun) break;
-          while (devicePaused && run === deviceRun) await waitFor(100, run);
-          if (run !== deviceRun) break;
-          status(`Device voices · card ${i + 1} of ${cards.length} · ${lang === 'de' ? 'German 0.5×' : 'English 1.0×'}`);
-          await speakPart(c[field], lang, run);
-          if (run !== deviceRun) break;
-          await waitFor(gap, run);
-        }
-      }
-    } while (run === deviceRun && $('repeat').checked);
-    if (run === deviceRun) {
-      devicePlaying = false;
-      updateControls();
-      status('Device-voice session complete.');
-    }
-  }
-  function toggleDevicePause() {
-    if (!devicePlaying) return;
-    devicePaused = !devicePaused;
-    try { devicePaused ? speechSynthesis.pause() : speechSynthesis.resume(); } catch (e) {}
-    $('device-pause').textContent = devicePaused ? '▶ Resume' : '⏸ Pause';
-    status(devicePaused ? 'Device speech paused.' : 'Playing with device voices.');
-  }
-  $('collection').addEventListener('change', populate);
-  $('session').addEventListener('change', chooseSession);
-  $('voice-source').addEventListener('change', () => {
-    try { localStorage.setItem(SOURCE_PREF, mode()); } catch (e) {}
-    chooseSession();
-  });
-  $('german-device-voice').addEventListener('change', () => {
-    try { localStorage.setItem(VOICE_PREF, $('german-device-voice').value); } catch (e) {}
-    if (devicePlaying) stopDevice();
-  });
-  $('refresh-voices').addEventListener('click', refreshGermanVoices);
-  $('speed').addEventListener('change', () => audio.playbackRate = Number($('speed').value) || 1);
-  $('repeat').addEventListener('change', () => audio.loop = $('repeat').checked);
-  $('play').addEventListener('click', () => {
-    if (mode() === 'device') { playDevice(); return; }
-    audio.play().catch(err => status('Unable to start: ' + (err?.message || 'check the connection and tap play again.')));
-  });
-  $('device-pause').addEventListener('click', toggleDevicePause);
-  $('device-stop').addEventListener('click', () => { stopDevice(); status('Device speech stopped.'); });
-  audio.addEventListener('playing', () => {
-    if (mode() === 'recorded') status('Playing recorded MP3. You can try locking your phone.');
-  });
-  audio.addEventListener('pause', () => {
-    if (mode() === 'recorded' && audio.currentTime && audio.currentTime < audio.duration) status('Paused. Press Play to continue.');
-  });
-  audio.addEventListener('ended', () => {
-    if (mode() === 'recorded') status('Session completed. Choose another session or enable Repeat.');
-  });
-  audio.addEventListener('error', () => {
-    if (mode() === 'recorded') status('Recording unavailable. Check that the GitHub audio-generation workflow succeeded.');
-  });
-  try { $('voice-source').value = localStorage.getItem(SOURCE_PREF) === 'device' ? 'device' : 'recorded'; } catch (e) {}
-  refreshGermanVoices();
-  if (speechAvailable()) {
-    if (typeof speechSynthesis.addEventListener === 'function') speechSynthesis.addEventListener('voiceschanged', refreshGermanVoices);
-    else speechSynthesis.onvoiceschanged = refreshGermanVoices;
-  }
-  setTimeout(refreshGermanVoices, 600);
-  // Load the small text dataset ahead of the Play gesture (important on mobile).
-  loadDeviceCards().catch(() => {});
-  fetch(new URL('30min-sessions.json', location.href), {cache:'no-store'})
-    .then(r => { if (!r.ok) throw Error(`HTTP ${r.status}`); return r.json(); })
-    .then(data => {
-      sessions = data.sessions || [];
-      if (!sessions.length) throw Error('No recorded sessions in manifest');
-      $('collection').replaceChildren(new Option('All available collections','all'),
-        ...Object.entries(labels).map(([v,t]) => new Option(t,v)));
-      populate();
-    })
-    .catch(err => {
-      status('No sessions yet. Run the 30-minute generation workflow first. (' + err.message + ')');
-      $('session').replaceChildren(new Option('No sessions available',''));
-    });
+ });
+ $('play').addEventListener('click',()=>{
+    if(mode()==='device'){playDevice();return;}
+    audio.play().catch(err=>status('Could not start recording: '+err.message));
+ });
+ $('device-pause').addEventListener('click',togglePause);
+ $('device-stop').addEventListener('click',()=>{stopDevice();status('Device speech stopped.');});
+ $('repeat').addEventListener('change',()=>audio.loop=$('repeat').checked);
+ audio.addEventListener('playing',()=>status(currentAudioDetails()?.legacy?'Playing existing MP3 (fixed German speed).':'Playing uninterrupted MP3 · German '+speed()+'%, English 100%.'));
+ audio.addEventListener('pause',()=>{if(mode()==='recorded'&&audio.currentTime&&audio.currentTime<audio.duration)status('Paused. Press Play to resume.');});
+ audio.addEventListener('ended',()=>{if(mode()==='recorded')status('Session completed. Select another or enable Repeat.');});
+ audio.addEventListener('error',()=>{if(mode()==='recorded')status('Could not load this recording. Check GitHub Actions and Pages deployment.');});
+ try{
+   const s=localStorage.getItem(sourceKey);$('voice-source').value=s==='device'?'device':'recorded';
+   const r=localStorage.getItem(rateKey);const p=String(Math.round(Number(r)*100));
+   if(speedOptions.includes(p))$('german-speed').value=p;
+ }catch(e){}
+ refreshGermanVoices();
+ if(deviceSupported()){
+    if(speechSynthesis.addEventListener)speechSynthesis.addEventListener('voiceschanged',refreshGermanVoices);
+    else speechSynthesis.onvoiceschanged=refreshGermanVoices;
+ }
+ setTimeout(refreshGermanVoices,750);
+ loadDeviceCards().catch(()=>{});
+ fetch(new URL('30min-sessions.json',location.href),{cache:'no-store'})
+   .then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json();})
+   .then(data=>{
+     sessions=data.sessions||[];
+     if(!sessions.length)throw Error('No listening sessions');
+     $('collection').replaceChildren(new Option('All available collections','all'),...Object.entries(labels).map(([v,n])=>new Option(n,v)));
+     populate();
+     currentAudioSession=currentAudioDetails();
+   }).catch(err=>status('Session list unavailable: '+err.message));
+ // Keep selected timeline synchronized when the user changes collection or session.
+ $('session').addEventListener('change',()=>{currentAudioSession=currentAudioDetails();});
+ $('collection').addEventListener('change',()=>{currentAudioSession=currentAudioDetails();});
 })();
 </script>
 </body></html>
