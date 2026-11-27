@@ -113,6 +113,13 @@ def main():
     if len(manifest['collections'].get('lookalikes',[]))!=500:
         raise ValueError('Generate 1000 missing Victoria clips before rebuilding the full 30-minute sessions')
     voice=PiperVoice.load(str((ROOT/'en_US-lessac-medium.onnx').resolve()))
+    # Also publish the precise source card text used by the optional device-voice player.
+    # This never modifies vocabulary or learning progress.
+    device_cards={group:[{field:card[field] for field in ('en','de','exampleEn','example')}
+                         for card in cards] for group,cards in source.items()}
+    (ROOT/'listening'/'30min-device-cards.json').write_text(
+        json.dumps({'version':1,'cards':device_cards},ensure_ascii=False,separators=(',',':'))+'\n',
+        encoding='utf-8')
     sessions=[]
     for group,cards in source.items():
         cache={}

@@ -7,7 +7,8 @@ from __future__ import annotations
 
 from pathlib import Path
 import re
-from generate_listening_mp3 import ROOT
+import json
+from generate_listening_mp3 import ROOT, GROUP_SOURCES, load_cards
 
 
 def replace_or_assert(source, old, new, label):
@@ -44,43 +45,47 @@ def patch_index():
  player.preservesPitch=true;
  recordingPlayer=player;"""
     html=replace_or_assert(html,old,new,'individual male playback speed')
+    # Device German uses the same half-speed setting, with English unchanged.
+    html=replace_or_assert(html,'utterance.rate=.80;', 'utterance.rate=.50;', 'device German speaking rate')
     path.write_text(html,encoding='utf-8')
 
 
 def patch_long_player():
     path=ROOT/'listening'/'30-minute.html'
     html=path.read_text(encoding='utf-8')
-    old='<label for="speed">Playback speed</label>'
-    new='<label for="speed">Overall playback speed (both languages)</label>'
-    html=replace_or_assert(html,old,new,'overall playback label')
-    note='''<p class="note" id="german-pace-note"><strong>English is at its original speed.</strong>
- Existing male German recordings are 50% slower (half speed), with pitch preserved;
- new Victoria German clips are also 50% slower (half speed). Overall playback speed
- changes both languages, so leave it at Normal (1×).</p>'''
-    if 'id="german-pace-note"' in html:
-        # Replace any prior 20%-slower note with a truthful new one.
-        html,count=re.subn(r'<p class="note" id="german-pace-note">.*?</p>',note,html,count=1,flags=re.S)
-        if count!=1: raise ValueError('Could not update old pace note')
-    else:
-        needle='<label class="check"><input type="checkbox" id="repeat">'
-        html=replace_or_assert(html,needle,note+'\n'+needle,'new pace note')
-    # Invalidate old audio30 URLs even on devices with persistent saved MP3s.
-    old='const url = new URL(s.file, base).href;'
-    new="const url = new URL(s.file, base).href + '?voices=victoria-and-thorsten-50pct-v1';"
-    html=replace_or_assert(html,old,new,'long MP3 cache bust')
-    path.write_text(html,encoding='utf-8')
+    # The listening UI is a standalone file uploaded with this package.
+    # Require it so that we never silently deploy only one of the two voice choices.
+    if 'id="voice-source"' not in html or 'id="german-device-voice"' not in html:
+        raise ValueError('Upload the NEW listening/30-minute.html from this package to add recorded/device options')
+    if 'Device voices use English at 1× and German at 0.5×' not in html:
+        raise ValueError('The listening page has an unexpected device-voice configuration')
+    # Keep the new page unchanged: it already includes a cache-busted recorded MP3 URL.
+    print('Listening player contains both recorded and device voice selections.')
+
+
+def write_device_cards():
+    """Save exact text for the device voice option in long listening sessions."""
+    html=(ROOT/'index.html').read_text(encoding='utf-8')
+    groups={g:load_cards(html,name) for g,name in GROUP_SOURCES.items()}
+    if sum(len(x) for x in groups.values())!=1300:
+        raise ValueError('Unexpected card count while preparing device-listening text')
+    fields=('en','de','exampleEn','example')
+    cards={g:[{field:card[field] for field in fields} for card in rows] for g,rows in groups.items()}
+    file=ROOT/'listening'/'30min-device-cards.json'
+    file.write_text(json.dumps({'version':1,'cards':cards},ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
+    print(f'Created device-listening dataset for {sum(len(x) for x in cards.values())} cards.')
 
 
 def patch_cache():
     path=ROOT/'sw.js'
     text=path.read_text(encoding='utf-8')
-    text,count=re.subn(r"const CACHE_NAME = 'wortspiel-pwa-[^']+';", "const CACHE_NAME = 'wortspiel-pwa-v26-victoria-50pct';",text,count=1)
+    text,count=re.subn(r"const CACHE_NAME = 'wortspiel-pwa-[^']+';", "const CACHE_NAME = 'wortspiel-pwa-v27-dual-source-50pct';",text,count=1)
     if count!=1:raise ValueError('Could not update PWA cache name')
     path.write_text(text,encoding='utf-8')
 
 
 def main():
-    patch_index();patch_long_player();patch_cache()
+    patch_index();patch_long_player();write_device_cards();patch_cache()
     print('Updated individual clips, playback speed, the 30-minute player and PWA cache.')
 
 if __name__=='__main__':main()

@@ -15,7 +15,7 @@ h1{font-size:clamp(29px,6.6vw,41px);margin:0 0 8px;line-height:1.13}h1 span{colo
 label{display:block;color:#e3e9f4;font-size:14px;font-weight:650;margin-bottom:9px}select,button{font:inherit}
 select{width:100%;padding:13px;border-radius:11px;color:#fff;background:#233752;border:1px solid #57718e;margin-bottom:20px}
 button{border:0;border-radius:11px;background:#ada3ff;color:#152039;font-weight:750;padding:13px 20px;cursor:pointer;width:100%;margin-bottom:16px}
-button:disabled{opacity:.5;cursor:default}audio{display:block;width:100%;margin:2px 0 14px}
+button:disabled{opacity:.5;cursor:default}audio{display:block;width:100%;margin:2px 0 14px}[hidden]{display:none!important}#device-actions{display:flex;gap:10px}#device-actions button{width:50%}#refresh-voices{font-size:13px;background:#516782;color:#fff;padding:7px 12px;width:auto}#voice-availability{font-size:12px;color:#b1c6df;margin:0 0 12px}
 .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 0 12px}.row label{margin:0}.row select{width:auto;margin:0;padding:7px}
 .check{display:flex;align-items:center;gap:10px;font-weight:500;cursor:pointer}.check input{width:19px;height:19px;accent-color:#ada3ff}
 #status{color:#c3d0e3;font-size:14px;min-height:25px;margin:8px 0}.note{font-size:14px;color:#aabed2;line-height:1.55}
@@ -32,15 +32,23 @@ button:disabled{opacity:.5;cursor:default}audio{display:block;width:100%;margin:
 <select id="collection"><option value="all">All available collections</option></select>
 <label for="session">30+ minute session</label>
 <select id="session" disabled><option>Loading recordings…</option></select>
-<button id="play" type="button" disabled>▶ Play 30+ minute recording</button>
+<label for="voice-source">German voice source</label>
+<select id="voice-source"><option value="recorded">Recorded German · Thorsten / Victoria</option><option value="device">Phone / computer German voice</option></select>
+<div id="device-settings" hidden>
+<label for="german-device-voice">Choose your device's German voice</label>
+<select id="german-device-voice"><option>Checking installed voices…</option></select>
+<p id="voice-availability"></p><button id="refresh-voices" type="button">↻ Refresh device voices</button>
+<p class="note">Device voices use English at 1× and German at 0.5×, but may stop when the screen locks. For screen-locked listening, choose Recorded German.</p>
+</div>
+<button id="play" type="button" disabled>▶ Play recorded 30+ minutes</button>
 <audio id="audio" controls preload="metadata" aria-label="WortFlip continuous listening"></audio>
-<div class="row"><label for="speed">Overall playback speed (both languages)</label><select id="speed"><option value="0.85">Slow · 0.85×</option><option value="1" selected>Normal · 1×</option><option value="1.15">Faster · 1.15×</option></select></div>
-<p class="note" id="german-pace-note"><strong>German is recorded about 20% slower.</strong> English stays at its original speed. Leave overall playback at Normal (1×) to hear this balance; the speed menu changes both languages.</p>
-<label class="check"><input type="checkbox" id="repeat"> Repeat this recording continuously</label>
+<div id="device-actions" hidden><button type="button" id="device-pause" disabled>⏸ Pause</button><button type="button" id="device-stop" disabled>■ Stop</button></div>
+<div class="row" id="speed-row"><label for="speed">Overall recorded playback speed (both languages)</label><select id="speed"><option value="0.85">Slow · 0.85×</option><option value="1" selected>Normal · 1×</option><option value="1.15">Faster · 1.15×</option></select></div>
+<label class="check"><input type="checkbox" id="repeat"> Repeat this session continuously</label>
 <p id="status" role="status" aria-live="polite">Preparing your audio list…</p>
 <a id="download" class="download" hidden download>⬇ Download this session as MP3</a>
 </section>
-<p class="note">For reliable listening with your phone locked, use the play button here, then lock the phone. Headphones and background playback depend on phone/browser settings. These prerecorded sessions include all cards in each collection; CEFR and learned/difficult filters are available only in the main app’s device-voice mode. No learning ratings are changed.</p>
+<p class="note" id="german-pace-note"><strong>English is at its original speed.</strong> In recorded mode, the existing German male voice and new Victoria voice are each 50% slower, with pitch preservation. Leave Overall recorded playback speed at Normal (1×). In device mode, English is 1× and the selected German device voice is 0.5×. Recordings are more reliable for background and locked-screen listening. Your progress is unchanged.</p>
 </main>
 <script>
 'use strict';
@@ -48,57 +56,290 @@ button:disabled{opacity:.5;cursor:default}audio{display:block;width:100%;margin:
   const $ = id => document.getElementById(id);
   const audio = $('audio');
   const base = new URL('../', location.href);
-  const labels = {lookalikes:'English lookalikes', everyday:'Everyday expressions', nouns:'Practical nouns', speaking:'Conversational nouns', verbs:'Everyday verbs'};
+  const labels = {
+    lookalikes: 'English lookalikes', everyday: 'Everyday expressions',
+    nouns: 'Practical nouns', speaking: 'Conversational nouns', verbs: 'Everyday verbs'
+  };
+  const SOURCE_PREF = 'wortspiel-audio-mode-v1'; // Shared with WortFlip flashcards.
+  const VOICE_PREF = 'wortspiel-german-voice-v1'; // Shared device-voice preference.
   let sessions = [];
+  let deviceCards = null;
+  let deviceCardsPromise = null;
+  let availableGermanVoices = [];
+  let deviceRun = 0;
+  let devicePlaying = false;
+  let devicePaused = false;
   const status = s => $('status').textContent = s;
+  const current = () => sessions.find(s => s.id === $('session').value);
+  const mode = () => $('voice-source').value;
+  const voiceKey = v => (v.voiceURI || v.name) + '|' + v.lang;
+  const speechAvailable = () => 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
   function updateMediaSession(session) {
     if (!('mediaSession' in navigator) || !('MediaMetadata' in window)) return;
     try {
-      navigator.mediaSession.metadata = new MediaMetadata({title:session.label, artist:'WortFlip', album:'30+ Minute German Listening'});
-      navigator.mediaSession.setActionHandler('play', () => audio.play().catch(()=>{}));
-      navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-      navigator.mediaSession.setActionHandler('seekbackward', () => {audio.currentTime = Math.max(0, audio.currentTime - 15);});
-      navigator.mediaSession.setActionHandler('seekforward', () => {audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + 15);});
-    } catch(e) { /* Native controls are still available. */ }
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: session.label, artist: 'WortFlip', album: '30+ Minute German Listening'
+      });
+      // Media controls work reliably for the uninterrupted recorded MP3.
+      navigator.mediaSession.setActionHandler('play', () => {
+        if (mode() === 'recorded') audio.play().catch(() => {});
+      });
+      navigator.mediaSession.setActionHandler('pause', () => {
+        if (mode() === 'recorded') audio.pause();
+      });
+      navigator.mediaSession.setActionHandler('seekbackward', () => {
+        if (mode() === 'recorded') audio.currentTime = Math.max(0, audio.currentTime - 15);
+      });
+      navigator.mediaSession.setActionHandler('seekforward', () => {
+        if (mode() === 'recorded') audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + 15);
+      });
+    } catch (e) { /* Native controls are still available. */ }
   }
-  const current = () => sessions.find(s => s.id === $('session').value);
+  function refreshGermanVoices() {
+    const voiceSelect = $('german-device-voice');
+    let voices = [];
+    if (speechAvailable()) {
+      try { voices = speechSynthesis.getVoices() || []; } catch (e) {}
+    }
+    availableGermanVoices = voices.filter(v => /^de(?:[-_]|$)/i.test(v.lang || ''));
+    const preferred = (() => { try { return localStorage.getItem(VOICE_PREF) || ''; } catch (e) { return ''; } })();
+    const previous = voiceSelect.value || preferred;
+    voiceSelect.replaceChildren(...availableGermanVoices.map(v =>
+      new Option(`${v.name} · ${v.lang}${v.localService ? ' · installed' : ''}`, voiceKey(v))
+    ));
+    if (availableGermanVoices.length) {
+      const target = availableGermanVoices.find(v => voiceKey(v) === previous)
+        || availableGermanVoices.find(v => voiceKey(v) === preferred)
+        || availableGermanVoices[0];
+      voiceSelect.value = voiceKey(target);
+      voiceSelect.disabled = false;
+      $('voice-availability').textContent = 'German device voice available. English uses a normal-speed English device voice.';
+    } else {
+      voiceSelect.replaceChildren(new Option('No German device voice available', ''));
+      voiceSelect.disabled = true;
+      $('voice-availability').textContent = 'Your browser has no German speech voice. Install one in your system or use Recorded German.';
+    }
+    if (mode() === 'device') updateControls();
+  }
+  function stopDevice() {
+    deviceRun += 1;
+    devicePlaying = false;
+    devicePaused = false;
+    if (speechAvailable()) {
+      try { speechSynthesis.cancel(); } catch (e) {}
+    }
+    $('device-pause').textContent = '⏸ Pause';
+    updateControls();
+  }
+  function updateControls() {
+    const recorded = mode() === 'recorded';
+    $('audio').hidden = !recorded;
+    $('speed-row').hidden = !recorded;
+    $('download').hidden = !recorded || !current();
+    $('device-settings').hidden = recorded;
+    $('device-actions').hidden = recorded;
+    $('play').textContent = recorded ? '▶ Play recorded 30+ minutes' : '▶ Play using device voices';
+    $('play').disabled = !current() || (!recorded && (!speechAvailable() || !availableGermanVoices.length));
+    $('device-pause').disabled = !devicePlaying;
+    $('device-stop').disabled = !devicePlaying;
+  }
   function chooseSession() {
-    const s = current();
+    stopDevice();
     audio.pause();
-    if(!s) {audio.removeAttribute('src'); $('play').disabled=true; $('download').hidden=true;return;}
-    const url = new URL(s.file, base).href;
+    const s = current();
+    if (!s) {
+      audio.removeAttribute('src');
+      updateControls();
+      return;
+    }
+    const url = new URL(s.file, base).href + '?voices=victoria-thorsten-50pct-v2';
     audio.src = url;
-    audio.playbackRate = Number($('speed').value);
-    $('play').disabled = false;
-    $('download').href = url; $('download').hidden = false;
-    status(`${s.minutes} minutes · ${s.cards} card repetitions. Ready to play.`);
+    audio.playbackRate = Number($('speed').value) || 1;
+    audio.preservesPitch = true;
+    $('download').href = url;
+    updateControls();
+    status(`${s.minutes} minutes · ${s.cards} card repetitions. ${mode() === 'recorded' ? 'Recorded audio ready.' : 'Device voices ready; keep the screen awake.'}`);
     updateMediaSession(s);
   }
   function populate() {
-    const group=$('collection').value;
-    const choices=sessions.filter(s=>group==='all'||s.group===group);
-    $('session').replaceChildren(...choices.map(s=>new Option(`${s.label} · ${s.minutes} min`, s.id)));
+    const group = $('collection').value;
+    const choices = sessions.filter(s => group === 'all' || s.group === group);
+    const old = $('session').value;
+    $('session').replaceChildren(...choices.map(s => new Option(`${s.label} · ${s.minutes} min`, s.id)));
+    if (choices.some(s => s.id === old)) $('session').value = old;
     $('session').disabled = !choices.length;
     chooseSession();
   }
-  $('collection').addEventListener('change',populate);
-  $('session').addEventListener('change',chooseSession);
-  $('speed').addEventListener('change',()=>audio.playbackRate=Number($('speed').value));
-  $('repeat').addEventListener('change',()=>audio.loop=$('repeat').checked);
-  $('play').addEventListener('click',()=>audio.play().catch(err=>status('Unable to start: '+(err?.message || 'check the connection and tap play again.'))));
-  audio.addEventListener('playing',()=>status('Playing. You can now lock the phone; this MP3 is one continuous recording.'));
-  audio.addEventListener('pause',()=>{if(audio.currentTime&&audio.currentTime<audio.duration)status('Paused. Press Play to continue.');});
-  audio.addEventListener('ended',()=>status('Session completed. Choose another session or enable Repeat.'));
-  audio.addEventListener('error',()=>status('This recording is not available yet. Check that the GitHub audio-generation workflow succeeded.'));
-  fetch(new URL('30min-sessions.json',location.href), {cache:'no-store'})
-    .then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json();})
-    .then(data=>{
-      sessions=data.sessions||[];
-      if(!sessions.length)throw Error('No sessions in manifest');
-      $('collection').replaceChildren(new Option('All available collections','all'), ...Object.entries(labels).map(([v,t])=>new Option(t,v)));
+  async function loadDeviceCards() {
+    if (deviceCards) return deviceCards;
+    if (!deviceCardsPromise) {
+      deviceCardsPromise = fetch(new URL('30min-device-cards.json', location.href))
+        .then(r => { if (!r.ok) throw Error(`HTTP ${r.status}`); return r.json(); })
+        .then(data => {
+          if (!data || !data.cards) throw Error('Device voice cards are missing');
+          deviceCards = data.cards;
+          return deviceCards;
+        }).finally(() => { deviceCardsPromise = null; });
+    }
+    return deviceCardsPromise;
+  }
+  function entriesForSession(s, all) {
+    const cards = all[s.group] || [];
+    const begin = s.first_card - 1;
+    const end = s.last_new_card;
+    if (!cards.length || begin < 0 || end < begin || end > cards.length) throw Error('Invalid session card range');
+    const entries = cards.slice(begin, end);
+    for (let i = 0; i < s.repeated_cards; i++) entries.push(cards[i % cards.length]);
+    if (entries.length !== s.cards) throw Error('Session/card mismatch; rebuild the 30-minute recordings');
+    return entries;
+  }
+  function pickDeviceVoice(lang) {
+    const voices = speechSynthesis.getVoices() || [];
+    if (lang === 'de') return availableGermanVoices.find(v => voiceKey(v) === $('german-device-voice').value) || null;
+    const english = voices.filter(v => /^en(?:[-_]|$)/i.test(v.lang || ''));
+    return english.find(v => v.localService && /^en[-_]US$/i.test(v.lang || '')) || english[0] || null;
+  }
+  function waitFor(ms, run) {
+    return new Promise(resolve => {
+      let remaining = ms;
+      function tick() {
+        if (run !== deviceRun) { resolve(); return; }
+        if (devicePaused) { setTimeout(tick, 100); return; }
+        if (remaining <= 0) { resolve(); return; }
+        const step = Math.min(remaining, 100);
+        remaining -= step;
+        setTimeout(tick, step);
+      }
+      tick();
+    });
+  }
+  function speakPart(text, lang, run) {
+    return new Promise(resolve => {
+      if (run !== deviceRun) { resolve(); return; }
+      let finished = false;
+      const finish = () => { if (!finished) { finished = true; resolve(); } };
+      try {
+        const utterance = new SpeechSynthesisUtterance(String(text || ''));
+        utterance.lang = lang === 'de' ? 'de-DE' : 'en-US';
+        utterance.rate = lang === 'de' ? 0.5 : 1;
+        const voice = pickDeviceVoice(lang);
+        if (voice) utterance.voice = voice;
+        utterance.onend = finish;
+        utterance.onerror = finish;
+        speechSynthesis.speak(utterance);
+      } catch (e) { finish(); }
+    });
+  }
+  async function playDevice() {
+    if (devicePlaying) {
+      if (devicePaused) toggleDevicePause();
+      return;
+    }
+    if (!speechAvailable() || !availableGermanVoices.length) {
+      status('No German device speech voice available. Choose Recorded German or install a German system voice.');
+      return;
+    }
+    const s = current();
+    if (!s) return;
+    audio.pause();
+    const requestedRun = deviceRun;
+    let cards;
+    try {
+      cards = entriesForSession(s, await loadDeviceCards());
+    } catch (e) {
+      status(`Device listening cards unavailable: ${e.message}. Run the Victoria generation workflow (all).`);
+      return;
+    }
+    // Stop/race guard: changing the session while cards load invalidates the run.
+    if (requestedRun !== deviceRun || s !== current() || mode() !== 'device') return;
+    stopDevice();
+    const run = deviceRun;
+    devicePlaying = true;
+    updateControls();
+    status('Playing with device voices: English 1.0×, German 0.5×. Keep the screen awake.');
+    do {
+      for (let i = 0; i < cards.length && run === deviceRun; i++) {
+        const c = cards[i];
+        for (const [field, lang, gap] of [
+          ['en', 'en', 2500], ['de', 'de', 700],
+          ['exampleEn', 'en', 2500], ['example', 'de', 1150]
+        ]) {
+          if (run !== deviceRun) break;
+          while (devicePaused && run === deviceRun) await waitFor(100, run);
+          if (run !== deviceRun) break;
+          status(`Device voices · card ${i + 1} of ${cards.length} · ${lang === 'de' ? 'German 0.5×' : 'English 1.0×'}`);
+          await speakPart(c[field], lang, run);
+          if (run !== deviceRun) break;
+          await waitFor(gap, run);
+        }
+      }
+    } while (run === deviceRun && $('repeat').checked);
+    if (run === deviceRun) {
+      devicePlaying = false;
+      updateControls();
+      status('Device-voice session complete.');
+    }
+  }
+  function toggleDevicePause() {
+    if (!devicePlaying) return;
+    devicePaused = !devicePaused;
+    try { devicePaused ? speechSynthesis.pause() : speechSynthesis.resume(); } catch (e) {}
+    $('device-pause').textContent = devicePaused ? '▶ Resume' : '⏸ Pause';
+    status(devicePaused ? 'Device speech paused.' : 'Playing with device voices.');
+  }
+  $('collection').addEventListener('change', populate);
+  $('session').addEventListener('change', chooseSession);
+  $('voice-source').addEventListener('change', () => {
+    try { localStorage.setItem(SOURCE_PREF, mode()); } catch (e) {}
+    chooseSession();
+  });
+  $('german-device-voice').addEventListener('change', () => {
+    try { localStorage.setItem(VOICE_PREF, $('german-device-voice').value); } catch (e) {}
+    if (devicePlaying) stopDevice();
+  });
+  $('refresh-voices').addEventListener('click', refreshGermanVoices);
+  $('speed').addEventListener('change', () => audio.playbackRate = Number($('speed').value) || 1);
+  $('repeat').addEventListener('change', () => audio.loop = $('repeat').checked);
+  $('play').addEventListener('click', () => {
+    if (mode() === 'device') { playDevice(); return; }
+    audio.play().catch(err => status('Unable to start: ' + (err?.message || 'check the connection and tap play again.')));
+  });
+  $('device-pause').addEventListener('click', toggleDevicePause);
+  $('device-stop').addEventListener('click', () => { stopDevice(); status('Device speech stopped.'); });
+  audio.addEventListener('playing', () => {
+    if (mode() === 'recorded') status('Playing recorded MP3. You can try locking your phone.');
+  });
+  audio.addEventListener('pause', () => {
+    if (mode() === 'recorded' && audio.currentTime && audio.currentTime < audio.duration) status('Paused. Press Play to continue.');
+  });
+  audio.addEventListener('ended', () => {
+    if (mode() === 'recorded') status('Session completed. Choose another session or enable Repeat.');
+  });
+  audio.addEventListener('error', () => {
+    if (mode() === 'recorded') status('Recording unavailable. Check that the GitHub audio-generation workflow succeeded.');
+  });
+  try { $('voice-source').value = localStorage.getItem(SOURCE_PREF) === 'device' ? 'device' : 'recorded'; } catch (e) {}
+  refreshGermanVoices();
+  if (speechAvailable()) {
+    if (typeof speechSynthesis.addEventListener === 'function') speechSynthesis.addEventListener('voiceschanged', refreshGermanVoices);
+    else speechSynthesis.onvoiceschanged = refreshGermanVoices;
+  }
+  setTimeout(refreshGermanVoices, 600);
+  // Load the small text dataset ahead of the Play gesture (important on mobile).
+  loadDeviceCards().catch(() => {});
+  fetch(new URL('30min-sessions.json', location.href), {cache:'no-store'})
+    .then(r => { if (!r.ok) throw Error(`HTTP ${r.status}`); return r.json(); })
+    .then(data => {
+      sessions = data.sessions || [];
+      if (!sessions.length) throw Error('No recorded sessions in manifest');
+      $('collection').replaceChildren(new Option('All available collections','all'),
+        ...Object.entries(labels).map(([v,t]) => new Option(t,v)));
       populate();
     })
-    .catch(err=>{status('No recorded sessions yet. The generation workflow must be run first. ('+err.message+')');$('session').replaceChildren(new Option('Recordings not yet generated',''));});
+    .catch(err => {
+      status('No sessions yet. Run the 30-minute generation workflow first. (' + err.message + ')');
+      $('session').replaceChildren(new Option('No sessions available',''));
+    });
 })();
 </script>
 </body></html>
