@@ -1,0 +1,261 @@
+name: Unify WortFlip listening into one app screen
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unify_listening:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out WortFlip
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Combine voice controls and A1-C1 listening in the app
+        run: |
+          python3 - <<'PY'
+          #!/usr/bin/env python3
+          """Merge WortFlip's long and CEFR-filtered listening experiences into one in-app screen.
+
+          Only index.html, listening/30-minute.html, and sw.js are edited. Existing audio,
+          card data, progress storage, and lesson metadata are untouched.
+          """
+          from pathlib import Path
+          import re
+
+          # Run from repository root in GitHub Actions.
+          main_path = Path('index.html')
+          player_path = Path('listening/30-minute.html')
+          sw_path = Path('sw.js')
+          html = main_path.read_text(encoding='utf-8')
+          listen = player_path.read_text(encoding='utf-8')
+          sw = sw_path.read_text(encoding='utf-8')
+          marker = 'wortflip-unified-listening-v1'
+          if marker not in html:
+              essentials = ['id="listening-screen"', 'id="listen-cefr"', 'id="listen-progress"',
+                            'id="listen-toggle"', 'id="listen-speed"', 'id="listen-long-session-link"',
+                            'id="cefr-level"', 'id="listen-play"']
+              absent = [x for x in essentials if x not in html]
+              if absent:
+                  raise SystemExit('Main listening page is not the expected version: ' + ', '.join(absent))
+              if not all(x in listen for x in ('id="voice-source"', 'id="german-device-voice"', 'id="german-speed"')):
+                  raise SystemExit('The 30-minute player does not have the four-speed voice settings. Not changing anything.')
+              # The long player is embedded in the EXISTING app instead of being a separate destination.
+              start = html.index('<div id="listen-long-session-link"')
+              finish = html.index('<div class="listen-grid">', start)
+              long_panel = '''<!-- wortflip-unified-listening-v1: one screen for continuous and level-filtered learning -->
+          <div id="listen-long-session-link" class="listen-unified-long">
+            <h3>🎧 Continuous listening · 30+ minutes</h3>
+            <p>Choose recorded or phone/computer German, select a voice, and set German to 100%, 80%, 60%, or 40%. English stays at 100%.</p>
+            <iframe id="listen-long-iframe" class="listen-unified-frame" src="./listening/30-minute.html?embedded=1" title="WortFlip 30-minute listening with German voices and independent speed controls" loading="eager" allow="autoplay"></iframe>
+          </div>
+          <details id="listen-by-level-details" class="listen-by-level-details">
+          <summary>🎯 Listen by level (A1–C1), topic or review status</summary>
+          <p class="listen-unified-explain">Choose words by difficulty or learning progress. German-only speed adjustment uses your selected device voice here. The continuous recorded sessions above have all four German speed versions for locked-screen listening.</p>
+          '''
+              html = html[:start] + long_panel + html[finish:]
+              start = html.index('<details id="listen-by-level-details"')
+              end = html.index('</section>', start)
+              oldblock = html[start:end]
+              if oldblock.count('class="listen-notice"') != 1 or oldblock.count('</details>'):
+                  raise SystemExit('Unexpected end of original CEFR listening section')
+              html = html[:end] + '</details>\n' + html[end:]
+              # Keep the existing level filters, with the same voice source and speeds.
+              options_pattern = r'<div class="listen-options">.*?</div>'
+              new_options = '''<div class="listen-options">
+          <label>German voice source <select id="listen-voice-source"><option value="device" selected>Phone / computer's German voice</option><option value="recorded">Existing short-lesson MP3 (fixed speed)</option></select></label>
+          <label>German speaking speed (English 100%) <select id="listen-speed"><option value="1" selected>100% · Natural</option><option value="0.8">80% · Slightly slower</option><option value="0.6">60% · Slower</option><option value="0.4">40% · Very slow</option></select></label>
+          <label>Choose German device voice <select id="listen-german-device-voice" aria-label="Choose German device voice for level-filtered lessons"><option value="">Checking voices…</option></select></label>
+          <label><input id="listen-continue" type="checkbox" checked> Continue to next lesson</label>
+          </div>'''
+              html, count = re.subn(options_pattern, lambda m: new_options, html, count=1, flags=re.S)
+              if count != 1:
+                  raise SystemExit('Could not locate level-listening options')
+              # Change the Listen button back to an in-app action. Honor old #listen-by-level bookmarks.
+              toggle_start = html.index("L('listen-toggle').addEventListener('click'", html.index('function toggleScreen(on)'))
+              toggle_end = html.index("L('listen-back').addEventListener", toggle_start)
+              replace_toggle = '''L('listen-toggle').addEventListener('click',()=>toggleScreen(screen.hidden));
+           if(location.hash==='#listen-by-level'){
+             toggleScreen(true);
+             L('listen-by-level-details').open=true;
+             setTimeout(()=>L('listen-by-level-details').scrollIntoView({block:'start'}),90);
+           }
+           const unifiedFrame=L('listen-long-iframe');
+           const sendLongStop=()=>unifiedFrame?.contentWindow?.postMessage({type:'wortflip-long-stop'},location.origin);
+           window.addEventListener('message',e=>{
+             if(e.origin!==location.origin||e.source!==unifiedFrame.contentWindow||!e.data||typeof e.data!=='object')return;
+             if(e.data.type==='wortflip-listen-height'){
+               const n=Number(e.data.height);
+               if(Number.isFinite(n))unifiedFrame.style.height=Math.max(550,Math.min(2300,Math.ceil(n+10)))+'px';
+             }else if(e.data.type==='wortflip-long-started'){
+               stop();
+               L('listen-by-level-details').open=false;
+             }else if(e.data.type==='wortflip-open-level'){
+               sendLongStop();
+               L('listen-by-level-details').open=true;
+               L('listen-by-level-details').scrollIntoView({behavior:'smooth',block:'start'});
+             }
+           });
+           L('listen-by-level-details').addEventListener('toggle',()=>{if(L('listen-by-level-details').open)sendLongStop();});
+           '''
+              html = html[:toggle_start] + replace_toggle + html[toggle_end:]
+              # Hide the long-running iframe playback whenever the entire listening screen closes.
+              assert html.count('if(!on)stop();') == 1, 'Expected one toggleScreen stop point'
+              html = html.replace('if(!on)stop();', '''if(!on){stop();const f=L('listen-long-iframe');f?.contentWindow?.postMessage({type:'wortflip-long-stop'},location.origin);}''', 1)
+              # Device speech only: EN 100%, DE according to 4-speed selector.
+              old_rate = "const speed=Number(L('listen-speed').value)||1;utterance.rate=Math.max(.65,Math.min(1.25,speed*(lang==='de'?.85:.94)));"
+              new_rate = "const speed=Number(L('listen-speed').value)||1;utterance.rate=lang==='de'?speed:1;"
+              assert html.count(old_rate)==1,'Expected one original device-listening speed assignment'
+              html=html.replace(old_rate,new_rate,1)
+              old_voice = "return matched.find(v=>v.localService&&String(v.lang||'').toLowerCase()===(lang==='de'?'de-de':'en-us'))||matched[0]||null;"
+              new_voice = '''const preferred=lang==='de' ? L('listen-german-device-voice')?.value : null;
+              return matched.find(v=>lang==='de'&&((v.voiceURI||v.name)+'|'+v.lang)===preferred)
+                 ||matched.find(v=>v.localService&&String(v.lang||'').toLowerCase()===(lang==='de'?'de-de':'en-us'))||matched[0]||null;'''
+              assert html.count(old_voice)==1,'Expected original chooseVoice logic'
+              html=html.replace(old_voice,new_voice,1)
+              # Short recorded lessons include both languages in the same MP3 and cannot be independently slowed.
+              # At slow speeds, use the device voice for level-filtered listening; all four recorded
+              # versions are already available in the continuous listening section.
+              old_play = 'function playSelected(){if(canPlayRecording(current()))playRecording();else playDevice();}'
+              new_play = '''function playSelected(){
+             if(L('listen-voice-source').value==='recorded'&&Number(L('listen-speed').value)===1&&canPlayRecording(current()))playRecording();
+             else playDevice();
+           }'''
+              assert html.count(old_play)==1,'Expected original playSelected'
+              html=html.replace(old_play,new_play,1)
+              old_next = 'if(auto){if(usedDevice||!canPlayRecording(current()))playDevice();else playRecording();}'
+              new_next = "if(auto){if(usedDevice||!canPlayRecording(current())||Number(L('listen-speed').value)!==1||L('listen-voice-source').value==='device')playDevice();else playRecording();}"
+              assert html.count(old_next)==1, 'Expected automatic next lesson logic'
+              html=html.replace(old_next,new_next,1)
+              old_rec_rate = "player.src=url;player.playbackRate=Number(L('listen-speed').value)||1;"
+              assert html.count(old_rec_rate)==1,'Expected short recorded playback assignment'
+              html=html.replace(old_rec_rate,"player.src=url;player.playbackRate=1;",1)
+              old_change="L('listen-speed').addEventListener('change',()=>{if(state.recorded)player.playbackRate=Number(L('listen-speed').value)||1;});"
+              new_change='''L('listen-speed').addEventListener('change',()=>{
+             if(state.recorded&&Number(L('listen-speed').value)!==1){stop();setStatus('Only German is slowed in device mode here. Choose Recorded MP3 above for four-speed 30-minute playback.');}
+           });
+           L('listen-voice-source').addEventListener('change',()=>{stop();lessonReady();});
+           function populateLevelVoices(){
+             const sel=L('listen-german-device-voice');
+             let voices=[];try{voices=speechSynthesis.getVoices().filter(v=>/^de(?:[-_]|$)/i.test(v.lang||''));}catch(e){}
+             const old=sel.value;
+             let preferred='';try{preferred=localStorage.getItem('wortspiel-german-voice-v1')||'';}catch(e){}
+             sel.replaceChildren(...voices.map(v=>new Option(v.name+' · '+v.lang,(v.voiceURI||v.name)+'|'+v.lang)));
+             if(!voices.length){sel.replaceChildren(new Option('No German device voice available',''));sel.disabled=true;return;}
+             sel.disabled=false;
+             if(voices.some(v=>(v.voiceURI||v.name)+'|'+v.lang===old))sel.value=old;
+             else if(voices.some(v=>(v.voiceURI||v.name)+'|'+v.lang===preferred))sel.value=preferred;
+           }
+           L('listen-german-device-voice').addEventListener('change',()=>{
+             try{localStorage.setItem('wortspiel-german-voice-v1',L('listen-german-device-voice').value);}catch(e){}
+             if(state.device)stop();
+           });
+           if('speechSynthesis' in window){
+             if(typeof speechSynthesis.addEventListener==='function')speechSynthesis.addEventListener('voiceschanged',populateLevelVoices);
+             else setTimeout(populateLevelVoices,750);
+           }
+           populateLevelVoices();setTimeout(populateLevelVoices,800);'''
+              assert html.count(old_change)==1,'Expected level speed change listener'
+              html=html.replace(old_change,new_change,1)
+              # The old filters remain; tweak visible wording so their constraints are clear.
+              notice = 'Unfiltered recorded MP3 lessons can play with the phone locked.'
+              assert notice in html,'Expected level listening notice'
+              html=html.replace(notice,'Original recorded short lessons can play with the phone locked at their fixed speed.',1)
+              style = '''<style id="wortflip-unified-listening-styles">
+          .listen-unified-long{border:1px solid var(--border);border-radius:16px;padding:12px;background:var(--bg);margin:12px 0 22px}
+          .listen-unified-long h3{margin:4px 3px 6px;font-size:19px;color:var(--ink)}
+          .listen-unified-long p{margin:4px 3px 12px;color:var(--sub);font-size:13px}
+          .listen-unified-frame{display:block;width:100%;height:880px;max-width:100%;border:0;border-radius:12px;background:#101a2d}
+          .listen-by-level-details{margin:18px 0;padding:16px;border:1px solid var(--border);border-radius:14px}
+          .listen-by-level-details>summary{cursor:pointer;font-size:17px;font-weight:800;color:var(--ink);padding:4px 0}
+          .listen-by-level-details .listen-unified-explain{color:var(--sub);font-size:13px;margin:12px 0}
+          .listen-by-level-details .listen-options{align-items:flex-end}
+          .listen-by-level-details .listen-options>label{display:flex;flex-direction:column;gap:6px;max-width:100%}
+          .listen-by-level-details .listen-options select{max-width:100%;min-width:0}
+          @media(max-width:680px){.listen-unified-long{padding:5px}.listen-by-level-details{padding:10px}}
+          </style>
+          '''
+              assert '</head>' in html
+              html=html.replace('</head>',style+'</head>',1)
+
+              # Only now write the complete changed main file, after ALL assertions.
+              print('Main WortFlip: embedded the continuous listening UI and retained A1–C1 practice filters.')
+          else:
+              print('Main WortFlip already has unified listening; no duplicate changes.')
+
+          embed_marker = 'wortflip-embedded-listening-v1'
+          if embed_marker not in listen:
+              if '</style>' not in listen or '</script>' not in listen or not listen.strip().endswith('</html>'):
+                  raise SystemExit('Unexpected standalone listening page; refusing to alter it')
+              embed_css = '''/* wortflip-embedded-listening-v1 */
+          body.wortflip-embedded{padding:0 0 8px!important;margin:0!important;min-height:0!important;background:transparent!important}
+          body.wortflip-embedded main{max-width:none!important;margin:0!important}
+          body.wortflip-embedded .top,body.wortflip-embedded .mini,body.wortflip-embedded h1,body.wortflip-embedded .intro{display:none!important}
+          body.wortflip-embedded #listen-by-level-link{display:none!important}
+          body.wortflip-embedded .panel{border:0!important;box-shadow:none!important;padding:16px!important;margin:0!important}
+          '''
+              listen=listen.replace('</style>',embed_css+'</style>',1)
+              js = '''
+          // Embedded in the MAIN WortFlip listening screen; the old filtered options are below it.
+          if(new URLSearchParams(location.search).get('embedded')==='1' && window.parent!==window){
+            document.body.classList.add('wortflip-embedded');
+            const notifyParent=(type,extra={})=>window.parent.postMessage({type,...extra},location.origin);
+            const measure=()=>notifyParent('wortflip-listen-height',{height:Math.ceil(document.documentElement.scrollHeight)});
+            const levelLink=document.getElementById('listen-by-level-link');
+            if(levelLink)levelLink.addEventListener('click',e=>{e.preventDefault();notifyParent('wortflip-open-level');});
+            const btn=document.getElementById('play');
+            btn?.addEventListener('click',()=>notifyParent('wortflip-long-started'));
+            audio.addEventListener('playing',()=>notifyParent('wortflip-long-started'));
+            window.addEventListener('message',e=>{
+              if(e.origin!==location.origin||e.source!==window.parent||e.data?.type!=='wortflip-long-stop')return;
+              audio.pause();stopDevice();
+            });
+            if('ResizeObserver' in window)new ResizeObserver(measure).observe(document.body);
+            window.addEventListener('load',measure);
+            setTimeout(measure,300);setTimeout(measure,1200);
+          }
+          '''
+              # Insert inside the final player IIFE, before its closing delimiter.
+              last=listen.rfind('})();')
+              if last < 0:raise SystemExit("Cannot find listening player's final IIFE")
+              listen=listen[:last]+js+listen[last:]
+              print('30-minute player: optimized embedded view, dynamic height, and safe audio switching.')
+          else:
+              print('Embedded player already patched.')
+
+          cache='wortspiel-pwa-v32-unified-listening'
+          if cache not in sw:
+              sw,n=re.subn(r"const CACHE_NAME = 'wortspiel-pwa-[^']+';",f"const CACHE_NAME = '{cache}';",sw,count=1)
+              if n!=1: raise SystemExit('Cannot update service-worker cache version')
+
+          main_path.write_text(html,encoding='utf-8')
+          player_path.write_text(listen,encoding='utf-8')
+          sw_path.write_text(sw,encoding='utf-8')
+          print('Updated only index.html, listening/30-minute.html, sw.js. Original recordings and card ratings remain intact.')
+          PY
+      - name: Check that the unified options and all card filters exist
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          a=Path('index.html').read_text()
+          b=Path('listening/30-minute.html').read_text()
+          for item in ('wortflip-unified-listening-v1','id="listen-cefr"','id="cefr-level"','id="listen-german-device-voice"','id="listen-long-iframe"'):
+              assert item in a, item
+          for item in ('id="voice-source"','id="german-device-voice"','id="german-speed"','wortflip-embedded-listening-v1'):
+              assert item in b, item
+          print('Unified listening controls verified; all existing CEFR filters preserved.')
+          PY
+      - name: Publish only navigation and listening user interface
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html listening/30-minute.html sw.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'Unify WortFlip listening: continuous four-speed voice player and A1-C1 filters'
+            git push
+          else
+            echo 'Unified listening already installed.'
+          fi
