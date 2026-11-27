@@ -10,24 +10,22 @@ permissions:
 jobs:
   make_listening:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 360
     steps:
-      - name: Check out WortFlip
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install original English voice tools
+      - name: Install original English voice and audio tools
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y ffmpeg
           python -m pip install piper-tts==1.8.0
-      - name: Download original English Piper voice only
+      - name: Download original English voice only
         run: python -m piper.download_voices en_US-lessac-medium
-      - name: Build continuous MP3s from existing German recordings at 0.5x
+      - name: Build four uninterrupted MP3 versions with German only at 100/80/60/40 percent
         run: python scripts/generate_30min_listening.py
       - name: Confirm every MP3 is at least 30 minutes
         run: |
@@ -35,23 +33,30 @@ jobs:
           from pathlib import Path
           import json,subprocess
           sessions=json.loads(Path('listening/30min-sessions.json').read_text())['sessions']
-          assert sessions, 'No long recordings generated'
-          for s in sessions:
-              file=Path(s['file'])
-              secs=float(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',str(file)],text=True))
-              assert secs >= 1799.5, (file, secs)
-              print(f'{file}: {secs/60:.1f} minutes')
+          assert sessions
+          count=0
+          for session in sessions:
+              assert set(session['speeds'])=={'100','80','60','40'}
+              for rate,s in session['speeds'].items():
+                  f=Path(s['file'])
+                  secs=float(subprocess.check_output(['ffprobe','-v','error',
+                      '-show_entries','format=duration','-of',
+                      'default=noprint_wrappers=1:nokey=1',str(f)],text=True))
+                  assert secs >= 1799.5,(f,secs)
+                  print(f'{f} ({rate}% German): {secs/60:.1f} min')
+                  count+=1
+          print(f'Validated {count} MP3s')
           PY
-      - name: Save rebuilt long-session MP3s and manifest
+      - name: Publish new continuous recordings and session catalogue
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add listening/audio30/*.mp3 listening/30min-sessions.json listening/30min-device-cards.json
+          git add listening/audio30/speeds listening/30min-sessions.json listening/30min-device-cards.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Rebuild bilingual sessions with half-speed Victoria and Thorsten'
+            git commit -m 'Add four selectable German speeds to long listening sessions'
             git push
           fi
-      - name: Request GitHub Pages refresh
+      - name: Ask Pages to refresh
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

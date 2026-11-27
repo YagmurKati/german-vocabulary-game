@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: Preview eight samples first or generate all 1,000 missing clips
+        description: Preview eight samples at 100% speed, or generate all 1,000 clips
         required: true
         type: choice
         default: preview
@@ -21,22 +21,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 360
     steps:
-      - name: Check out WortFlip
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Install audio conversion tool
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y ffmpeg
-      - name: Start free local KokoroTTS with the German Victoria model
+      - name: Start free Victoria KokoroTTS server
         run: |
-          # An Apache-2.0 free/open model; NO paid APIs, keys or Azure involved.
-          # Versioned immutable tiny image downloads its language weights on first use.
           docker run -d --name wortflip-victoria \
             -e KOKOROTTS_DEVICE=cpu \
             -p 127.0.0.1:7860:7860 \
@@ -46,35 +42,35 @@ jobs:
           for i in range(120):
               try:
                   with urllib.request.urlopen('http://127.0.0.1:7860/health/ready',timeout=5) as r:
-                      if r.status == 200:
-                          print('KokoroTTS ready');break
+                      if r.status==200:
+                          print('Victoria server ready.');break
               except Exception:pass
               time.sleep(5)
-          else: raise SystemExit('KokoroTTS could not start within 10 minutes')
+          else: raise SystemExit('Victoria server not ready within 10 minutes')
           PY
-      - name: Generate the free Victoria German clips
+      - name: Generate the eight samples or all 1,000 at 100% natural speed
         run: python scripts/generate_missing_victoria.py --mode "${{ inputs.mode }}"
-      - name: Downloadable pronunciation samples - preview only
+      - name: Save preview samples for listening (not published)
         if: inputs.mode == 'preview'
         uses: actions/upload-artifact@v4
         with:
-          name: wortflip-victoria-preview
+          name: wortflip-victoria-normal-speed-preview
           path: victoria-preview/*.mp3
           retention-days: 7
-      - name: Update WortFlip player to use both voices at half speed - all only
+      - name: Update flashcards for all 1,300 recorded voices
         if: inputs.mode == 'all'
-        run: python scripts/patch_victoria_playback.py
-      - name: Commit only the 1,000 new recordings, manifest and player updates
+        run: python scripts/prepare_listening.py
+      - name: Publish new Victoria MP3s without replacing existing Thorsten clips
         if: inputs.mode == 'all'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add audio/*.mp3 audio/tracks.json index.html listening/30-minute.html listening/30min-device-cards.json sw.js
+          git add audio/*.mp3 audio/tracks.json index.html sw.js listening/30min-device-cards.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Add free Victoria German voice clips and half-speed German playback'
+            git commit -m 'Add normal-speed Victoria German recordings and four-speed controls'
             git push
           fi
-      - name: Request GitHub Pages refresh
+      - name: Ask Pages to refresh
         if: inputs.mode == 'all'
         continue-on-error: true
         env:
@@ -85,6 +81,6 @@ jobs:
             -H "Authorization: Bearer ${GITHUB_TOKEN}" \
             -H 'X-GitHub-Api-Version: 2022-11-28' \
             "https://api.github.com/repos/${GITHUB_REPOSITORY}/pages/builds"
-      - name: Print server diagnostics if workflow fails
+      - name: Diagnostics if server or generation fails
         if: failure()
         run: docker logs --tail=80 wortflip-victoria || true
