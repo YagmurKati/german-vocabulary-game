@@ -34,7 +34,8 @@ button:disabled{opacity:.5;cursor:default}audio{display:block;width:100%;margin:
 <select id="session" disabled><option>Loading recordings…</option></select>
 <button id="play" type="button" disabled>▶ Play 30+ minute recording</button>
 <audio id="audio" controls preload="metadata" aria-label="WortFlip continuous listening"></audio>
-<div class="row"><label for="speed">Playback speed</label><select id="speed"><option value="0.85">Slow · 0.85×</option><option value="1" selected>Normal · 1×</option><option value="1.15">Faster · 1.15×</option></select></div>
+<div class="row"><label for="speed">Overall playback speed (both languages)</label><select id="speed"><option value="0.85">Slow · 0.85×</option><option value="1" selected>Normal · 1×</option><option value="1.15">Faster · 1.15×</option></select></div>
+<p class="note" id="german-pace-note"><strong>German is recorded about 20% slower.</strong> English stays at its original speed. Leave overall playback at Normal (1×) to hear this balance; the speed menu changes both languages.</p>
 <label class="check"><input type="checkbox" id="repeat"> Repeat this recording continuously</label>
 <p id="status" role="status" aria-live="polite">Preparing your audio list…</p>
 <a id="download" class="download" hidden download>⬇ Download this session as MP3</a>
