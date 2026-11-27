@@ -421,6 +421,13 @@ html[data-theme="dark"] #listen-toggle{background:#2f2950;color:#e8dcff;border-c
   <option value="recorded">Recorded voice (same on every device)</option>
   <option value="device">Device voice</option>
  </select>
+ <label for="german-speed">German speaking speed (English stays normal)</label>
+ <select id="german-speed" aria-label="German voice playback speed">
+  <option value="1" selected>100% · Normal</option>
+  <option value="0.8">80% · 20% slower</option>
+  <option value="0.6">60% · 40% slower</option>
+  <option value="0.4">40% · 60% slower</option>
+ </select>
  <button type="button" id="audio-download-btn" class="mini-btn">Save audio offline</button>
  <p id="offline-audio-status" class="audio-explain" role="status" aria-live="polite"></p>
 </div>
@@ -627,6 +634,17 @@ async function getRecordedManifest(){
 // Recordings are hosted on Pages and also in the public GitHub repository.
 // The direct GitHub source is a fallback if mobile browsers cannot play a Pages URL.
 const DIRECT_AUDIO_ROOT='https://raw.githubusercontent.com/YagmurKati/german-vocabulary-game/main/';
+const GERMAN_SPEED_PREF_KEY='wortflip-german-speed-v1';
+const germanSpeedSelect=el('german-speed');
+try {
+ const saved=localStorage.getItem(GERMAN_SPEED_PREF_KEY);
+ if(['1','0.8','0.6','0.4'].includes(saved)) germanSpeedSelect.value=saved;
+} catch(e) {}
+function germanPlaybackSpeed(){return Number(germanSpeedSelect.value)||1;}
+germanSpeedSelect.addEventListener('change',()=>{
+ try {localStorage.setItem(GERMAN_SPEED_PREF_KEY,germanSpeedSelect.value);}catch(e){}
+ if(recordingPlayer) recordingPlayer.playbackRate=germanPlaybackSpeed();
+});
 function playRecorded(example=false){
  if(!queue.length||cursor>=queue.length)return;
  const idx=queue[cursor];
@@ -634,6 +652,8 @@ function playRecorded(example=false){
  const file='audio/'+prefix+String(idx).padStart(3,'0')+'.mp3';
  if(recordingPlayer){recordingPlayer.pause();recordingPlayer.removeAttribute('src');recordingPlayer.load();}
  const player=new Audio();
+ player.playbackRate=germanPlaybackSpeed();
+ player.preservesPitch=true;
  recordingPlayer=player;
  const siteUrl='./'+file;
  const githubUrl=DIRECT_AUDIO_ROOT+file;
@@ -666,7 +686,7 @@ function playDeviceGerman(text){
  try{
   speechSynthesis.cancel();
   const utterance=new SpeechSynthesisUtterance(text);
-  utterance.lang=voice.lang;utterance.voice=voice;utterance.rate=.80;
+  utterance.lang=voice.lang;utterance.voice=voice;utterance.rate=germanPlaybackSpeed();
   utterance.onerror=e=>{if(e.error!=='canceled'&&e.error!=='interrupted')toast('German device voice failed.');};
   speechSynthesis.speak(utterance);
  }catch(e){toast('German device voice unavailable.');}
