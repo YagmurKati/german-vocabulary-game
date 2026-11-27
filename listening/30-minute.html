@@ -21,6 +21,12 @@ button:disabled{opacity:.5;cursor:default}audio{display:block;width:100%;margin:
 .check{display:flex;align-items:center;gap:10px;font-weight:500;cursor:pointer}.check input{width:19px;height:19px;accent-color:#ada3ff}
 #status{color:#c3d0e3;font-size:14px;min-height:25px;margin:12px 0}.note{font-size:14px;color:#aabed2;line-height:1.6}.download{display:inline-block;margin-top:8px;font-size:14px;color:#c6c1ff}
 .mini{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#bcaeff;font-weight:800;margin:0 0 9px}.rate-info{font-size:13px;color:#bed3e9;margin:-9px 0 16px}
+/* wortflip-embedded-listening-v1 */
+body.wortflip-embedded{padding:0 0 8px!important;margin:0!important;min-height:0!important;background:transparent!important}
+body.wortflip-embedded main{max-width:none!important;margin:0!important}
+body.wortflip-embedded .top,body.wortflip-embedded .mini,body.wortflip-embedded h1,body.wortflip-embedded .intro{display:none!important}
+body.wortflip-embedded #listen-by-level-link{display:none!important}
+body.wortflip-embedded .panel{border:0!important;box-shadow:none!important;padding:16px!important;margin:0!important}
 </style>
 </head>
 <body><main>
@@ -317,6 +323,25 @@ button:disabled{opacity:.5;cursor:default}audio{display:block;width:100%;margin:
  // Keep selected timeline synchronized when the user changes collection or session.
  $('session').addEventListener('change',()=>{currentAudioSession=currentAudioDetails();});
  $('collection').addEventListener('change',()=>{currentAudioSession=currentAudioDetails();});
+
+// Embedded in the MAIN WortFlip listening screen; the old filtered options are below it.
+if(new URLSearchParams(location.search).get('embedded')==='1' && window.parent!==window){
+  document.body.classList.add('wortflip-embedded');
+  const notifyParent=(type,extra={})=>window.parent.postMessage({type,...extra},location.origin);
+  const measure=()=>notifyParent('wortflip-listen-height',{height:Math.ceil(document.documentElement.scrollHeight)});
+  const levelLink=document.getElementById('listen-by-level-link');
+  if(levelLink)levelLink.addEventListener('click',e=>{e.preventDefault();notifyParent('wortflip-open-level');});
+  const btn=document.getElementById('play');
+  btn?.addEventListener('click',()=>notifyParent('wortflip-long-started'));
+  audio.addEventListener('playing',()=>notifyParent('wortflip-long-started'));
+  window.addEventListener('message',e=>{
+    if(e.origin!==location.origin||e.source!==window.parent||e.data?.type!=='wortflip-long-stop')return;
+    audio.pause();stopDevice();
+  });
+  if('ResizeObserver' in window)new ResizeObserver(measure).observe(document.body);
+  window.addEventListener('load',measure);
+  setTimeout(measure,300);setTimeout(measure,1200);
+}
 })();
 </script>
 </body></html>
