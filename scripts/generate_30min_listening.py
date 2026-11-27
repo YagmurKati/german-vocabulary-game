@@ -9,11 +9,15 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import re
 import subprocess
 
 from generate_listening_mp3 import ROOT, GROUP_SOURCES, SAMPLE_RATE, load_cards, get_pcm, silence
 
 MIN_SECONDS = 30 * 60  # Minimum length, including the final complete card
+# Piper phoneme timing: 1.25 means German is spoken at approximately 80% of
+# the original pace. English remains at its original 1.0 timing.
+GERMAN_LENGTH_SCALE = 1.25
 OUTPUT_DIR = ROOT / "listening" / "audio30"
 MANIFEST = ROOT / "listening" / "30min-sessions.json"
 GROUP_LABELS = {
@@ -104,8 +108,50 @@ def render_session(group: str, cards: list, start: int, sequence: int, voices: d
     return result, original_index
 
 
+def update_listening_player_and_cache():
+    """Clarify the mixed-language speed and invalidate cached old MP3s."""
+    player = ROOT / "listening" / "30-minute.html"
+    html = player.read_text(encoding="utf-8")
+    original_label = '<label for="speed">Playback speed</label>'
+    updated_label = '<label for="speed">Overall playback speed (both languages)</label>'
+    if updated_label not in html:
+        if original_label not in html:
+            raise ValueError("Could not find 30-minute player speed selector")
+        html = html.replace(original_label, updated_label, 1)
+    note = ('<p class="note" id="german-pace-note">'
+            '<strong>German is recorded about 20% slower.</strong> English stays at its original speed. '
+            'Leave overall playback at Normal (1×) to hear this balance; the speed menu changes both languages.'
+            '</p>')
+    if 'id="german-pace-note"' not in html:
+        marker = '<label class="check"><input type="checkbox" id="repeat">'
+        if marker not in html:
+            raise ValueError("Could not find 30-minute player repeat selector")
+        html = html.replace(marker, note + '\n' + marker, 1)
+    player.write_text(html, encoding="utf-8")
+
+    # The existing service worker caches audio and HTML. A version bump is
+    # required; otherwise phones may keep serving the previous-speed MP3s.
+    service_worker = ROOT / "sw.js"
+    sw = service_worker.read_text(encoding="utf-8")
+    pattern = r"const CACHE_NAME = 'wortspiel-pwa-[^']+';"
+    newer, count = re.subn(pattern,
+        "const CACHE_NAME = 'wortspiel-pwa-v24-30min-slow-german';", sw, count=1)
+    if count != 1:
+        raise ValueError("Could not find service-worker cache name")
+    service_worker.write_text(newer, encoding="utf-8")
+
+
 def main():
-    from piper import PiperVoice
+    from piper import PiperVoice, SynthesisConfig
+
+    class SlowerGermanVoice:
+        """Use Piper phoneme-duration scaling only for German synthesis."""
+        def __init__(self, voice):
+            self.voice = voice
+            self.settings = SynthesisConfig(length_scale=GERMAN_LENGTH_SCALE)
+
+        def synthesize_wav(self, text, wav_file):
+            return self.voice.synthesize_wav(text, wav_file, syn_config=self.settings)
 
     html = (ROOT / "index.html").read_text(encoding="utf-8")
     source = {group: load_cards(html, name) for group, name in GROUP_SOURCES.items()}
@@ -113,7 +159,7 @@ def main():
         raise ValueError("Expected the published set of 1,300 WortFlip cards")
     voices = {
         "en": PiperVoice.load(str((ROOT / "en_US-lessac-medium.onnx").resolve())),
-        "de": PiperVoice.load(str((ROOT / "de_DE-thorsten-medium.onnx").resolve())),
+        "de": SlowerGermanVoice(PiperVoice.load(str((ROOT / "de_DE-thorsten-medium.onnx").resolve()))),
     }
     sessions = []
     for group, cards in source.items():
@@ -129,10 +175,12 @@ def main():
     MANIFEST.write_text(json.dumps({
         "version": 1,
         "description": "Continuous 30+ minute English–German lessons made from the existing 1,300 WortFlip cards",
-        "sequence": "English prompt, 2.5s pause, German answer, English example, 2.5s pause, German example",
+        "sequence": "English prompt, 2.5s pause, slower German answer, English example, 2.5s pause, slower German example",
+        "voice_timing": {"english_length_scale": 1.0, "german_length_scale": GERMAN_LENGTH_SCALE},
         "sessions": sessions,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Built {len(sessions)} 30+ minute sessions; saved {MANIFEST}", flush=True)
+    update_listening_player_and_cache()
+    print(f"Built {len(sessions)} 30+ minute sessions (German ~20% slower; English unchanged); saved {MANIFEST}", flush=True)
 
 
 if __name__ == "__main__":
