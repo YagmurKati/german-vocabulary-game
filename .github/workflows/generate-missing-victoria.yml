@@ -35,12 +35,12 @@ jobs:
           sudo apt-get install -y ffmpeg
       - name: Start free local KokoroTTS with the German Victoria model
         run: |
-          # An Apache-2.0 free/open model; NO paid APIs, keys or Azure involved.
-          # Versioned immutable tiny image downloads its language weights on first use.
+          # Use the public GitHub Container Registry release by tag.
+          # No Azure, paid API, secret or login is required.
           docker run -d --name wortflip-victoria \
             -e KOKOROTTS_DEVICE=cpu \
             -p 127.0.0.1:7860:7860 \
-            hangrylabs/kokorotts:v1.0_tiny@sha256:c8c044a2968cbd6cc49e811176fb856c000af324f8b01a027db91e38f1a863fa
+            ghcr.io/hangry-labs/kokorotts:v1.0_tiny
           python - <<'PY'
           import time,urllib.request
           for i in range(120):
