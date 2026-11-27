@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "description": "Continuous 30+ minute English–German lessons made from the existing 1,300 WortFlip cards",
+  "sequence": "English prompt, 2.5s pause, German answer, English example, 2.5s pause, German example",
+  "sessions": [
+    {
+      "id": "lookalikes-01",
+      "group": "lookalikes",
+      "label": "English lookalikes · session 1",
+      "file": "listening/audio30/lookalikes-01.mp3",
+      "seconds": 1802,
+      "minutes": 30.0,
+      "cards": 137,
+      "first_card": 1,
+      "last_new_card": 137,
+      "repeated_cards": 0
+    },
+    {
+      "id": "lookalikes-02",
+      "group": "lookalikes",
+      "label": "English lookalikes · session 2",
+      "file": "listening/audio30/lookalikes-02.mp3",
+      "seconds": 1802,
+      "minutes": 30.0,
+      "cards": 135,
+      "first_card": 138,
+      "last_new_card": 272,
+      "repeated_cards": 0
+    },
+    {
+      "id": "lookalikes-03",
+      "group": "lookalikes",
+      "label": "English lookalikes · session 3",
+      "file": "listening/audio30/lookalikes-03.mp3",
+      "seconds": 1811,
+      "minutes": 30.2,
+      "cards": 140,
+      "first_card": 273,
+      "last_new_card": 412,
+      "repeated_cards": 0
+    },
+    {
+      "id": "lookalikes-04",
+      "group": "lookalikes",
+      "label": "English lookalikes · session 4",
+      "file": "listening/audio30/lookalikes-04.mp3",
+      "seconds": 1801,
+      "minutes": 30.0,
+      "cards": 144,
+      "first_card": 413,
+      "last_new_card": 500,
+      "repeated_cards": 56
+    },
+    {
+      "id": "everyday-01",
+      "group": "everyday",
+      "label": "Everyday expressions · session 1",
+      "file": "listening/audio30/everyday-01.mp3",
+      "seconds": 1810,
+      "minutes": 30.2,
+      "cards": 133,
+      "first_card": 1,
+      "last_new_card": 133,
+      "repeated_cards": 0
+    },
+    {
+      "id": "everyday-02",
+      "group": "everyday",
+      "label": "Everyday expressions · session 2",
+      "file": "listening/audio30/everyday-02.mp3",
+      "seconds": 1809,
+      "minutes": 30.2,
+      "cards": 135,
+      "first_card": 134,
+      "last_new_card": 268,
+      "repeated_cards": 0
+    },
+    {
+      "id": "everyday-03",
+      "group": "everyday",
+      "label": "Everyday expressions · session 3",
+      "file": "listening/audio30/everyday-03.mp3",
+      "seconds": 1812,
+      "minutes": 30.2,
+      "cards": 141,
+      "first_card": 269,
+      "last_new_card": 400,
+      "repeated_cards": 9
+    },
+    {
+      "id": "nouns-01",
+      "group": "nouns",
+      "label": "Practical nouns · session 1",
+      "file": "listening/audio30/nouns-01.mp3",
+      "seconds": 1804,
+      "minutes": 30.1,
+      "cards": 127,
+      "first_card": 1,
+      "last_new_card": 127,
+      "repeated_cards": 0
+    },
+    {
+      "id": "nouns-02",
+      "group": "nouns",
+      "label": "Practical nouns · session 2",
+      "file": "listening/audio30/nouns-02.mp3",
+      "seconds": 1803,
+      "minutes": 30.0,
+      "cards": 129,
+      "first_card": 128,
+      "last_new_card": 200,
+      "repeated_cards": 56
+    },
+    {
+      "id": "speaking-01",
+      "group": "speaking",
+      "label": "Conversational nouns · session 1",
+      "file": "listening/audio30/speaking-01.mp3",
+      "seconds": 1807,
+      "minutes": 30.1,
+      "cards": 141,
+      "first_card": 1,
+      "last_new_card": 100,
+      "repeated_cards": 41
+    },
+    {
+      "id": "verbs-01",
+      "group": "verbs",
+      "label": "Everyday verbs · session 1",
+      "file": "listening/audio30/verbs-01.mp3",
+      "seconds": 1812,
+      "minutes": 30.2,
+      "cards": 138,
+      "first_card": 1,
+      "last_new_card": 100,
+      "repeated_cards": 38
+    }
+  ]
+}
