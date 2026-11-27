@@ -523,7 +523,7 @@ function imageKeyForCard(i){
  if(i<700)return WORD_PICTURES.speaking?.[i-600];
  return WORD_PICTURES.verbs?.[i-700];
 }
-function canPlayRecording(){return queue.length>0&&cursor<queue.length&&((library==='lookalikes'&&queue[cursor]<400)||(library==='everyday'&&queue[cursor]<400));}
+function canPlayRecording(){return queue.length>0&&cursor<queue.length;}
 function syncCardAudioControls(){
  const deviceOnly=!canPlayRecording();
  el('audio-mode').value=deviceOnly?'device':audioMode;
@@ -625,7 +625,7 @@ async function getRecordedManifest(){
  if(!manifestRequest)manifestRequest=fetch('./audio/tracks.json',{cache:'no-store'}).then(async r=>{
    if(!r.ok)throw Error('German recordings have not been published yet');
    const d=await r.json();
-   if(d.version!==1||d.collections.lookalikes.length!==400||d.collections.everyday.length!==400||d.collections.examples.length!==400||!Array.isArray(d.collections.lookalike_examples)||d.collections.lookalike_examples.length!==400)throw Error('The audio track list is incomplete');
+   if(d.version!==1||!d.collections||Object.entries({lookalikes:500,everyday:400,examples:400,lookalike_examples:500,nouns:200,noun_examples:200,speaking:100,speaking_examples:100,verbs:100,verb_examples:100}).some(([key,n])=>!Array.isArray(d.collections[key])||d.collections[key].length!==n))throw Error('The audio track list is incomplete');
    recordedManifest=d;
    return d;
  }).finally(()=>{manifestRequest=null;});
@@ -648,8 +648,13 @@ germanSpeedSelect.addEventListener('change',()=>{
 function playRecorded(example=false){
  if(!queue.length||cursor>=queue.length)return;
  const idx=queue[cursor];
- const prefix=example?(library==='lookalikes'?'y':'x'):(library==='lookalikes'?'l':'e');
- const file='audio/'+prefix+String(idx).padStart(3,'0')+'.mp3';
+ let prefix, localIndex=idx;
+ if(library==='lookalikes')prefix=example?'y':'l';
+ else if(idx<400)prefix=example?'x':'e';
+ else if(idx<600){prefix=example?'z':'n';localIndex=idx-400;}
+ else if(idx<700){prefix=example?'t':'s';localIndex=idx-600;}
+ else{prefix=example?'w':'v';localIndex=idx-700;}
+ const file='audio/'+prefix+String(localIndex).padStart(3,'0')+'.mp3';
  if(recordingPlayer){recordingPlayer.pause();recordingPlayer.removeAttribute('src');recordingPlayer.load();}
  const player=new Audio();
  player.playbackRate=germanPlaybackSpeed();
